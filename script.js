@@ -95,25 +95,19 @@ $().ready(function() {
 			// Make PaymentRequest show to display payment sheet 
 			payment.show().then(function(paymentResponse) {
 				
-			  // Process response
-			  var paymentData = {
-				  // payment method string
-				  method: paymentResponse.methodName,
-				  // payment details as you requested
-				  details: paymentResponse.details.toJSON(),
-				  // shipping address information
-				  address: paymentResponse.shippingAddress.toJSON()
-			  };
+				try {
+				    console.log(JSON.stringify(paymentResponse));
+				} catch(e) {
+					console.error("JSON stringify failed");
+				}
 
-			  // Call complete to hide payment sheet
-			  paymentResponse.complete("success");
+			    // Call complete to hide payment sheet
+ 			    paymentResponse.complete("success");
 
-			  console.log(JSON.stringify(paymentData));
-
-			  location.href = '/order-confirm.html';
+			    location.href = '/order-confirm.html';
 
 			}).catch(function(err) {
-			  console.error("Uh oh, something bad happened", err.message);
+			    console.error("Uh oh, something bad happened", err.message);
 			});
 		});
 	});
