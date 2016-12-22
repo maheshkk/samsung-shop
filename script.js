@@ -93,7 +93,7 @@ $().ready(function() {
 			);
 
 			// Make PaymentRequest show to display payment sheet 
-			payment.show().then(function(response) {
+			payment.show().then(function(paymentResponse) {
 				
 			  // Process response
 			  var paymentData = {
@@ -106,7 +106,7 @@ $().ready(function() {
 			  };
 
 			  // Call complete to hide payment sheet
-			  response.complete("success");
+			  paymentResponse.complete("success");
 
 			  console.log(JSON.stringify(paymentData));
 
