@@ -151,9 +151,11 @@ label {
 }
 
 .product-image img {
+	display: block;
 	width: 100%;
 	max-width: 300px;
 	max-height: 300px;
+	margin: 0px auto;
 }
 
 .product-info {
