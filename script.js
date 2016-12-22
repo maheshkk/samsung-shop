@@ -104,7 +104,7 @@ $().ready(function() {
 			    // Call complete to hide payment sheet
  			    paymentResponse.complete("success");
 
-			    location.href = '/order-confirm.html';
+			    location.href = 'order-confirm.html';
 
 			}).catch(function(err) {
 			    console.error("Uh oh, something bad happened", err.message);
