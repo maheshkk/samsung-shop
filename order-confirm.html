@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<title>Samsung Demo Shop</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.js" crossorigin="anonymous"></script>
+<script src="script.js"></script>
+</head>
+<body>
+    <nav class="product-filter">
+        <h1>Shop Samsung</h1>
+        
+        <div class="sort">
+            <div class="collection-sort">
+                <label>Sort by:</label>
+                <select>
+              <option value="/">Featured</option>
+              <option value="/">Best Selling</option>
+              <option value="/">Alphabetically, A-Z</option>
+              <option value="/">Alphabetically, Z-A</option>
+              <option value="/">Price, low to high</option>
+              <option value="/">Price, high to low</option>
+              <option value="/">Date, new to old</option>
+              <option value="/">Date, old to new</option>
+            </select>
+            </div>
+        </div>
+    </nav>
+    
+    <div id="order-confirmation">
+        <div class="product-info">
+            <h1>Thank you for your order!</h1>
+            <h5>You will receive order confirmation email shortly.</h5>
+        </div>
+        <div class="product-info">
+            <h6>Do you want to signup for SamsungShop to receive updates on your order?</h6><br>
+            <div class="login-section" visible="">
+              <label id="accountEmailLabel">Email</label><br>
+              <input type="email" id="accountEmail" name="email" placeholder="Email" required="" aria-labelledby="accountEmailLabel" autocomplete="username" value="" autofocus="">
+            </div>
+
+            <div class="row input-row">
+                <label id="accountPasswordLabel">Password</label><br>
+                <input type="password" id="accountPassword" name="password" placeholder="Password" required="" aria-labelledby="accountPasswordLabel" autocomplete="current-password">
+            </div>
+
+            <br><div class="product-buy-button">
+                <h5>SIGN UP</h5>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
