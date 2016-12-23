@@ -37,8 +37,8 @@ $().ready(function() {
     				data: {
       					//product ID obtained from Samsung onboarding portal
       					'productId': '02510116604241796260',
-					'merchantRefId': '1321223122",
-      					'allowedCardNetworks': ['AX', 'MC', "VI", "DS"],
+					'merchantRefId': '1321223122',
+      					'allowedCardNetworks': ['AX', 'MC', 'VI', 'DS'],
       					'paymentProtocol': "PROTOCOL_3DS",
       					'merchantName': "Samsung Shop (demo)",
       					'isReccurring': false,
