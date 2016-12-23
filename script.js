@@ -29,9 +29,6 @@ $().ready(function() {
 
   			// Supported payment methods
   			var supportedInstruments = [
-				{
-    				supportedMethods: ['amex', 'discover','mastercard','visa']
-  				},
   				{
     				supportedMethods: ['https://samsung.com/pay', 'https://rsolomakhin.github.io/bobpay'],
     				data: {
