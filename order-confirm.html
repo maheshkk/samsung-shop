@@ -5,6 +5,20 @@
 <link rel="stylesheet" href="styles.css">
 <script src="https://code.jquery.com/jquery-3.1.1.slim.js" crossorigin="anonymous"></script>
 <script src="script.js"></script>
+<script>
+
+ $().ready(function() {
+    var response = sessionStorage.getItem("response"); 
+    if (response) {
+      response = JSON.parse(response);
+
+      if (response && response.payerEmail) {
+        $("#accountEmail").attr("value", response.payerEmail);
+        $("#accountPassword").focus();
+      }
+    }  
+ })
+</script>
 <meta name="viewport" content="initial-scale=1, maximum-scale=1">    
 </head>
 <body>

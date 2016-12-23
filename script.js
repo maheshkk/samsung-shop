@@ -33,16 +33,16 @@ $().ready(function() {
     				supportedMethods: ['amex', 'discover','mastercard','visa']
   				},
   				{
-    				supportedMethods: ['https://android.com/pay'],
+    				supportedMethods: ['https://samsung.com/pay'],
     				data: {
       					//product ID obtained from Samsung onboarding portal
       					'productId': '02510116604241796260',
       					'allowedCardNetworks': ['AMEX', 'mastercard', "visa"],
       					'paymentProtocol': "PROTOCOL_3DS",
-      					'merchantName': "Shop Samsung (demo)",
+      					'merchantName': "Samsung Shop (demo)",
       					'isReccurring': false,
       					'orderNumber': 1000,
-      					'billingAddressRequired': "zipOnly"
+      					'billingAddressRequired': true
 					}
 			}];
 
@@ -95,8 +95,18 @@ $().ready(function() {
 			// Make PaymentRequest show to display payment sheet 
 			payment.show().then(function(paymentResponse) {
 				
+				var response = {};
+
 				try {
-				    console.log(JSON.stringify(paymentResponse));
+					response = {
+					    details: JSON.stringify(paymentResponse.details),
+					    shippingAddress: JSON.stringify(paymentResponse.shippingAddress),
+					    payerEmail: paymentResponse.payerEmail,
+					    methodName: paymentResponse.methodName
+					};
+
+					console.log(JSON.stringify(response));
+
 				} catch(e) {
 					console.error("JSON stringify failed");
 				}
@@ -104,7 +114,9 @@ $().ready(function() {
 			    // Call complete to hide payment sheet
  			    paymentResponse.complete("success");
 
-			    location.href = 'order-confirm.html';
+ 			  	sessionStorage.setItem('response', JSON.stringify(response));
+
+			    setTimeout(function() { location.href = "order-confirm.html" }, 1000);
 
 			}).catch(function(err) {
 			    console.error("Uh oh, something bad happened", err.message);
