@@ -28,21 +28,24 @@ $().ready(function() {
   			}
 
   			// Supported payment methods
-  			var supportedInstruments = [
+  			var supportedInstruments = [				
+				{
+					supportedMethods: ['visa', 'mastercard', 'amex', 'discover'],
+				},
 				{					
-    				supportedMethods: ['https://samsung.com/pay', 'https://rsolomakhin.github.io/bobpay'],
-    				data: {
-      					//product ID obtained from Samsung onboarding portal
-      					'productId': '02510116604241796260',
-					'merchantRefId': '1321223122',
-      					'allowedCardNetworks': ['AX', 'MC', 'VI', 'DS'],
-      					'paymentProtocol': "PROTOCOL_3DS",
-      					'merchantName': "Samsung Shop (demo)",
-      					'isReccurring': false,
-      					'orderNumber': 1000,
-      					'billingAddressRequired': true
+    					supportedMethods: ['https://samsung.com/pay', 'https://rsolomakhin.github.io/bobpay'],
+    					data: {
+						//product ID obtained from Samsung onboarding portal
+						'productId': '02510116604241796260',
+						'merchantRefId': '1321223122',
+						'allowedCardNetworks': ['AX', 'MC', 'VI', 'DS'],
+						'paymentProtocol': "PROTOCOL_3DS",
+						'merchantName': "Samsung Shop (demo)",
+						'isReccurring': false,
+						'orderNumber': 1000,
+						'billingAddressRequired': true
 					}
-			}];
+				}];
 
 			var details = {
 				displayItems: [
