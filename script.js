@@ -29,9 +29,6 @@ $().ready(function() {
 
   			// Supported payment methods
   			var supportedInstruments = [				
-				{
-					supportedMethods: ['visa', 'mastercard', 'amex', 'discover'],
-				},
 				{					
     					supportedMethods: ['https://samsung.com/pay'],
     					data: {
