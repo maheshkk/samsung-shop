@@ -33,7 +33,7 @@ $().ready(function() {
 					supportedMethods: ['visa', 'mastercard', 'amex', 'discover'],
 				},
 				{					
-    					supportedMethods: ['https://samsung.com/pay', 'https://rsolomakhin.github.io/bobpay'],
+    					supportedMethods: ['https://samsung.com/pay'],
     					data: {
 						//product ID obtained from Samsung onboarding portal
 						'productId': '02510116604241796260',
