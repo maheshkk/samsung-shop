@@ -29,10 +29,10 @@ $().ready(function() {
 
 			// Supported payment methods
   			var supportedInstruments = [				
-			{
 				{
 					supportedMethods: ['amex', 'discover','mastercard','visa']
 				},
+				{
 					supportedMethods: ['https://samsung.com/pay'],
 					data: {
 						//product ID obtained from Samsung onboarding portal
@@ -45,7 +45,7 @@ $().ready(function() {
 						'orderNumber': 1000,
 						'billingAddressRequired': true
 					}
-			}];
+				}];
 
 			var details = {
 				displayItems: [
