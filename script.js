@@ -27,11 +27,14 @@ $().ready(function() {
     			return;
   			}
 
-  			// Supported payment methods
+			// Supported payment methods
   			var supportedInstruments = [				
-				{					
-    					supportedMethods: ['https://samsung.com/pay'],
-    					data: {
+			{
+				{
+					supportedMethods: ['amex', 'discover','mastercard','visa']
+				},
+					supportedMethods: ['https://samsung.com/pay'],
+					data: {
 						//product ID obtained from Samsung onboarding portal
 						'productId': '02510116604241796260',
 						'merchantRefId': '1321223122',
@@ -42,7 +45,7 @@ $().ready(function() {
 						'orderNumber': 1000,
 						'billingAddressRequired': true
 					}
-				}];
+			}];
 
 			var details = {
 				displayItems: [
