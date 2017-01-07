@@ -36,13 +36,13 @@ $().ready(function() {
 					supportedMethods: ['https://samsung.com/pay'],
 					data: {
 						//product ID obtained from Samsung onboarding portal
-						'productId': '02510116604241796260',
-						'merchantRefId': '1321223122',
-						'allowedCardNetworks': ['AX', 'MC', 'VI', 'DS'],
+						'productId': 'b30f1a1ea0b244458d5a5b',
+						'merchantRefId': 'MerchantReferenceId',
+						'orderNumber': 'AMZ007MAR',
 						'paymentProtocol': "PROTOCOL_3DS",
 						'merchantName': "Samsung Shop (demo)",
 						'isReccurring': false,
-						'orderNumber': 1000,
+						'allowedCardNetworks': ['VISA','MASTERCARD'],
 						'billingAddressRequired': true
 					}
 				}];
