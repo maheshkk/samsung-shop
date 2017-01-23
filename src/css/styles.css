@@ -106,6 +106,7 @@ h6 {
 
 .product-filter {
 	display: flex;
+	justify-content: space-between;
 	padding: 30px 0;
 	position: relative;
 	background-color: #f6f6f6;
@@ -268,7 +269,8 @@ input {
 	}
 	
 	.product-filter {
-		flex-direction: column;
+		/*flex-direction: column;*/
+
 	}
 	
 	.sort {

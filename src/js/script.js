@@ -1,24 +1,24 @@
 $().ready(function() {
-		
-	$(".product-page-hide").on("click", function(e){
-		$("#single-product").hide();
+	var cart = {}; //cart that gets passed to next page 
+	$('.product-page-hide').on('click', function(e){
+		$('#single-product').hide();
 		e.stopPropagation();
 	});
 
 
-	$(".product-card").click(function(){
-		var prod_page = $("#single-product")
-		var image_source = $(this).find("img").attr("src")
-		var prod_name = $(this).find("h5").text();
-		var prod_price = $(this).find("h6").text();
+	$('.product-card').click(function(){
+		var prod_page = $('#single-product');
+		var image_source = $(this).find('img').attr('src');
+		var prod_name = $(this).find('h5').text();
+		var prod_price = $(this).find('h6').text();
 		
-		$(prod_page).find("img").attr("src", image_source);
-		$(prod_page).find("h2").text(prod_name);
-		$(prod_page).find("h1").text(prod_price);
+		$(prod_page).find('img').attr('src', image_source);
+		$(prod_page).find('h2').text(prod_name);
+		$(prod_page).find('h1').text(prod_price);
 
-		$(prod_page).show("slow");
-
-		$("#buyNow").on("click", function(){
+		$(prod_page).show('slow');
+		//buy now
+		$('#buyNow').on('click', function(){
 
 			 if (!window.PaymentRequest) {
    				// PaymentRequest API is not available. Forwarding to
@@ -37,12 +37,12 @@ $().ready(function() {
     				data: {
       					//product ID obtained from Samsung onboarding portal
       					'productId': '02510116604241796260',
-      					'allowedCardNetworks': ['AMEX', 'mastercard', "visa"],
-      					'paymentProtocol': "PROTOCOL_3DS",
-      					'merchantName': "Shop Samsung (demo)",
+      					'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],
+      					'paymentProtocol': 'PROTOCOL_3DS',
+      					'merchantName': 'Shop Samsung (demo)',
       					'isReccurring': false,
       					'orderNumber': 1000,
-      					'billingAddressRequired': "zipOnly"
+      					'billingAddressRequired': 'zipOnly'
 					}
 			}];
 
@@ -50,18 +50,18 @@ $().ready(function() {
 				displayItems: [
 			    	{
 			      		label: prod_name,
-			      		amount: { currency: "USD", value : prod_price.replace("$", "") }, // US$65.00
+			      		amount: { currency: 'USD', value : prod_price.replace('$', '') }, // US$65.00
 			    	},
 			    	{
-			      		label: "Loyal customer discount",
-			      		amount: { currency: "USD", value : "-10.00" }, // -US$10.00
+			      		label: 'Loyal customer discount',
+			      		amount: { currency: 'USD', value : '-10.00' }, // -US$10.00
 			      		pending: true // The price is not determined yet
 			    	}
 			  	],
 			  	
 			  	total:  {
-			    	label: "Total",
-			    	amount: { currency: "USD", value : prod_price.replace("$", "") }, // US$55.00
+			    	label: 'Total',
+			    	amount: { currency: 'USD', value : prod_price.replace('$', '') }, // US$55.00
 			  	},
 
 			  	shippingOptions: [
@@ -83,7 +83,7 @@ $().ready(function() {
   		    	requestPayerEmail: true,
     			requestPayerName: true,
 			    requestShipping: true,
-  				shippingType: "shipping" // "shipping"(default), "delivery" or "pickup"
+  				shippingType: 'shipping' // "shipping"(default), "delivery" or "pickup"
 			};
 
 			var payment = new PaymentRequest(
@@ -106,16 +106,44 @@ $().ready(function() {
 			  };
 
 			  // Call complete to hide payment sheet
-			  paymentResponse.complete("success");
+			  paymentResponse.complete('success');
 
 			  console.log(JSON.stringify(paymentData));
 
 			  location.href = '/order-confirm.html';
 
 			}).catch(function(err) {
-			  console.error("Uh oh, something bad happened", err.message);
+			  console.error('Uh oh, something bad happened', err.message);
 			});
 		});
+		//add to cart
+		$('#addToCart').on('click', function(){
+			var cartCount = parseInt($('#shopping-cart-count').text()) + 1;
+			$('#shopping-cart-count').text(cartCount);
+			var count;
+			//don't want duplicate items in cart- just increment
+			if(cart[prod_name]){
+				count = parseInt(cart[prod_name]['count']) + 1; 
+			} else {
+				count = 1;
+				cart[prod_name];
+			}
+			var item = {
+				'image': image_source,
+				'name': prod_name,
+				'price': prod_price,
+				'count': count
+			};
+			//$.extend(cart, item);
+			cart[prod_name] = item;
+		});
+		//cart button
+		$('#shopping-cart').on('click', function(){
+			//use session storage to pass info, since theres no server side logic handling this
+			sessionStorage.setItem('samsungPayShopDemo', cart);
+			location.href = '/cart.html';
+		});
+
 	});
 
 });
