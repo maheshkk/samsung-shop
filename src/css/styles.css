@@ -250,6 +250,7 @@ input {
 	display: flex;
 	flex-direction: column;
 	background-color: #FFFFFF;
+	margin-bottom: 25px;
 }
 .item-container{
 	display: flex;
@@ -272,6 +273,30 @@ input {
 .item-info-left, .item-info-right{
 	display: flex;
 	flex-direction: row;
+}
+.cart-costs {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+#total-cost{
+	margin-left: 5px;
+	margin-right: 15px;
+}
+.button{
+	width: 150px;
+	height: 40px;
+	background-color: #5aad35;
+	border: #FFFFFF solid 2px;
+	color: #FFFFFF;
+	cursor: pointer;
+	text-align: center;
+	padding-top:10px;
+}
+.button:hover {
+	background-color: #FFFFFF;
+	color: #5aad35;
+	border: #5aad35 solid 2px;
 }
 
 @media ( max-width: 1240px ) {
