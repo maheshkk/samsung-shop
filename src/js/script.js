@@ -23,7 +23,7 @@ $().ready(function() {
 			 if (!window.PaymentRequest) {
    				// PaymentRequest API is not available. Forwarding to
     			// legacy form based experience.
-    			location.href = '/checkout.html';
+    			location.href = '/samsung-shop/checkout.html';
     			return;
   			}
 
@@ -110,7 +110,7 @@ $().ready(function() {
 
 			  console.log(JSON.stringify(paymentData));
 
-			  location.href = '/order-confirm.html';
+			  location.href = '/samsung-shop/order-confirm.html';
 
 			}).catch(function(err) {
 			  console.error('Uh oh, something bad happened', err.message);
@@ -147,7 +147,7 @@ $().ready(function() {
 		$('#shopping-cart').on('click', function(){
 			//use session storage to pass info, since theres no server side logic handling this
 			sessionStorage.setItem('samsungPayShopDemo', JSON.stringify(cart));
-			location.href = '/cart.html';
+			location.href = '/samsung-shop/cart.html';
 		});
 
 	});
