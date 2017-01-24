@@ -140,14 +140,14 @@ $().ready(function() {
 				//$.extend(cart, item);
 				cart[prod_name] = item;
 			}
-			$('#single-product').hide();
+			$('#single-product').hide('slow');
 			return addToCart(image_source, prod_name, prod_price);
 		});
 		//cart button
 		$('#shopping-cart').on('click', function(){
 			//use session storage to pass info, since theres no server side logic handling this
 			sessionStorage.setItem('samsungPayShopDemo', JSON.stringify(cart));
-			//location.href = '/cart.html';
+			location.href = '/cart.html';
 		});
 
 	});

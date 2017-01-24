@@ -1,12 +1,14 @@
 $().ready(function() {
 	var cart = JSON.parse(sessionStorage.getItem('samsungPayShopDemo'));
 	var cost = 0;
+	var cartCount = 0;
 	//populate cart with all items
 	var cartItems = document.getElementById('cart-items');
 	var itemContainer, itemInfoLeft, itemImage, itemName, itemInfoRight, itemQuantityLabel,itemQuantity, itemPrice;
 	var fragment = document.createDocumentFragment();
 	for(var k in cart){
-		var count = cart[k]['count'];
+		var count = parseInt(cart[k]['count']);
+		cartCount += count;
 		var price = cart[k]['price'];
 		//should probably change this to mustache templating, if allowed on github pages
 		itemContainer = document.createElement('div'); 
@@ -38,9 +40,10 @@ $().ready(function() {
 		itemContainer.appendChild(itemInfoLeft);
 		itemContainer.appendChild(itemInfoRight);
 		cartItems.appendChild(itemContainer);
-		cost += (parseInt(count) * (parseFloat(price.replace('$', ''))));
+		cost += (count * (parseFloat(price.replace('$', ''))));
 	}
 	$('#total-cost').text(cost.toFixed(2));
+	$('#shopping-cart-count').text(cartCount);
 	//auto calculate total cost with input event listener
 	var inputs = $('.item-quantity');
 	$('.item-quantity').on('input', function(){
