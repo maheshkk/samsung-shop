@@ -1,12 +1,13 @@
 $().ready(function() {
 	var cart = JSON.parse(sessionStorage.getItem('samsungPayShopDemo'));
-
+	var cost = 0;
 	//populate cart with all items
 	var cartItems = document.getElementById('cart-items');
 	var itemContainer, itemInfoLeft, itemImage, itemName, itemInfoRight, itemQuantityLabel,itemQuantity, itemPrice;
 	var fragment = document.createDocumentFragment();
 	for(var k in cart){
-		console.log(cart[k]);
+		var count = cart[k]['count'];
+		var price = cart[k]['price'];
 		//should probably change this to mustache templating, if allowed on github pages
 		itemContainer = document.createElement('div'); 
 		itemContainer.className = 'item-container';
@@ -24,11 +25,11 @@ $().ready(function() {
 		itemQuantityLabel.className = 'cart-item-pad-top';
 		itemQuantityLabel.innerText = 'Quantity: ';
 		itemQuantity = document.createElement('input');
-		itemQuantity.value = cart[k]['count'];
+		itemQuantity.value = count;
 		itemQuantity.className = 'item-quantity';
 		itemPrice = document.createElement('h4');
 		itemPrice.className = 'cart-item-pad-top';
-		itemPrice.innerText = cart[k]['price'];
+		itemPrice.innerText = price;
 		itemInfoLeft.appendChild(itemImage);
 		itemInfoLeft.appendChild(itemName);
 		itemInfoRight.appendChild(itemQuantityLabel);
@@ -37,8 +38,20 @@ $().ready(function() {
 		itemContainer.appendChild(itemInfoLeft);
 		itemContainer.appendChild(itemInfoRight);
 		cartItems.appendChild(itemContainer);
+		cost += (parseInt(count) * (parseFloat(price.replace('$', ''))));
 	}
-	//calculate total cost
+	$('#total-cost').text(cost.toFixed(2));
+	//auto calculate total cost with input event listener
+	var inputs = $('.item-quantity');
+	$('.item-quantity').on('input', function(){
+		var total = 0;
+		$.each(inputs, function(){
+			var qnt = $(this).val();
+			var price = parseFloat($(this).parent().find('h4').text().replace('$', ''));
+			total += (qnt * price);
+		});
+		$('#total-cost').text(total.toFixed(2));
+	});
 
 	//set up web payment
 });
