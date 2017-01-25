@@ -17,104 +17,14 @@ $().ready(function() {
 		$(prod_page).find('h1').text(prod_price);
 
 		$(prod_page).show('slow');
+		var itemSummary = [{
+			'label': prod_name,
+			'value': prod_price
+		}];
 		//buy now
 		$('#buyNow').on('click', function(){
-
-			 if (!window.PaymentRequest) {
-   				// PaymentRequest API is not available. Forwarding to
-    			// legacy form based experience.
-    			location.href = '/samsung-shop/checkout.html';
-    			return;
-  			}
-
-  			// Supported payment methods
-  			var supportedInstruments = [
-				{
-    				supportedMethods: ['amex', 'discover','mastercard','visa']
-  				},
-  				{
-    				supportedMethods: ['https://android.com/pay'],
-    				data: {
-      					//product ID obtained from Samsung onboarding portal
-      					'productId': '02510116604241796260',
-      					'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],
-      					'paymentProtocol': 'PROTOCOL_3DS',
-      					'merchantName': 'Shop Samsung (demo)',
-      					'isReccurring': false,
-      					'orderNumber': 1000,
-      					'billingAddressRequired': 'zipOnly'
-					}
-			}];
-
-			var details = {
-				displayItems: [
-			    	{
-			      		label: prod_name,
-			      		amount: { currency: 'USD', value : prod_price.replace('$', '') }, // US$65.00
-			    	},
-			    	{
-			      		label: 'Loyal customer discount',
-			      		amount: { currency: 'USD', value : '-10.00' }, // -US$10.00
-			      		pending: true // The price is not determined yet
-			    	}
-			  	],
-			  	
-			  	total:  {
-			    	label: 'Total',
-			    	amount: { currency: 'USD', value : prod_price.replace('$', '') }, // US$55.00
-			  	},
-
-			  	shippingOptions: [
-				    {
-				      id: 'standard',
-				      label: 'Standard shipping',
-				      amount: {currency: 'USD', value: '10.00'},
-				      selected: true
-				    },
-				    {
-				      id: 'express',
-				      label: 'Express shipping',
-				      amount: {currency: 'USD', value: '25.00'}
-				    }
-				]
-			};
-
-			var options = {
-  		    	requestPayerEmail: true,
-    			requestPayerName: true,
-			    requestShipping: true,
-  				shippingType: 'shipping' // "shipping"(default), "delivery" or "pickup"
-			};
-
-			var payment = new PaymentRequest(
-				supportedInstruments, // required payment method data
-  				details,              // required information about transaction
-  				options               // optional parameter for things like shipping, etc.
-			);
-
-			// Make PaymentRequest show to display payment sheet 
-			payment.show().then(function(paymentResponse) {
-				
-			  // Process response
-			  var paymentData = {
-				  // payment method string
-				  method: paymentResponse.methodName,
-				  // payment details as you requested
-				  details: paymentResponse.details.toJSON(),
-				  // shipping address information
-				  address: paymentResponse.shippingAddress.toJSON()
-			  };
-
-			  // Call complete to hide payment sheet
-			  paymentResponse.complete('success');
-
-			  console.log(JSON.stringify(paymentData));
-
-			  location.href = '/samsung-shop/order-confirm.html';
-
-			}).catch(function(err) {
-			  console.error('Uh oh, something bad happened', err.message);
-			});
+			webpay(itemSummary, prod_price);
+			//
 		});
 		//add to cart
 		$('#addToCart').one('click', function(){
