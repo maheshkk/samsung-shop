@@ -14,16 +14,16 @@ function webpay(itemSummary, total){
 		supportedMethods: ['amex', 'discover','mastercard','visa']
 	},
 	{
-		supportedMethods: ['https://android.com/pay'], // <--change?
+		supportedMethods: ['https://samsung.com/pay'], 
 		data: {
 			//product ID obtained from Samsung onboarding portal
-			'productId': '02510116604241796260',
+			'productId': 'a6bea2455a6749c6945ee7',
 			'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],
 			'paymentProtocol': 'PROTOCOL_3DS',
 			'merchantName': 'Shop Samsung (demo)',
-			'isReccurring': false,
-			'orderNumber': 1000,
-			'billingAddressRequired': 'zipOnly'
+			'billingAddressRequired': 'zipOnly',
+			'isDebugMode': false,
+			'APIKey': '12345'
 		}
 	}];
 
