@@ -10,9 +10,10 @@ function webpay(itemSummary, total){
 	}
 
 		// Supported payment methods
-	var supportedInstruments = [{
+	var supportedInstruments = [
+	/*{
 		supportedMethods: ['amex', 'discover','mastercard','visa']
-	},
+	},*/
 	{
 		supportedMethods: ['https://samsung.com/pay'], 
 		data: {
