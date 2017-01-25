@@ -1,5 +1,6 @@
 function webpay(itemSummary, total){
-
+	this.itemSummary = itemSummary;
+	this.total = total;
 	if (!window.PaymentRequest) {
 		// PaymentRequest API is not available. Forwarding to
 		// legacy form based experience.
@@ -43,10 +44,10 @@ function webpay(itemSummary, total){
 	};
 
 	//populate display items with items from cart/buy now
-	itemSummary.forEach( function(element){
+	this.itemSummary.forEach( function(element){
 		details['displayItems'].push({
 			label: element['label'],
-	  	amount: { currency: 'USD', value : (element['value']).replace('$', '') },
+	  	amount: { currency: 'USD', value : element['value'].replace('$', '') }
 		});
 	});
 	//shipping 
@@ -59,7 +60,7 @@ function webpay(itemSummary, total){
 	//total
 	details['total'] = {
   	label: 'Total',
-  	amount: { currency: 'USD', value : total.replace('$', '')},
+  	amount: { currency: 'USD', value : this.total.replace('$', '')},
 	};
 
 	var options = {
