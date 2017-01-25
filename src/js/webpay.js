@@ -22,6 +22,8 @@ function webpay(itemSummary, total){
 			'merchantRefId': 'MerchantIDOptional',
 			'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],
 			'paymentProtocol': 'PROTOCOL_3DS',
+			'orderNumber': "1233123",
+			'isRecurring': false,
 			'merchantName': 'Shop Samsung (demo)',
 			'billingAddressRequired': 'zipOnly',
 			'isDebugMode': false,
