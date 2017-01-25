@@ -60,7 +60,7 @@ function webpay(itemSummary, total){
 	details['total'] = {
   	label: 'Total',
   	amount: { currency: 'USD', value : total},
-	},
+	};
 
 	var options = {
 	  requestPayerEmail: true,

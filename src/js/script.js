@@ -17,12 +17,12 @@ $().ready(function() {
 		$(prod_page).find('h1').text(prod_price);
 
 		$(prod_page).show('slow');
-		var itemSummary = [{
-			'label': prod_name,
-			'value': prod_price
-		}];
 		//buy now
 		$('#buyNow').on('click', function(){
+			var itemSummary = [{
+				'label': prod_name,
+				'value': prod_price
+			}];
 			webpay(itemSummary, prod_price);
 			//
 		});
