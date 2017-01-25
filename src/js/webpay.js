@@ -1,4 +1,5 @@
 function webpay(itemSummary, total){
+	console.log(itemSummary);
 	this.itemSummary = itemSummary;
 	this.total = total;
 	if (!window.PaymentRequest) {

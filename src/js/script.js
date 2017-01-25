@@ -23,7 +23,6 @@ $().ready(function() {
 				'label': prod_name,
 				'value': prod_price
 			}];
-			console.log(itemSummary);
 			return webpay(itemSummary, prod_price);
 			//
 		});
