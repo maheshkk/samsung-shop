@@ -43,7 +43,7 @@ function webpay(itemSummary, total){
 	};
 
 	//populate display items with items from cart/buy now
-	itemSummary.foreach( function(element){
+	itemSummary.forEach( function(element){
 		details['displayItems'].push({
 			label: element['label'],
 	  	amount: { currency: 'USD', value : (element['value']).replace('$', '') },
