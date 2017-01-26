@@ -65,17 +65,20 @@ $().ready(function() {
 	var inputs = $('.item-quantity');
 	$('.item-quantity').on('input', function(){
 		var total = 0;
+		itemSummary = [];
 		$.each(inputs, function(){
 			var qnt = $(this).val();
-			var name = $(this).closest('.itemName').text();
-			var price = parseFloat($(this).parent().find('h4').text().replace('$', ''));
-			subTotal = (qnt * price);
-			total += subTotal;
-			var label = qnt + ' x ' + name;
-			itemSummary.push({
-				'label':  label,
-				'value': subTotal
-			});
+			if(qnt !== 0 || qnt !== undefined){
+				var name = $(this).closest('.itemName').text();
+				var price = parseFloat($(this).parent().find('h4').text().replace('$', ''));
+				subTotal = (qnt * price);
+				total += subTotal;
+				var label = qnt + ' x ' + name;
+				itemSummary.push({
+					'label':  label,
+					'value': subTotal
+				});
+			}
 		});
 		$('#total-cost').text(total.toFixed(2));
 	});
