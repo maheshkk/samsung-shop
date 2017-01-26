@@ -27,7 +27,7 @@ $().ready(function() {
 				'value': prod_price
 			}];
 			console.log(itemSummary);
-			$('#buyNow').on('click', function(){
+			$('#buyNow').off('click', function(){
 				console.log('turn off button');
 			});
 			var webpayment = webpay(itemSummary, prod_price)
