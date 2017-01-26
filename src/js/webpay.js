@@ -79,33 +79,9 @@ function webpay(itemSummary, total){
 		shippingType: 'shipping' // "shipping"(default), "delivery" or "pickup"
 	};
 
-	var payment = new PaymentRequest(
-		supportedInstruments, // required payment method data
-		details,              // required information about transaction
-		options               // optional parameter for things like shipping, etc.
-	);
-
-	// Make PaymentRequest show to display payment sheet 
-	payment.show().then(function(paymentResponse) {
-		
-	  // Process response
-	  var paymentData = {
-		  // payment method string
-		  method: paymentResponse.methodName,
-		  // payment details as you requested
-		  details: paymentResponse.details.toJSON(),
-		  // shipping address information
-		  address: paymentResponse.shippingAddress.toJSON()
-	  };
-
-	  // Call complete to hide payment sheet
-	  paymentResponse.complete('success');
-
-	  console.log(JSON.stringify(paymentData));
-
-	  location.href = '/samsung-shop/order-confirm.html';
-
-	}).catch(function(err) {
-	  console.error('Uh oh, something bad happened', err.message);
-	});
+	return {
+		'supportedInstruments': supportedInstruments,
+		'details': details,
+		'options': options 
+	};
 }

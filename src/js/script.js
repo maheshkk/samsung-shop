@@ -26,9 +26,36 @@ $().ready(function() {
 				'label': prod_name,
 				'value': prod_price
 			}];
-			(function(){
-				webpay(itemSummary, prod_price);
-			})();
+			var webpayInfo= webpay(itemSummary, prod_price);
+			var payment = new PaymentRequest(
+				webpayInfo['supportedInstruments'], // required payment method data
+				webpayInfo['details'],              // required information about transaction
+			  webpayInfo['options']              // optional parameter for things like shipping, etc.
+			);
+
+			// Make PaymentRequest show to display payment sheet 
+			payment.show().then(function(paymentResponse) {
+				
+			  // Process response
+			  var paymentData = {
+				  // payment method string
+				  method: paymentResponse.methodName,
+				  // payment details as you requested
+				  details: paymentResponse.details.toJSON(),
+				  // shipping address information
+				  address: paymentResponse.shippingAddress.toJSON()
+			  };
+
+			  // Call complete to hide payment sheet
+			  paymentResponse.complete('success');
+
+			  console.log(JSON.stringify(paymentData));
+
+			  location.href = '/samsung-shop/order-confirm.html';
+
+			}).catch(function(err) {
+			  console.error('Uh oh, something bad happened', err.message);
+			});
 			//
 		});
 		//add to cart
