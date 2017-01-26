@@ -13,41 +13,47 @@
     </nav>
     
     <div id="order-confirmation">
-      <form>
-      	<input type="email" placeholder="email">
-      	<input type="text" placeholder="phone number">
-      	<input type="text" placeholder="address">
-      	<input type="text" placeholder="city">
-      	<input type="text" placeholder="state/province">
-      	<input type="text" placeholder="zipcode">
-      	<input type="text" placeholder="country">
-      	<input type="text" placeholder="card holder name">
-      	<input type="text" placeholder="card number">
-      	<input type="text" placeholder="CVV">
-      	<select>
-		  <option value="jan">Jan</option>
-		  <option value="feb">Feb</option>
-		  <option value="mar">Mar</option>
-		  <option value="apr">Apr</option>
-		  <option value="may">May</option>
-		  <option value="jun">Jun</option>
-		  <option value="jul">Jul</option>
-		  <option value="aug">Aug</option>
-		  <option value="sep">Sep</option>
-		  <option value="oct">Oct</option>
-		  <option value="nov">Nov</option>
-		  <option value="dec">Dec</option>
-		</select>
-		<select>
-		  <option value="2017">2017</option>
-		  <option value="2018">2018</option>
-		  <option value="2019">2019</option>
-		  <option value="2020">2020</option>
-		  <option value="2021">2021</option>
-		  <option value="2022">2022</option>
-		</select>
-      	<input type="submit">
+      <form class = "form">
+        <label class="form-label">Account Information</label>
+      	<input class="form-input" type="email" placeholder="Email">
+      	<input class="form-input" type="text" placeholder="Phone Number">
+        <label class="form-label">Billing Information</label>
+      	<input class="form-input" type="text" placeholder="Address">
+      	<input class="form-input" type="text" placeholder="City">
+      	<input class="form-input" type="text" placeholder="State/Province">
+      	<input class="form-input" type="text" placeholder="Zipcode">
+      	<input class="form-input" type="text" placeholder="Country">
+        <label class="form-label">Payment Method</label>
+      	<input class="form-input" type="text" placeholder="Cardholder Name">
+      	<input class="form-input" type="text" placeholder="Card Number">
+      	<input class="form-input" type="text" placeholder="CVV">
+        <div class="form-dates">
+        	<select class="form-select">
+      		  <option value="jan">Jan</option>
+      		  <option value="feb">Feb</option>
+      		  <option value="mar">Mar</option>
+      		  <option value="apr">Apr</option>
+      		  <option value="may">May</option>
+      		  <option value="jun">Jun</option>
+      		  <option value="jul">Jul</option>
+      		  <option value="aug">Aug</option>
+      		  <option value="sep">Sep</option>
+      		  <option value="oct">Oct</option>
+      		  <option value="nov">Nov</option>
+      		  <option value="dec">Dec</option>
+      		</select>
+      		<select class="form-select">
+      		  <option value="2017">2017</option>
+      		  <option value="2018">2018</option>
+      		  <option value="2019">2019</option>
+      		  <option value="2020">2020</option>
+      		  <option value="2021">2021</option>
+      		  <option value="2022">2022</option>
+      		</select>
+        </div>
+      	<input type="submit" value="Place Order">
       </form>
+      
       <div id = "summary">
       </div>
     </div>
