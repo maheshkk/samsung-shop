@@ -6,11 +6,12 @@ $().ready(function() {
 		$('#single-product').hide();
 		e.stopPropagation();
 	});
+	/*
 	var cartTotal = sessionStorage.getItem('samsungPayShopDemoCount');
 	if(cartTotal){
 		$('#shopping-cart-count').text(cartTotal);
 	}
-
+	*/
 	$('.product-card').click(function(){
 		var prod_page = $('#single-product');
 		var image_source = $(this).find('img').attr('src');
