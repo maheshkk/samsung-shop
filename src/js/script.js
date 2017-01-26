@@ -1,6 +1,7 @@
 $().ready(function() {
 	var cart = {}; //cart that gets passed to next page 
 	$('.product-page-hide').on('click', function(e){
+		//detach buy now button event handler
 		$('#buyNow').off('click');
 		$('#single-product').hide();
 		e.stopPropagation();
@@ -30,8 +31,6 @@ $().ready(function() {
 			console.log(itemSummary);
 			var webpayment = webpay(itemSummary, prod_price);
 			webpayment.setup(itemSummary, prod_price);
-			return;
-			
 		});
 		//add to cart
 		$('#addToCart').one('click', function(){

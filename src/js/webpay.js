@@ -71,7 +71,7 @@ var webpay = function (itemSummary, total){
 			//total
 			details['total'] = {
 		  		label: 'Total',
-		  		amount: { currency: 'USD', value : total.replace('$', '')},
+		  		amount: { currency: 'USD', value : parseFloat(total.replace('$', '')) + discount},
 			};
 
 			var options = {
