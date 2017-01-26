@@ -1,7 +1,5 @@
 function webpay(itemSummary, total){
 	console.log(itemSummary);
-	this.itemSummary = itemSummary;
-	this.total = total;
 	if (!window.PaymentRequest) {
 		// PaymentRequest API is not available. Forwarding to
 		// legacy form based experience.
@@ -46,8 +44,9 @@ function webpay(itemSummary, total){
 	};
 
 	//populate display items with items from cart/buy now
-	this.itemSummary.forEach( function(element){
+	itemSummary.forEach( function(element){
 		var val = element['value'];
+		console.log(typeof val);
 		details['displayItems'].push({
 			label: element['label'],
 	  	amount: { currency: 'USD', value : val.replace('$', '') }
@@ -62,14 +61,14 @@ function webpay(itemSummary, total){
 	});
 	//total
 	details['total'] = {
-  	label: 'Total',
-  	amount: { currency: 'USD', value : this.total.replace('$', '')},
+  		label: 'Total',
+  		amount: { currency: 'USD', value : this.total.replace('$', '')},
 	};
 
 	var options = {
-	  requestPayerEmail: true,
+	    requestPayerEmail: true,
 		requestPayerName: true,
-	  requestShipping: true,
+	    requestShipping: true,
 		shippingType: 'shipping' // "shipping"(default), "delivery" or "pickup"
 	};
 

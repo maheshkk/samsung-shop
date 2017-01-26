@@ -23,7 +23,7 @@ $().ready(function() {
 				'label': prod_name,
 				'value': prod_price
 			}];
-			return webpay(itemSummary, prod_price);
+			webpay(itemSummary, prod_price);
 			//
 		});
 		//add to cart
