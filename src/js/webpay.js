@@ -1,5 +1,6 @@
 function webpay(itemSummary, total){
 	console.log(itemSummary);
+	console.log(total);
 	if (!window.PaymentRequest) {
 		// PaymentRequest API is not available. Forwarding to
 		// legacy form based experience.
@@ -65,7 +66,7 @@ function webpay(itemSummary, total){
 	//total
 	details['total'] = {
   		label: 'Total',
-  		amount: { currency: 'USD', value : this.total.replace('$', '')},
+  		amount: { currency: 'USD', value : total.replace('$', '')},
 	};
 
 	var options = {
