@@ -1,6 +1,7 @@
 $().ready(function() {
 	var cart = {}; //cart that gets passed to next page 
 	$('.product-page-hide').on('click', function(e){
+		$('#buyNow').off('click');
 		$('#single-product').hide();
 		e.stopPropagation();
 	});
@@ -21,7 +22,7 @@ $().ready(function() {
 
 		$(prod_page).show('slow');
 		//buy now
-		$('#buyNow').click(function(){
+		$('#buyNow').on('click', function(){
 			var itemSummary = [{
 				'label': prod_name,
 				'value': prod_price
