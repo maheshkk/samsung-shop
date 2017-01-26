@@ -84,7 +84,7 @@ function webpay(itemSummary, total){
 	);
 
 	// Make PaymentRequest show to display payment sheet 
-	payment.show().then(function(paymentResponse) {
+	return payment.show().then(function(paymentResponse) {
 		
 	  // Process response
 	  var paymentData = {
