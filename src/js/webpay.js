@@ -86,11 +86,6 @@ var webpay = function (itemSummary, total){
 				details,              // required information about transaction
 				options               // optional parameter for things like shipping, etc.
 			);
-			payment.abort().then(function(){
-				$('#buyNow').off('click', function(){
-					console.log('turn off');
-				});
-			});
 			// Make PaymentRequest show to display payment sheet 
 			payment.show().then(function(paymentResponse) {
 				
@@ -113,7 +108,15 @@ var webpay = function (itemSummary, total){
 			}).catch(function(err) {
 			  console.error('Uh oh, something bad happened', err.message);
 			});
+
+			payment.abort().then(function(){
+				$('#buyNow').off('click', function(){
+					console.log('turn off');
+				}).catch(function() {
+    			console.log('Unable to abort.');
+  			});
+			});
 		}
-		}
+	}
 }
 
