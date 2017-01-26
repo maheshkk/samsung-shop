@@ -106,7 +106,11 @@ var webpay = function (itemSummary, total){
 			  console.log(JSON.stringify(paymentData));
 
 			  location.href = '/samsung-shop/order-confirm.html';
-
+			  paymentResponse.complete('fail').then(() => {
+				  $('#buyNow').off('click',function(){
+				  	console.log('turn off');
+				  });
+				};
 			}).catch(function(err) {
 			  console.error('Uh oh, something bad happened', err.message);
 			});
