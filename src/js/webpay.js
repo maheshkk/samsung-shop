@@ -112,10 +112,10 @@ var webpay = function (itemSummary, total){
 			payment.abort().then(function(){
 				$('#buyNow').off('click', function(){
 					console.log('turn off');
-				}).catch(function() {
-    			console.log('Unable to abort.');
-  			});
-			});
+				});
+			}).catch(function() {
+    		console.log('Unable to abort.');
+  		});
 		}
 	}
 }
