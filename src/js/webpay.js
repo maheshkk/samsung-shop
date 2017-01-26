@@ -1,7 +1,5 @@
 var webpay = function (itemSummary, total){
 	'use strict';
-	console.log(itemSummary);
-	console.log(total);
 	return {
 		setup: function(itemSummary, total){
 			var discount = -10.00;
@@ -55,7 +53,6 @@ var webpay = function (itemSummary, total){
 			itemSummary.forEach( function(element){
 				var val = element['value'];
 				if( (typeof val) === 'string' ) val = val.replace('$', '');
-				console.log(typeof val);
 				details['displayItems'].push({
 					label: element['label'],
 			  	amount: { currency: 'USD', value : val }

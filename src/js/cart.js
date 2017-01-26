@@ -69,7 +69,7 @@ $().ready(function() {
 		$.each(inputs, function(){
 			var qnt = $(this).val();
 			if(qnt !== 0 || qnt !== undefined){
-				var name = $(this).parent().closest('img').find('.itemName').text();
+				var name = ($(this).parent()).parent().find('.itemName').text();
 				var price = parseFloat($(this).parent().find('h4').text().replace('$', ''));
 				subTotal = (qnt * price);
 				total += subTotal;
