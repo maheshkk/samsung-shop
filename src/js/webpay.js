@@ -50,10 +50,11 @@ function webpay(itemSummary, total){
 	//populate display items with items from cart/buy now
 	itemSummary.forEach( function(element){
 		var val = element['value'];
+		if( (typeof val) === 'string' ) val = val.replace('$', '');
 		console.log(typeof val);
 		details['displayItems'].push({
 			label: element['label'],
-	  	amount: { currency: 'USD', value : val.replace('$', '') }
+	  	amount: { currency: 'USD', value : val }
 		});
 	});
 	//shipping 
