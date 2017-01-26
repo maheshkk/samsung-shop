@@ -1,6 +1,8 @@
 function webpay(itemSummary, total){
+	'use strict';
 	console.log(itemSummary);
 	console.log(total);
+	var discount = -10.00;
 	if (!window.PaymentRequest) {
 		// PaymentRequest API is not available. Forwarding to
 		// legacy form based experience.
@@ -61,7 +63,7 @@ function webpay(itemSummary, total){
 	details['displayItems'].push(
 	{
 		label: 'Loyal customer discount',
-		amount: { currency: 'USD', value : '-10.00' }, // -US$10.00
+		amount: { currency: 'USD', value : discout }, // -US$10.00
 		pending: true // The price is not determined yet
 	});
 	//total
@@ -71,9 +73,9 @@ function webpay(itemSummary, total){
 	};
 
 	var options = {
-	    requestPayerEmail: true,
+	  requestPayerEmail: true,
 		requestPayerName: true,
-	    requestShipping: true,
+	  requestShipping: true,
 		shippingType: 'shipping' // "shipping"(default), "delivery" or "pickup"
 	};
 
@@ -84,7 +86,7 @@ function webpay(itemSummary, total){
 	);
 
 	// Make PaymentRequest show to display payment sheet 
-	return payment.show().then(function(paymentResponse) {
+	payment.show().then(function(paymentResponse) {
 		
 	  // Process response
 	  var paymentData = {

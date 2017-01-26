@@ -4,7 +4,10 @@ $().ready(function() {
 		$('#single-product').hide();
 		e.stopPropagation();
 	});
-
+	var cartTotal = sessionStorage.getItem('samsungPayShopDemoCount');
+	if(cartTotal){
+		$('#shopping-cart-count').text(cartTotal);
+	}
 
 	$('.product-card').click(function(){
 		var prod_page = $('#single-product');
@@ -23,7 +26,7 @@ $().ready(function() {
 				'label': prod_name,
 				'value': prod_price
 			}];
-			return webpay(itemSummary, prod_price);
+			webpay(itemSummary, prod_price);
 			//
 		});
 		//add to cart
@@ -57,6 +60,7 @@ $().ready(function() {
 		$('#shopping-cart').on('click', function(){
 			//use session storage to pass info, since theres no server side logic handling this
 			sessionStorage.setItem('samsungPayShopDemo', JSON.stringify(cart));
+			sessionStorage.setItem('samsungPayShopDemoCount', $('#shopping-cart-count').text());
 			location.href = '/samsung-shop/cart.html';
 		});
 
