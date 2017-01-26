@@ -63,7 +63,7 @@ function webpay(itemSummary, total){
 	details['displayItems'].push(
 	{
 		label: 'Loyal customer discount',
-		amount: { currency: 'USD', value : discout }, // -US$10.00
+		amount: { currency: 'USD', value : discount }, // -US$10.00
 		pending: true // The price is not determined yet
 	});
 	//total
