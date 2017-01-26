@@ -26,7 +26,8 @@ $().ready(function() {
 				'label': prod_name,
 				'value': prod_price
 			}];
-			webpay.setup(itemSummary, prod_price);
+			var webpayment = webpay(itemSummary, prod_price)
+			webpayment.setup(itemSummary, prod_price);
 			
 		});
 		//add to cart
