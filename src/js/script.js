@@ -21,15 +21,12 @@ $().ready(function() {
 
 		$(prod_page).show('slow');
 		//buy now
-		$('#buyNow').on('click', function(){
+		$('#buyNow').click(function(){
 			var itemSummary = [{
 				'label': prod_name,
 				'value': prod_price
 			}];
 			console.log(itemSummary);
-			$('#buyNow').off('click', function(){
-				console.log('turn off button');
-			});
 			var webpayment = webpay(itemSummary, prod_price)
 			return webpayment.setup(itemSummary, prod_price);
 			
