@@ -66,11 +66,15 @@ var webpay = function (itemSummary, total){
 				pending: true // The price is not determined yet
 			});
 			//total
+			var finalCost = parseFloat(total.replace('$', '')) + discount;
 			details['total'] = {
 		  		label: 'Total',
-		  		amount: { currency: 'USD', value : parseFloat(total.replace('$', '')) + discount},
+		  		amount: { currency: 'USD', value : finalCost},
 			};
-
+			if(finalCost < 0.00){
+				alert('Your cart is empty');
+				return;
+			}
 			var options = {
 			  requestPayerEmail: true,
 				requestPayerName: true,
