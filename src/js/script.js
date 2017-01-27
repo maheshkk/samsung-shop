@@ -3,6 +3,7 @@ $().ready(function() {
 	$('.product-page-hide').on('click', function(e){
 		//detach buy now button event handler
 		$('#buyNow').off('click');
+		$('#addToCart').off('click');
 		$('#single-product').hide();
 		e.stopPropagation();
 	});
@@ -34,7 +35,7 @@ $().ready(function() {
 			webpayment.setup(itemSummary, prod_price);
 		});
 		//add to cart
-		$('#addToCart').one('click', function(){
+		$('#addToCart').on('click', function(){
 			//extra scope
 			function addToCart(image_source, prod_name, prod_price){
 				var cartCount = parseInt($('#shopping-cart-count').text());
