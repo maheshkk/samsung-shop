@@ -160,7 +160,7 @@ label {
 	flex-wrap: wrap;
 }
 
-.product-card {
+.product-card, .single-product-card {
 	display: flex;
 	flex-direction: column;
 	cursor: pointer;
