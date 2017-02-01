@@ -59,6 +59,7 @@ $().ready(function() {
 				cart[prod_name] = item;
 			}
 			$('#single-product').hide('slow');
+			$('#addToCart').off('click');
 			return addToCart(image_source, prod_name, prod_price);
 		});
 		//cart button
