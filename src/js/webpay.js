@@ -9,8 +9,7 @@ webpay.prototype.setup = function(itemSummary, total){
 		location.href = '/samsung-shop/checkout.html';
 		return;
 	}
-
-		// Supported payment methods
+	// Supported payment methods
 	var supportedInstruments = [
 	{
 		supportedMethods: ['amex', 'discover','mastercard','visa']
@@ -21,12 +20,10 @@ webpay.prototype.setup = function(itemSummary, total){
 			//product ID obtained from Samsung onboarding portal
 			'productId': 'a6bea2455a6749c6945ee7',
 			'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],
-			'paymentProtocol': 'PROTOCOL_3DS',
 			'orderNumber': "1233123",
 			'merchantName': 'Shop Samsung (demo)',
-			'billingAddressRequired': 'zipOnly',
 			'debug': {
-				'APIKey': '12345'
+				'APIKey': '6874ad7c7c10403396811780aef9ecf3'
 			}
 		}
 	}];
