@@ -85,7 +85,7 @@ $().ready(function() {
 	//set up web payment
 	$('#checkout-button').on('click', function(){
 		var price = $('#total-cost').text();
-		var webpayment = webpay(itemSummary, price);
+		var webpayment = new webpay();
 		webpayment.setup(itemSummary, price);
 	});
 });
