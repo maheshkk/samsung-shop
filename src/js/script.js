@@ -26,6 +26,7 @@ $().ready(function() {
 		$(prod_page).show('slow');
 		//buy now
 		$('#buyNow').on('click', function(){
+			$('#addToCart').off('click');
 			var itemSummary = [{
 				'label': prod_name,
 				'value': prod_price
@@ -36,6 +37,7 @@ $().ready(function() {
 		});
 		//add to cart
 		$('#addToCart').on('click', function(){
+			$('#buyNow').off('click');
 			//extra scope
 			function addToCart(image_source, prod_name, prod_price){
 				var cartCount = parseInt($('#shopping-cart-count').text());
