@@ -97,9 +97,9 @@ webpay.prototype.setup = function(itemSummary, total){
 		  // payment method string
 		  method: paymentResponse.methodName,
 		  // payment details as you requested
-		  details: paymentResponse.details.toJSON(),
+		  details: JSON.stringify(paymentResponse.details),
 		  // shipping address information
-		  address: paymentResponse.shippingAddress.toJSON()
+		  address: JSON.stringify(paymentResponse.shippingAddress)
 	  };
 	  // TODO
 	  // Call complete to hide payment sheet
