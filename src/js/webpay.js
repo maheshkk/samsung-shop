@@ -9,24 +9,25 @@ webpay.prototype.setup = function(itemSummary, total){
 		location.href = '/samsung-shop/checkout.html';
 		return;
 	}
+	
 	// Supported payment methods
 	var supportedInstruments = [
 	{
 		supportedMethods: ['amex', 'discover','mastercard','visa']
-	},
-	{
-		supportedMethods: ['https://samsung.com/pay'], 
-		data: {
-			//product ID obtained from Samsung onboarding portal
-			'productId': 'a6bea2455a6749c6945ee7',
-			'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],
-			'orderNumber': "1233123",
-			'merchantName': 'Shop Samsung (demo)',
-			'debug': {
-				'APIKey': '6874ad7c7c10403396811780aef9ecf3'
-			}
+	},		
+ 	{		
+ 		supportedMethods: ['https://samsung.com/pay'], 		
+ 		data: {		
+ 			//product ID obtained from Samsung onboarding portal		
+ 			'productId': 'a6bea2455a6749c6945ee7',		
+ 			'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],		
+ 			'orderNumber': "1233123",		
+ 			'merchantName': 'Shop Samsung (demo)',		
+ 			'debug': {		
+ 				'APIKey': '6874ad7c7c10403396811780aef9ecf3'		
+ 			}		
 		}
-	}];
+ 	}];
 
 	var details = {
 		displayItems: [],
@@ -83,6 +84,11 @@ webpay.prototype.setup = function(itemSummary, total){
 		details,              // required information about transaction
 		options               // optional parameter for things like shipping, etc.
 	);
+
+ 	payment.addEventListener('shippingaddresschange', function(e) {
+		console.log("address chage");
+	});
+	 
 	// Make PaymentRequest show to display payment sheet 
 	payment.show().then(function(paymentResponse) {
 		
