@@ -95,15 +95,32 @@ webpay.prototype.setup = function(itemSummary, total){
 		  // shipping address information
 		  address: paymentResponse.shippingAddress.toJSON()
 	  };
-
+	  return 
+	  // TODO
 	  // Call complete to hide payment sheet
 	  paymentResponse.complete('success');
 
 	  console.log(JSON.stringify(paymentData));
-
-	  location.href = '/samsung-shop/order-confirm.html';
-	}).catch(function(err) {
-	  console.error('Uh oh, something bad happened', err.message);
+	  return fetch('/pay', {
+	    method: 'POST',
+	    credentials: 'include',
+	    headers: {
+	      'Content-Type': 'application/json'
+	    },
+	    body: JSON.stringify(paymentData)
+	  }).then(res => {
+	    if (res.status === 200) {
+	      return res.json();
+	    } else {
+	      throw 'Payment Error';
+	    }
+	  }).then(res => {
+	    paymentResponse.complete("success");
+	  }, err => {
+	    paymentResponse.complete("fail");
+	  });
+	}).catch(err => {
+	  console.error("Uh oh, something bad happened", err.message);
 	});
 }
 
