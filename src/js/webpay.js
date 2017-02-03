@@ -105,7 +105,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	  // Call complete to hide payment sheet
 	  paymentResponse.complete('success');
 	  console.log(paymentData);
-	  location.href = '/samsung-shop/confirmation.html'
+	  location.href = '/samsung-shop/order-confirm.html'
 	}).catch(err => {
 	  console.error("Uh oh, something bad happened", err.message);
 	});
