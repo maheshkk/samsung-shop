@@ -90,8 +90,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	});
 	 
 	// Make PaymentRequest show to display payment sheet 
-	payment.show().then(function(paymentResponse) {
-		
+	payment.show().then(function(paymentResponse) {	
 	  // Process response
 	  var paymentData = {
 		  // payment method string
@@ -101,11 +100,21 @@ webpay.prototype.setup = function(itemSummary, total){
 		  // shipping address information
 		  address: JSON.stringify(paymentResponse.shippingAddress)
 	  };
-	  // TODO
-	  // Call complete to hide payment sheet
-	  paymentResponse.complete('success');
+
 	  console.log(paymentData);
-	  location.href = '/samsung-shop/order-confirm.html'
+	  processPayment(paymentResponse).then(function(success) {
+	  	  if (success) {
+			// Call complete to hide payment sheet
+			paymentResponse.complete('success');
+			location.href = '/samsung-shop/order-confirm.html'
+	   	  } else {
+	   	  	// Call complete to hide payment sheet
+			paymentResponse.complete('fail');
+			console.log("Something went wrong with processing payment");
+		  }
+	  }).catch(err => {
+	      console.error("Uh oh, something bad happened while processing payment", err.message);
+	  });
 	}).catch(err => {
 	  console.error("Uh oh, something bad happened", err.message);
 	});
