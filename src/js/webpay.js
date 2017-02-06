@@ -86,7 +86,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	);
 
  	payment.addEventListener('shippingaddresschange', function(e) {
-		console.log("address chage");
+		console.log("address change");
 	});
 	 
 	// Make PaymentRequest show to display payment sheet 
