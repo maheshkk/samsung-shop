@@ -8,7 +8,7 @@ function processPayment(payload) {
             resolve(false);
         }
 
-        var credentials = payload.details.paymentCredential["3ds"];
+        var credentials = payload.details.paymentCredential["3DS"];
 
         var postPayment = { 
             "request_id": guid(),
