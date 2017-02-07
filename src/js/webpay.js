@@ -6,7 +6,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	if (!window.PaymentRequest) {
 		// PaymentRequest API is not available. Forwarding to
 		// legacy form based experience.
-		location.href = '/samsung-shop/checkout.html';
+		window.top.location.href = '/samsung-shop/checkout.html';
 		return;
 	}
 	
@@ -106,7 +106,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	  	  if (success) {
 			// Call complete to hide payment sheet
 			paymentResponse.complete('success');
-			location.href = '/samsung-shop/order-confirm.html'
+			window.top.location.href = '/samsung-shop/order-confirm.html'
 	   	  } else {
 	   	  	// Call complete to hide payment sheet
 			paymentResponse.complete('fail');
