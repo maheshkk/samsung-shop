@@ -4,11 +4,11 @@ function guid() {
 
 function processPayment(payload) {
     return new Promise(function (resolve, reject) {    
-        if (!payload || !payload.paymentCredential) {
+        if (!payload || !payload.details || !payload.details.paymentCredential) {
             resolve(false);
         }
 
-        var credentials = JSON.parse(payload.paymentCredential)["3ds"];
+        var credentials = JSON.parse(payload.details.paymentCredential)["3ds"];
 
         var postPayment = { 
             "request_id": guid(),
