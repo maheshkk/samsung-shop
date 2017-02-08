@@ -63,6 +63,11 @@ table{
     border-spacing:0;
 }
 
+iframe {
+	display: block;
+	margin: 0 auto;
+}
+
 /*------------------------------------*\
     $MAIN
 \*------------------------------------*/
