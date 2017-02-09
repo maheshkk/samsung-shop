@@ -1,6 +1,7 @@
 var webpay = function (){
 	//init
 }
+
 webpay.prototype.setup = function(itemSummary, total){
 	var discount = -10.00;
 	if (!window.PaymentRequest) {
@@ -29,6 +30,7 @@ webpay.prototype.setup = function(itemSummary, total){
 		}
  	}];
 
+ 	// details contain info about the transaction
 	var details = {
 		displayItems: [],
 		shippingOptions: [
@@ -55,13 +57,15 @@ webpay.prototype.setup = function(itemSummary, total){
 	  	amount: { currency: 'USD', value : val }
 		});
 	});
+
 	//shipping 
 	details['displayItems'].push(
 	{
 		label: 'Loyal customer discount',
 		amount: { currency: 'USD', value : discount }, // -US$10.00
-		pending: true // The price is not determined yet
+		pending: true 																 // The price is not determined yet
 	});
+
 	//total
 	var finalCost = parseFloat(total.replace('$', '')) + discount;
 	details['total'] = {
@@ -72,6 +76,8 @@ webpay.prototype.setup = function(itemSummary, total){
 		alert('Your cart is empty');
 		return;
 	}
+
+	// collect additional information
 	var options = {
 	  requestPayerEmail: true,
 		requestPayerName: true,
@@ -85,6 +91,7 @@ webpay.prototype.setup = function(itemSummary, total){
 		options               // optional parameter for things like shipping, etc.
 	);
 
+	//detect when shipping address changes
  	payment.addEventListener('shippingaddresschange', function(e) {
 		console.log("address change");
 		e.updateWith(new Promise(function(resolve) {
@@ -106,14 +113,14 @@ webpay.prototype.setup = function(itemSummary, total){
 
 	  console.log(paymentData);
 	  processPayment(paymentResponse).then(function(success) {
-	  	  if (success) {
-			// Call complete to hide payment sheet
-			paymentResponse.complete('success');
-			window.top.location.href = 'https://maheshkk.github.io/samsung-shop/order-confirm.html'
-	   	  } else {
-	   	  	// Call complete to hide payment sheet
-			paymentResponse.complete('fail');
-			console.log("Something went wrong with processing payment");
+	  	if (success) {
+				// Call complete to hide payment sheet
+				paymentResponse.complete('success');
+				window.top.location.href = 'https://maheshkk.github.io/samsung-shop/order-confirm.html'
+	   	} else {
+		   	// Call complete to hide payment sheet
+				paymentResponse.complete('fail');
+				console.log("Something went wrong with processing payment");
 		  }
 	  }).catch(err => {
 	      console.error("Uh oh, something bad happened while processing payment", err.message);

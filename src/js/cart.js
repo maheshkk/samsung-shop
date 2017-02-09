@@ -7,6 +7,8 @@ $().ready(function() {
 	var cartItems = document.getElementById('cart-items');
 	var itemContainer, itemInfoLeft, itemImage, itemName, itemInfoRight, itemQuantityLabel,itemQuantity, itemPrice;
 	var fragment = document.createDocumentFragment();
+
+	//populate page with items from previous page
 	function init(){
 		if(sessionStorage.getItem('samsungPayShopDemoCount') === 0){
 			cartItems.innerText = 'Your cart is empty';
@@ -16,7 +18,7 @@ $().ready(function() {
 				var count = parseInt(cart[k]['count']);
 				cartCount += count;
 				var price = cart[k]['price'];
-				//should probably change this to mustache templating, if allowed on github pages
+				//should probably change this to mustache templating
 				itemContainer = document.createElement('div'); 
 				itemContainer.className = 'item-container';
 				itemInfoLeft = document.createElement('div');
@@ -63,6 +65,8 @@ $().ready(function() {
 	$('#shopping-cart-count').text(cartCount);
 	//auto calculate total cost with input event listener
 	var inputs = $('.item-quantity');
+
+	// auto update cost and cart summary whenever user edits amount for each item
 	$('.item-quantity').on('input', function(){
 		var total = 0;
 		itemSummary = [];

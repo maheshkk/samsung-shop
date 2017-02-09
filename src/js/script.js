@@ -1,7 +1,7 @@
 $().ready(function() {
 	var cart = {}; //cart that gets passed to next page 
 	$('.product-page-hide').on('click', function(e){
-		//detach buy now button event handler
+		//detach button event handlers
 		$('#buyNow').off('click');
 		$('#addToCart').off('click');
 		$('#single-product').hide();
@@ -14,6 +14,7 @@ $().ready(function() {
 	}
 	*/
 	$('.product-card').click(function(){
+		//get info about selected item
 		var prod_page = $('#single-product');
 		var image_source = $(this).find('img').attr('src');
 		var prod_name = $(this).find('h5').text();
