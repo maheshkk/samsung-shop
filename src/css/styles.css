@@ -184,9 +184,6 @@ label {
 	/*box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.25);*/
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
-.product-card:hover{
-	box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.25);
-}
 
 .product-image img {
 	display: block;
@@ -234,7 +231,7 @@ label {
     border: #5bc0de solid 2px;
 }
 
-#addToCart: hover {
+#addToCart:hover {
 	background-color: #FFFFFF;
 	color: #5bc0de;
 }
@@ -247,7 +244,7 @@ label {
     background-color: #5cb85c;
     border: #5cb85c solid 2px;
 }
-#buyNow: hover {
+#buyNow:hover {
 	background-color: #FFFFFF;
 	color:#5cb85c;
 }
