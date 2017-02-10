@@ -122,7 +122,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	    selectedShippingOption.selected = true;
 	    otherShippingOption.selected = false;
 	    return Promise.resolve(details);
-	  })(details, payment.shippingOption));
+	  })(details, payment.shippingOptions));
 	});
 
 
