@@ -126,7 +126,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	    selectedShippingOption.selected = true;
 	    otherShippingOption.selected = false;
 	      return Promise.resolve(details);
-		  })(details, request.shippingOption));
+		  })(details, payment.shippingOption));
 		});
 
 
