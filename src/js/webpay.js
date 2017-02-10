@@ -100,15 +100,13 @@ webpay.prototype.setup = function(itemSummary, total){
 	});
 	 
  	//detect shipping option changes
- 	payment.addEventListener('shippingoptionchange', function(e) {
- 		console.log('shipping option changed');
-	  e.updateWith(( function(details, shippingOption) {
-	  	console.log(details);
+ 	payment.addEventListener('shippingoptionchange', e => {
+	  e.updateWith(((details, shippingOption) => {
 	    var selectedShippingOption;
 	    var otherShippingOption;
 	    if (shippingOption === 'standard') {
 	      selectedShippingOption = details['shippingOptions'][0];
-	      otherShippingOption = detail['shippingOptions'][1];
+	      otherShippingOption = details['shippingOptions'][1];
 	      details['total']['amount']['value'] = (parseFloat(details['total']['amount']['value']) + 10.00).toFixed(2);
 	      console.log(details['total']['amount']['value'] );
 	    } else {
@@ -127,9 +125,10 @@ webpay.prototype.setup = function(itemSummary, total){
 	    */
 	    selectedShippingOption.selected = true;
 	    otherShippingOption.selected = false;
-	    //return Promise.resolve(details);
-	  }));
-	});
+	      return Promise.resolve(details);
+		  })(details, request.shippingOption));
+		});
+
 
 
 	// Make PaymentRequest show to display payment sheet 
