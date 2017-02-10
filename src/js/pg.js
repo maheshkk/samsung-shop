@@ -2,25 +2,37 @@ function guid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});
 }
 
-function processPayment(payload) {
+function processPayment(payload, totalCost) {
     return new Promise(function (resolve, reject) {    
         if (!payload || !payload.details || !payload.details.paymentCredential) {
             resolve(false);
+        }
+        var server = {};
+
+        var serverSwitch = $('#serverSwitch').val();
+        if(serverSwitch === 'staging'){
+            server['mid'] = '2cae108f-c342-4a79-b8f9-bb524112ab17';
+            server['url'] = '/papi/v1/transactions';
+        } else if (serverSwitch === 'production') {
+            server['mid'] = '9a75435d-2535-4284-a8c9-cb249860d403';
+            server['url'] = '/pcat/v1/transactions';
+        } else {
+            
         }
 
         var credentials = payload.details.paymentCredential["3DS"];
 
         var postPayment = { 
             "request_id": guid(),
-            "mid": "2cae108f-c342-4a79-b8f9-bb524112ab17",
+            "mid": server['mid'],
             "txn_type": "PURCHASE",
             "method": "3ds",
             "currency": "USD",
-            "amount": 500,
+            "amount": totalCost,
             "3ds" : credentials
         }
 
-        fetch('https://api.samsungpaydev.us/papi/v1/transactions', {
+        fetch('https://api.samsungpaydev.us' + server['url'], {
             method: 'post',
             body: JSON.stringify(postPayment),
             headers: {
