@@ -106,25 +106,27 @@ webpay.prototype.setup = function(itemSummary, total){
 	    var selectedShippingOption;
 	    var otherShippingOption;
 	    if (shippingOption === 'standard') {
-	      selectedShippingOption = details.shippingOptions[0];
-	      otherShippingOption = details.shippingOptions[1];
-	      details.total.amount.value -= 10.00;
-	      console.log(details.total.amount.value);
+	      selectedShippingOption = details['shippingOptions'][0];
+	      otherShippingOption = detail['shippingOptions'][1];
+	      details['total']['amount']['value'] -= 10.00;
+	      console.log(details['total']['amount']['value'] );
 	    } else {
-	      selectedShippingOption = details.shippingOptions[1];
-	      otherShippingOption = details.shippingOptions[0];
-	      details.total.amount.value -= 25.00;
-	      console.log(details.total.amount.value);
+	      selectedShippingOption = details['shippingOptions'][1];
+	      otherShippingOption = details['shippingOptions'][0];
+	      details['total']['amount']['value']  -= 25.00;
+	      console.log(details['total']['amount']['value'] );
 	    }
+	    /*
 	    if (details.displayItems.length === 2) {
 	      details.displayItems.splice(1, 0, selectedShippingOption);
 	    } else {
 	      details.displayItems.splice(1, 1, selectedShippingOption);
 	    }
+	    */
 	    selectedShippingOption.selected = true;
 	    otherShippingOption.selected = false;
 	    return Promise.resolve(details);
-	  })(details, payment.shippingOption));
+	  }));
 	});
 
 
