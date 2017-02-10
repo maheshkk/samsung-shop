@@ -95,7 +95,7 @@ webpay.prototype.setup = function(itemSummary, total){
  	payment.addEventListener('shippingaddresschange', function(e) {
 		console.log("address change");
 		e.updateWith(new Promise(function(resolve) {
-			resolve(details);
+			return Promise.resolve(details);
 		}));
 	});
 	 
@@ -103,7 +103,7 @@ webpay.prototype.setup = function(itemSummary, total){
  	payment.addEventListener('shippingoptionchange', function(e) {
  		console.log('shipping option changed');
 	  e.updateWith( new Promise( function(details, shippingOption) {
-	    resolve(details);
+	    return Promise.resolve(details);
 	  }));
 	});
 
