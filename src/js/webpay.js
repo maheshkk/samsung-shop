@@ -99,6 +99,15 @@ webpay.prototype.setup = function(itemSummary, total){
 		}));
 	});
 	 
+ 	//detect shipping option changes
+ 	payment.addEventListener('shippingoptionchange', function(e) {
+ 		console.log('shipping option changed');
+	  e.updateWith( new Promise( function(details, shippingOption) {
+	    resolve(details);
+	  }));
+	});
+
+
 	// Make PaymentRequest show to display payment sheet 
 	payment.show().then(function(paymentResponse) {	
 	  // Process response
