@@ -159,6 +159,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	      console.error("Uh oh, something bad happened while processing payment", err.message);
 	  });
 	}).catch(err => {
+		console.log(details);
 	  console.error("Uh oh, something bad happened", err.message);
 	});
 }
