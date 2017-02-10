@@ -108,11 +108,11 @@ webpay.prototype.setup = function(itemSummary, total){
 	    if (shippingOption === 'standard') {
 	      selectedShippingOption = details.shippingOptions[0];
 	      otherShippingOption = details.shippingOptions[1];
-	      details.total.amount.value -= '10.00';
+	      details.total.amount.value -= 10.00;
 	    } else {
 	      selectedShippingOption = details.shippingOptions[1];
 	      otherShippingOption = details.shippingOptions[0];
-	      details.total.amount.value -= '25.00';
+	      details.total.amount.value -= 25.00;
 	    }
 	    if (details.displayItems.length === 2) {
 	      details.displayItems.splice(1, 0, selectedShippingOption);
