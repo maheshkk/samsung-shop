@@ -111,6 +111,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	      details['total']['amount']['value'] -= 10.00;
 	      console.log(details['total']['amount']['value'] );
 	    } else {
+	    	console.log(details['shippingOptions'][1]);
 	      selectedShippingOption = details['shippingOptions'][1];
 	      otherShippingOption = details['shippingOptions'][0];
 	      details['total']['amount']['value']  -= 25.00;
