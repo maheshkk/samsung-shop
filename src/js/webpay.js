@@ -103,6 +103,7 @@ webpay.prototype.setup = function(itemSummary, total){
  	payment.addEventListener('shippingoptionchange', function(e) {
  		console.log('shipping option changed');
 	  e.updateWith(( function(details, shippingOption) {
+	  	console.log(details);
 	    var selectedShippingOption;
 	    var otherShippingOption;
 	    if (shippingOption === 'standard') {
