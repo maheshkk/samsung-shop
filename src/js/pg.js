@@ -1,5 +1,6 @@
 function guid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});
+    var guid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});
+    return guid;
 }
 
 function processPayment(payload, totalCost) {
@@ -31,7 +32,7 @@ function processPayment(payload, totalCost) {
             "amount": totalCost,
             "3ds" : credentials
         }
-
+        console.log(postPayment);
         fetch('https://api.samsungpaydev.us' + server['url'], {
             method: 'post',
             body: JSON.stringify(postPayment),
@@ -40,6 +41,7 @@ function processPayment(payload, totalCost) {
                 'Content-Type': 'application/json'
             }
         }).then(function(response) {
+            console.log(response);
             if (!response.ok) {
                 //handle error
                 resolve(false);
