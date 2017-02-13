@@ -3,7 +3,7 @@ var webpay = function (){
 }
 
 webpay.prototype.setup = function(itemSummary, total){
-	var discount = -10.00;
+	var discount = 0.00;//-10.00;
 	if (!window.PaymentRequest) {
 		// PaymentRequest API is not available. Forwarding to
 		// legacy form based experience.
