@@ -8,6 +8,7 @@ function processPayment(payload, totalCost) {
         if (!payload || !payload.details || !payload.details.paymentCredential) {
             resolve(false);
         }
+        /*
         var server = {};
 
         var serverSwitch = $('#serverSwitch').val();
@@ -20,12 +21,12 @@ function processPayment(payload, totalCost) {
         } else {
             
         }
-
+        */
         var credentials = payload.details.paymentCredential["3DS"];
 
         var postPayment = { 
             "request_id": guid(),
-            "mid": server['mid'],
+            "mid": '9a75435d-2535-4284-a8c9-cb249860d403', //server['mid'],
             "txn_type": "PURCHASE",
             "method": "3ds",
             "currency": "USD",
@@ -33,7 +34,8 @@ function processPayment(payload, totalCost) {
             "3ds" : credentials
         }
         console.log(postPayment);
-        fetch('https://api.samsungpaydev.us' + server['url'], {
+        //alert(postPayment);
+        fetch('https://api.samsungpaydev.us/pcat/v1/transactions', {
             method: 'post',
             body: JSON.stringify(postPayment),
             headers: {
@@ -42,12 +44,14 @@ function processPayment(payload, totalCost) {
             }
         }).then(function(response) {
             console.log(response);
+            //alert(response);
             if (!response.ok) {
                 //handle error
                 resolve(false);
             }
             return response.json();
         }).then(function(paymentVerified) {
+            //alert(paymentVerified);
             try { 
                 if (paymentVerified && paymentVerified.resp_code && paymentVerified.resp_code == "APPROVAL") {
                     console.log("RES: " + paymentVerified);
