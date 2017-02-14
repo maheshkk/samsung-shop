@@ -27,6 +27,10 @@ $().ready(function() {
 		$(prod_page).show('slow');
 		//buy now
 		$('#buyNow').on('click', function(){
+			var data = {};
+			$.post('https://api.samsungpaydev.us/pcat/v1/transactions', function(data, status){
+		        console.log("Data: " + data + "\nStatus: " + status);
+		    });
 			var itemSummary = [{
 				'label': prod_name,
 				'value': prod_price
