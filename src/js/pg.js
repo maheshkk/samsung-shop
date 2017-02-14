@@ -39,7 +39,7 @@ function processPayment(payload, totalCost) {
         console.log(postPayment);
         //alert(postPayment);
         fetch('https://api.samsungpaydev.us/pcat/v1/transactions', {
-            method: 'post',
+            method: 'POST',
             body: JSON.stringify(postPayment),
             headers: {
                 'Accept': 'application/json',
