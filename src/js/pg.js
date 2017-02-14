@@ -46,6 +46,7 @@ function processPayment(payload, totalCost) {
                 'Content-Type': 'application/json'
             }
         }).then(function(response) {
+            console.log(postPayment);
             console.log(response);
             //alert(response);
             if (!response.ok) {
@@ -54,6 +55,7 @@ function processPayment(payload, totalCost) {
             }
             return response.json();
         }).then(function(paymentVerified) {
+            console.log(postPayment);
             console.log(paymentVerified);
             //alert(paymentVerified);
             try { 
@@ -66,6 +68,7 @@ function processPayment(payload, totalCost) {
                 reject(false);
             }
         }).catch(function(err) {
+            console.log(postPayment);
             console.log("Err: " + err.message);
             reject(false);            
         });
