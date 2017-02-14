@@ -54,6 +54,7 @@ function processPayment(payload, totalCost) {
             }
             return response.json();
         }).then(function(paymentVerified) {
+            console.log(paymentVerified);
             //alert(paymentVerified);
             try { 
                 if (paymentVerified && paymentVerified.resp_code && paymentVerified.resp_code == "APPROVAL") {
