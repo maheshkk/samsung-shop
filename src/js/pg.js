@@ -38,7 +38,7 @@ function processPayment(payload, totalCost) {
         }
         console.log(postPayment);
 
-        .ajax({
+        $.ajax({
           type: "POST",
           headers: { 
             'Accept': 'application/json',
