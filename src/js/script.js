@@ -45,7 +45,7 @@ $().ready(function() {
 			    'Content-Type': 'application/json' 
 			  },
 			  url: url,
-			  data: info,
+			  data: JSON.stringify(info),
 			  success: function(response){
 			  	console.log(response);
 			  },
