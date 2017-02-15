@@ -27,7 +27,6 @@ $().ready(function() {
 		$(prod_page).show('slow');
 		//buy now
 		$('#buyNow').on('click', function(){
-			/*
 			var info = {
 				"request_id": "771149d2-caec-4a18-8328-80c7d3659fdd", 
 				"mid": "9a75435d-2535-4284-a8c9-cb249860d403", 
@@ -39,25 +38,16 @@ $().ready(function() {
 			};
 		  	var url = 'https://api.samsungpaydev.us/pcat/v1/transactions';
 		  	
-		    fetch(url)  
-			  .then(  
-			    function(response) {  
-			      if (response.status !== 200) {  
-			        console.log('Looks like there was a problem. Status Code: ' +  
-			          response.status);  
-			        return;  
-			      }
+		    $.ajax({
+			  type: "POST",
+			  url: url,
+			  data: info,
+			  success: function(response){
+			  	console.log(response);
+			  },
+			  dataType: 'json'
+			});
 
-			      // Examine the text in the response  
-			      response.json().then(function(data) {  
-			        console.log(data);  
-			      });  
-			    }  
-			  )  
-			  .catch(function(err) {  
-			    console.log('Fetch Error :-S', err);  
-			  });
-			  */
 			var itemSummary = [{
 				'label': prod_name,
 				'value': prod_price
