@@ -40,6 +40,10 @@ $().ready(function() {
 		  	
 		    $.ajax({
 			  type: "POST",
+			  headers: { 
+		 	    'Accept': 'application/json',
+			    'Content-Type': 'application/json' 
+			  },
 			  url: url,
 			  data: info,
 			  success: function(response){
