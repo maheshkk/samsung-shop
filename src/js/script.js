@@ -27,6 +27,7 @@ $().ready(function() {
 		$(prod_page).show('slow');
 		//buy now
 		$('#buyNow').on('click', function(){
+			/*
 			var info = {
 				"request_id": "771149d2-caec-4a18-8328-80c7d3659fdd", 
 				"mid": "9a75435d-2535-4284-a8c9-cb249860d403", 
@@ -51,7 +52,7 @@ $().ready(function() {
 			  },
 			  dataType: 'json'
 			});
-
+			*/
 			var itemSummary = [{
 				'label': prod_name,
 				'value': prod_price

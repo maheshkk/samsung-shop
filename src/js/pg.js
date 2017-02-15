@@ -37,7 +37,22 @@ function processPayment(payload, totalCost) {
             "3ds" : credentials
         }
         console.log(postPayment);
+
+        .ajax({
+          type: "POST",
+          headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+          },
+          url: 'https://api.samsungpaydev.us/pcat/v1/transactions',
+          data: JSON.stringify(postPayment),
+          success: function(response){
+            console.log(response);
+          },
+          dataType: 'json'
+        });
         //alert(postPayment);
+        /*
         fetch('https://api.samsungpaydev.us/pcat/v1/transactions', {
             method: 'POST',
             body: JSON.stringify(postPayment),
@@ -72,5 +87,6 @@ function processPayment(payload, totalCost) {
             console.log("Err: " + err.message);
             reject(false);            
         });
+        */
     });        
 }
