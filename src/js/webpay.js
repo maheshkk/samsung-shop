@@ -28,8 +28,7 @@ webpay.prototype.setup = function(itemSummary, total){
  				'APIKey': '6874ad7c7c10403396811780aef9ecf3'		
  			}		
 		}
-	}
-	/*
+	},
 	{
 		supportedMethods: ['https://samsung.com/pay'],  		
  		data: {		
@@ -42,7 +41,7 @@ webpay.prototype.setup = function(itemSummary, total){
  				'APIKey': '6874ad7c7c10403396811780aef9ecf3'		
  			}		
 		}
- 	}*/];
+ 	}];
 
  	// details contain info about the transaction
 	var details = {
