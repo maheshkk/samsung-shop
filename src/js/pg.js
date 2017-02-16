@@ -11,7 +11,7 @@ function processPayment(payload, totalCost) {
         if (!payload || !payload.details || !payload.details.paymentCredential) {
             resolve(false);
         }
-        /*
+        
         var server = {};
 
         var serverSwitch = $('#serverSwitch').val();
@@ -24,12 +24,12 @@ function processPayment(payload, totalCost) {
         } else {
             
         }
-        */
+        
         var credentials = payload.details.paymentCredential["3DS"];
 
         var postPayment = { 
             "request_id": guid(),
-            "mid": '9a75435d-2535-4284-a8c9-cb249860d403', //server['mid'],
+            "mid": server['mid'],
             "txn_type": "PURCHASE",
             "method": "3ds",
             "currency": "USD",
@@ -37,14 +37,15 @@ function processPayment(payload, totalCost) {
             "3ds" : credentials
         }
         console.log(postPayment);
-
+        var url = 'https://api.samsungpaydev.us' + server['url'];
+        console.log(url);
         $.ajax({
           type: "POST",
           headers: { 
             'Accept': 'application/json',
             'Content-Type': 'application/json' 
           },
-          url: 'https://api.samsungpaydev.us/pcat/v1/transactions',
+          url: url,
           data: JSON.stringify(postPayment),
           success: function(response){
             console.log(response);
