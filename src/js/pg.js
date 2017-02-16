@@ -5,10 +5,10 @@ function guid() {
 }
 
 function processPayment(payload, totalCost) {
-    //return new Promise(function (resolve, reject) {    
-        //if (!payload || !payload.details || !payload.details.paymentCredential) {
-          //  resolve(false);
-        //}
+    return new Promise(function (resolve, reject) {    
+        if (!payload || !payload.details || !payload.details.paymentCredential) {
+           resolve(false);
+        }
         
         var server = {};
 
@@ -87,5 +87,5 @@ function processPayment(payload, totalCost) {
             reject(false);            
         });
         */
-    //});        
+    });        
 }
