@@ -5,9 +5,7 @@ function guid() {
 }
 
 function processPayment(payload, totalCost) {
-    console.log(payload);
-    console.log(totalCost);
-    return new Promise(function (resolve, reject) {    
+    //return new Promise(function (resolve, reject) {    
         //if (!payload || !payload.details || !payload.details.paymentCredential) {
           //  resolve(false);
         //}
@@ -89,5 +87,5 @@ function processPayment(payload, totalCost) {
             reject(false);            
         });
         */
-    });        
+    //});        
 }
