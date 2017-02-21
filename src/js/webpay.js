@@ -151,6 +151,7 @@ webpay.prototype.setup = function(itemSummary, total){
 
 	// Make PaymentRequest show to display payment sheet 
 	payment.show().then(function(paymentResponse) {	
+		console.log(paymentResponse);
 	  // Process response
 	  var paymentData = {
 		  // payment method string
