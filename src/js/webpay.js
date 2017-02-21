@@ -10,7 +10,8 @@ webpay.prototype.setup = function(itemSummary, total){
 		window.top.location.href = 'https://maheshkk.github.io/samsung-shop/checkout.html';
 		return;
 	}
-	var product = {};
+	var product = {}; 
+	var serverSwitch = $('#serverSwitch').val();
  	if(serverSwitch === 'staging'){
     product['id'] = '99599f416a1b4cff88a5b7';
   } else if (serverSwitch === 'production') {
