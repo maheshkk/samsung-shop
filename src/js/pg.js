@@ -25,6 +25,8 @@ function processPayment(payload, totalCost) {
         }
         
         var credentials = payload.details.paymentCredential["3DS"];
+        var url = 'https://api.samsungpaydev.us' + server['url'];
+        console.log(url);
 
         var postPayment = { 
             "request_id": guid(),
@@ -36,8 +38,6 @@ function processPayment(payload, totalCost) {
             "3ds" : credentials
         }
         console.log(postPayment);
-        var url = 'https://api.samsungpaydev.us' + server['url'];
-        console.log(url);
         $.ajax({
           type: "POST",
           headers: { 

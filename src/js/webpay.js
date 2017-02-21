@@ -10,7 +10,15 @@ webpay.prototype.setup = function(itemSummary, total){
 		window.top.location.href = 'https://maheshkk.github.io/samsung-shop/checkout.html';
 		return;
 	}
-	
+	var product = {};
+ 	if(serverSwitch === 'staging'){
+    product['id'] = '99599f416a1b4cff88a5b7';
+  } else if (serverSwitch === 'production') {
+    product['id'] = '847bcee98502428c9a9ade';
+  } else {
+          
+  }
+  console.log(product);
 	// Supported payment methods
 	var supportedInstruments = [
 	{
@@ -20,7 +28,7 @@ webpay.prototype.setup = function(itemSummary, total){
  		supportedMethods: ['https://spay.samsung.com'], //'https://samsung.com/pay' 		
  		data: {		
  			//product ID obtained from Samsung onboarding portal		
- 			'productId': '4fceff3402c84843a9eebd', //'2bc3e6da781e4e458b18bc', //a6bea2455a6749c6945ee7		
+ 			'productId': product['id'], //'2bc3e6da781e4e458b18bc', //a6bea2455a6749c6945ee7		
  			'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],		
  			'orderNumber': "1233123",		
  			'merchantName': 'Shop Samsung (demo)',		
