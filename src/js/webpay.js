@@ -20,7 +20,7 @@ webpay.prototype.setup = function(itemSummary, total){
  		supportedMethods: ['https://spay.samsung.com'], //'https://samsung.com/pay' 		
  		data: {		
  			//product ID obtained from Samsung onboarding portal		
- 			'productId': '2bc3e6da781e4e458b18bc', //a6bea2455a6749c6945ee7		
+ 			'productId': '4fceff3402c84843a9eebd', //'2bc3e6da781e4e458b18bc', //a6bea2455a6749c6945ee7		
  			'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],		
  			'orderNumber': "1233123",		
  			'merchantName': 'Shop Samsung (demo)',		
