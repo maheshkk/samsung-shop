@@ -62,7 +62,7 @@ function processPayment(payload, totalCost) {
           error: function(error){
             console.log('error: ' + error);
             return;
-          }
+          },
           dataType: 'json'
         });
         //alert(postPayment);
