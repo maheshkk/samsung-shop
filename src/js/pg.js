@@ -20,9 +20,11 @@ function processPayment(payload, totalCost) {
         } else if (serverSwitch === 'production') {
             server['mid'] = '9a75435d-2535-4284-a8c9-cb249860d403';
             server['url'] = '/pcat/v1/transactions';
+        } else if(serverSwitch === 'stripe) {
+            server['mid'] = '18cb7fde-5321-4dba-b9ee-13a49e172f7c';
+	    server['url'] = '/papi/v1/transactions';
         } else {
-            
-        }
+	}
         
         var credentials = payload.details.paymentCredential["3DS"];
         var url = 'https://api.samsungpaydev.us' + server['url'];
