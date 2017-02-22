@@ -56,11 +56,13 @@ function processPayment(payload, totalCost) {
           url: url,
           data: JSON.stringify(postPayment),
           success: function(response){
+            console.log('success');
             console.log(response);
             return;
           },
           error: function(error){
-            console.log('error: ' + error);
+            console.log('error: ');
+            console.log(error);
             return;
           },
           dataType: 'json'
