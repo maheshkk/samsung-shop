@@ -164,7 +164,6 @@ webpay.prototype.setup = function(itemSummary, total){
 				// Call complete to hide payment sheet
 				paymentResponse.complete('success');
 				//window.top.location.href = 'https://maheshkk.github.io/samsung-shop/order-confirm.html';
-				console.log("payment sucess");
 	   	} else {
 		   	// Call complete to hide payment sheet
 				paymentResponse.complete('fail');
