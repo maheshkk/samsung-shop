@@ -58,12 +58,11 @@ function processPayment(payload, totalCost) {
           success: function(response){
             console.log('success');
             console.log(response);
-            return;
           },
-          error: function(error){
+          error: function(xhr, ajaxOptions, thrownError){
             console.log('error: ');
-            console.log(error);
-            return;
+            console.log(xhr.status);
+            console.log(thrownError);
           },
           dataType: 'json'
         });
