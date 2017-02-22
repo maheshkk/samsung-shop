@@ -14,7 +14,9 @@ webpay.prototype.setup = function(itemSummary, total){
 	var serverSwitch = $('#serverSwitch').val();
  	if(serverSwitch === 'staging'){
     product['id'] = '99599f416a1b4cff88a5b7';
-  } else if (serverSwitch === 'production') {
+  } else if (serverSwitch === 'stripe'){
+	 product['id'] = '99599f416a1b4cff88a5b7';
+	} else if (serverSwitch === 'production') {
     product['id'] = '847bcee98502428c9a9ade';
   } else {
           
