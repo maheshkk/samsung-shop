@@ -1,6 +1,5 @@
 function guid() {
     var guid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});
-    console.log(guid);
     return guid;
 }
 
@@ -58,7 +57,12 @@ function processPayment(payload, totalCost) {
           data: JSON.stringify(postPayment),
           success: function(response){
             console.log(response);
+            return;
           },
+          error: function(error){
+            console.log('error: ' + error);
+            return;
+          }
           dataType: 'json'
         });
         //alert(postPayment);
