@@ -10,6 +10,8 @@ webpay.prototype.setup = function(itemSummary, total){
 		window.top.location.href = 'https://maheshkk.github.io/samsung-shop/checkout.html';
 		return;
 	}
+
+	// set product id based on option selected in drop down
 	var product = {}; 
 	var serverSwitch = $('#serverSwitch').val();
  	if(serverSwitch === 'staging'){
@@ -17,10 +19,22 @@ webpay.prototype.setup = function(itemSummary, total){
   } else if (serverSwitch === 'stripe'){
 	 product['id'] = 'c8e2edebcab74d8bb76658';
 	} else if (serverSwitch === 'production') {
-    product['id'] = '4fceff3402c84843a9eebd'; 
+    product['id'] = '847bcee98502428c9a9ade'; 
   } else {
-          
+    product['id'] = 'a6bea2455a6749c6945ee7';
   }
+
+  //data to be used alongside spay
+  var payData = {		
+		//product ID obtained from Samsung onboarding portal		
+		'productId': product['id'],	
+		'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],		
+		'orderNumber': "1233123",		
+		'merchantName': 'Shop Samsung (demo)',		
+		'debug': {		
+			'APIKey': '6874ad7c7c10403396811780aef9ecf3'
+		}		
+	}		
   console.log(product);
 	// Supported payment methods
 	var supportedInstruments = [
@@ -28,30 +42,13 @@ webpay.prototype.setup = function(itemSummary, total){
 		supportedMethods: ['amex', 'discover','mastercard','visa']
 	},		
  	{		
- 		supportedMethods: ['https://spay.samsung.com'], //'https://samsung.com/pay' 		
- 		data: {		
- 			//product ID obtained from Samsung onboarding portal		
- 			'productId': product['id'], //'2bc3e6da781e4e458b18bc', //a6bea2455a6749c6945ee7		
- 			'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],		
- 			'orderNumber': "1233123",		
- 			'merchantName': 'Shop Samsung (demo)',		
- 			'debug': {		
- 				'APIKey': '6874ad7c7c10403396811780aef9ecf3'		
- 			}		
-		}
+ 		supportedMethods: ['https://spay.samsung.com'], // current url		
+ 		data: payData
 	},
 	{
-		supportedMethods: ['https://samsung.com/pay'],  		
- 		data: {		
- 			//product ID obtained from Samsung onboarding portal		
- 			'productId': 'a6bea2455a6749c6945ee7', 		
- 			'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],		
- 			'orderNumber': "1233123",		
- 			'merchantName': 'Shop Samsung (demo)',		
- 			'debug': {		
- 				'APIKey': '6874ad7c7c10403396811780aef9ecf3'		
- 			}		
-		}
+		supportedMethods: ['https://samsung.com/pay'], //older url for older versions of Spay
+ 		data: payData
+	}
  	}];
 
  	// details contain info about the transaction
@@ -150,12 +147,17 @@ webpay.prototype.setup = function(itemSummary, total){
 	  // Process response
 	  var paymentData = {
 		  // payment method string
-		  method: paymentResponse.methodName,
+		  "method": paymentResponse.methodName,
 		  // payment details as you requested
-		  details: JSON.stringify(paymentResponse.details),
+		  "details": JSON.stringify(paymentResponse.details),
 		  // shipping address information
-		  address: JSON.stringify(paymentResponse.shippingAddress),
+		  "address": JSON.stringify(paymentResponse.shippingAddress)
 	  };
+	  
+	  // extra param for stripe
+	  if(serverSwitch === 'stripe'){
+	  	paymentData["merchantGatewayParameter"] = {"userId": " acct_17irF7F6yPzJ7wOR" };
+	  }	
 
 	  console.log(paymentData);
 	  processPayment(paymentResponse, finalCost).then(function(success) {
