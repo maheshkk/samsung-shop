@@ -33,7 +33,8 @@ webpay.prototype.setup = function(itemSummary, total){
 		'merchantName': 'Shop Samsung (demo)',		
 		'debug': {		
 			'APIKey': '6874ad7c7c10403396811780aef9ecf3'
-		}		
+		},
+		"merchantGatewayParameter": {"userId": " acct_17irF7F6yPzJ7wOR" }
 	}		
   console.log(product);
 	// Supported payment methods
@@ -144,6 +145,7 @@ webpay.prototype.setup = function(itemSummary, total){
 
 	// Make PaymentRequest show to display payment sheet 
 	payment.show().then(function(paymentResponse) {	
+		console.log(paymentResponse);
 	  // Process response
 	  var paymentData = {
 		  // payment method string
@@ -154,11 +156,6 @@ webpay.prototype.setup = function(itemSummary, total){
 		  "address": JSON.stringify(paymentResponse.shippingAddress)
 	  };
 	  
-	  // extra param for stripe
-	  if(serverSwitch === 'stripe'){
-	  	paymentData["merchantGatewayParameter"] = {"userId": " acct_17irF7F6yPzJ7wOR" };
-	  }	
-
 	  console.log(paymentData);
 	  processPayment(paymentResponse, finalCost).then(function(success) {
 	  	console.log(success);
