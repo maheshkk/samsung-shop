@@ -33,7 +33,7 @@ webpay.prototype.setup = function(itemSummary, total){
 		'merchantName': 'Shop Samsung (demo)',		
 		'debug': {		
 			'APIKey': '6874ad7c7c10403396811780aef9ecf3'
-		}
+		},
 		"merchantGatewayParameter": {"userId": " acct_17irF7F6yPzJ7wOR" }
 	}		
   console.log(product);
