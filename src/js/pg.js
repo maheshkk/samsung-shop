@@ -55,8 +55,8 @@ function processPayment(payload, totalCost) {
         $.ajax({
           type: "POST",
           headers: { 
-            //'Accept': 'application/json',
-            'cache-control': 'no-cache' ,
+            'Accept': 'application/json',
+            //'cache-control': 'no-cache' ,
             'Content-Type': 'application/json' 
           },
           url: url,
