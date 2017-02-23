@@ -9,6 +9,8 @@ function processPayment(payload, totalCost) {
         if (!payload || !payload.details) {
            resolve(false);
         }
+
+        //credentials should be from spay app
         var credentials;
         if(!payload.details.paymentCredential){
             credentials = {
@@ -21,8 +23,8 @@ function processPayment(payload, totalCost) {
             credentials = payload.details.paymentCredential["3DS"];
         }
         
+        //setup correct url and mid for specific values of dropdown
         var server = {};
-
         var serverSwitch = $('#serverSwitch').val();
         if(serverSwitch === 'staging'){
             server['mid'] = '2cae108f-c342-4a79-b8f9-bb524112ab17';
@@ -38,6 +40,7 @@ function processPayment(payload, totalCost) {
         var url = 'https://api.samsungpaydev.us' + server['url'];
         console.log(url);
 
+        //payment data sent to server
         var postPayment = { 
             "request_id": guid(),
             "mid": server['mid'],

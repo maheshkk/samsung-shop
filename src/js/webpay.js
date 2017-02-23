@@ -49,7 +49,7 @@ webpay.prototype.setup = function(itemSummary, total){
 		supportedMethods: ['https://samsung.com/pay'], //older url for older versions of Spay
  		data: payData
 	}
- 	}];
+ 	];
 
  	// details contain info about the transaction
 	var details = {
