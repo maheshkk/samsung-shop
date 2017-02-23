@@ -62,7 +62,11 @@ function processPayment(payload, totalCost) {
           success: function(response){
             console.log('success');
             console.log(response);
-            resolve(true);
+            if(response['resp_code'] && response['resp_code'] === "DECLINE"){
+                resole(false);
+            } else {
+                resolve(true);
+            }
           },
           error: function(xhr, ajaxOptions, thrownError){
             console.log('error: ');
