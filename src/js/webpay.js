@@ -19,7 +19,7 @@ webpay.prototype.setup = function(itemSummary, total){
   } else if (serverSwitch === 'stripe'){
 	 product['id'] = 'c8e2edebcab74d8bb76658';
 	} else if (serverSwitch === 'production') {
-    product['id'] = '847bcee98502428c9a9ade'; 
+    product['id'] = '2bc3e6da781e4e458b18bc'; 
   } else {
     product['id'] = 'a6bea2455a6749c6945ee7';
   }
@@ -34,7 +34,7 @@ webpay.prototype.setup = function(itemSummary, total){
 		'debug': {		
 			'APIKey': '6874ad7c7c10403396811780aef9ecf3'
 		}
-		//"merchantGatewayParameter": {"userId": " acct_17irF7F6yPzJ7wOR" }
+		"merchantGatewayParameter": {"userId": " acct_17irF7F6yPzJ7wOR" }
 	}		
   console.log(product);
 	// Supported payment methods

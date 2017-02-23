@@ -56,7 +56,7 @@ function processPayment(payload, totalCost) {
           type: "POST",
           headers: { 
             'Accept': 'application/json',
-            //'cache-control': 'no-cache' ,
+            'cache-control': 'no-cache' ,
             'Content-Type': 'application/json' 
           },
           url: url,
