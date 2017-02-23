@@ -13,6 +13,7 @@ function processPayment(payload, totalCost) {
         //credentials should be from spay app
         var credentials;
         if(!payload.details.paymentCredential){
+            //set own credentials incase it empty
             credentials = {
                 "type":"S",
                 "version":"100",
@@ -63,7 +64,7 @@ function processPayment(payload, totalCost) {
             console.log('success');
             console.log(response);
             if(response['resp_code'] && response['resp_code'] === "DECLINE"){
-                resole(false);
+                resolve(false);
             } else {
                 resolve(true);
             }
