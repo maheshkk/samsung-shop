@@ -1,4 +1,7 @@
 $().ready(function() {
+	var dropdown = sessionStorage.getItem('samsungPayShopDemoDropDown');
+	$('#serverSwitch').val(dropdown);
+	sessionStorage.removeItem('samsungPayShopDemoDropDown');
 	var cart = JSON.parse(sessionStorage.getItem('samsungPayShopDemo'));
 	var cost = 0;
 	var cartCount = 0;
