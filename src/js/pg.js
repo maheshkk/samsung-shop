@@ -51,7 +51,7 @@ function processPayment(payload, totalCost) {
             "amount": totalCost,
             "3ds" : credentials
         }
-        console.log(postPayment);
+        console.log(JSON.stringify(postPayment));
         $.ajax({
           type: "POST",
           headers: { 
@@ -63,7 +63,7 @@ function processPayment(payload, totalCost) {
           data: JSON.stringify(postPayment),
           success: function(response){
             console.log('success');
-            console.log(response);
+            console.log(JSON.stringify(response));
             if(response['resp_code'] && response['resp_code'] === "DECLINE"){
                 resolve(false);
             } else {
@@ -72,7 +72,7 @@ function processPayment(payload, totalCost) {
           },
           error: function(xhr, ajaxOptions, thrownError){
             console.log('error: ');
-            console.log(xhr);
+            console.log(JSON.stringify(xhr));
             console.log(thrownError);
             resolve(false);
           },
