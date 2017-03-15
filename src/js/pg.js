@@ -5,7 +5,7 @@ function guid() {
 
 function processPayment(payload, totalCost) {
     console.log(payload);
-    return new Promise(function (resolve, reject) {
+    return new Promise( (resolve, reject) => {
         if (!payload || !payload.details) {
            resolve(false);
         }

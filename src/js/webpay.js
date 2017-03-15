@@ -46,9 +46,10 @@ webpay.prototype.setup = function(itemSummary, total){
     supportedMethods: ['basic-card'],
     data: {
       supportedNetworks: ['unionpay', 'visa', 'mastercard', 'amex', 'discover',
-        'diners', 'jcb', 'mir',
+        'diners', 'jcb', 'mir'
       ],
-      supportedTypes: ['prepaid', 'debit', 'credit'],
+      supportedTypes: ['prepaid', 'debit', 'credit']
+    }
   },		
  	{		
  		supportedMethods: ['https://spay.samsung.com'], // current url		
@@ -122,9 +123,9 @@ webpay.prototype.setup = function(itemSummary, total){
 	);
 
 	//detect when shipping address changes
- 	payment.addEventListener('shippingaddresschange', function(e) {
+ 	payment.addEventListener('shippingaddresschange', e => {
 		console.log("address change");
-		e.updateWith(new Promise(function(resolve) {
+		e.updateWith(new Promise( resolve => {
 			resolve(details);
 		}));
 	});
@@ -152,7 +153,7 @@ webpay.prototype.setup = function(itemSummary, total){
 
 
 	// Make PaymentRequest show to display payment sheet 
-	payment.show().then(function(paymentResponse) {	
+	payment.show().then( paymentResponse => {	
 		console.log(paymentResponse);
 	  // Process response
 	  var paymentData = {
@@ -165,7 +166,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	  };
 	  
 	  console.log(paymentData);
-	  processPayment(paymentResponse, finalCost).then(function(success) {
+	  processPayment(paymentResponse, finalCost).then( success => {
 	  	console.log(success);
 	  	if (success) {
 				// Call complete to hide payment sheet
