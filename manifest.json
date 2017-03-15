@@ -3,7 +3,7 @@
   "name": "Samsung Shop App",
   "icons": [
     {
-      "src": "logo.png",
+      "src": "src/img/logo.png",
       "sizes": "192x192",
       "type": "image/png"
     }
