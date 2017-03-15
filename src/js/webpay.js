@@ -41,7 +41,15 @@ webpay.prototype.setup = function(itemSummary, total){
 	var supportedInstruments = [
 	{
 		supportedMethods: ['amex', 'discover','mastercard','visa']
-	},		
+	},
+	{
+    supportedMethods: ['basic-card'],
+    data: {
+      supportedNetworks: ['unionpay', 'visa', 'mastercard', 'amex', 'discover',
+        'diners', 'jcb', 'mir',
+      ],
+      supportedTypes: ['prepaid', 'debit', 'credit'],
+  },		
  	{		
  		supportedMethods: ['https://spay.samsung.com'], // current url		
  		data: payData
