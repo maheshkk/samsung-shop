@@ -30,8 +30,7 @@ function processPayment(payload, totalCost) {
         
         //setup correct url and mid for specific values of dropdown
         var server = {};
-        var serverSwitch;
-        var switchVal = $('#serverSwitch').val();
+        var serverSwitch = $('#serverSwitch').val();
         if(serverSwitch === 'staging'){
             server['mid'] = '2cae108f-c342-4a79-b8f9-bb524112ab17';
             server['url'] = '/papi/v1/transactions';
