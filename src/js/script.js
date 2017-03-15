@@ -7,6 +7,11 @@ $().ready(function() {
 		$('#single-product').hide();
 		e.stopPropagation();
 	});
+
+	//event listener for drop down
+	$('#serverSwitch').change(function(){
+		sessionStorage.setItem('samsungPayShopDemoDropDown', $('#serverSwitch').val());
+	});
 	/*
 	var cartTotal = sessionStorage.getItem('samsungPayShopDemoCount');
 	if(cartTotal){

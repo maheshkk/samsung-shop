@@ -21,12 +21,19 @@ function processPayment(payload, totalCost) {
             }
             //credentials = '';
         } else {
+            console.log('creds from spay');
             credentials = payload.details.paymentCredential["3DS"];
         }
         
         //setup correct url and mid for specific values of dropdown
         var server = {};
-        var serverSwitch = $('#serverSwitch').val();
+        var serverSwitch;
+        var switchVal = $('#serverSwitch').val();
+        if(switchVal){
+            serverSwitch = switchVal;
+        } else {
+            serverSwitch = sessionStorage.getItem('samsungPayShopDemoDropDown');
+        }
         if(serverSwitch === 'staging'){
             server['mid'] = '2cae108f-c342-4a79-b8f9-bb524112ab17';
             server['url'] = '/papi/v1/transactions';
