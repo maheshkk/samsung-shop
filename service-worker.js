@@ -47,15 +47,11 @@ self.addEventListener('install', e => {
 
 // when the browser fetches a URL…
 self.addEventListener('fetch', event => {
+     console.log('[ServiceWorker] Fetch', event.request.url);
     // … either respond with the cached object or go ahead and fetch the actual URL
     event.respondWith(
         caches.match(event.request).then( response => {
-            if (response) {
-                // retrieve from cache
-                return response;
-            }
-            // fetch as normal
-            return fetch(event.request);
+            return response || fetch(event.request);
         })
     );
 });
