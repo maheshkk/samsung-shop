@@ -8,7 +8,13 @@ $().ready(function() {
 		e.stopPropagation();
 	});
 
-	//event listener for drop down
+	// event listener for custom pricing
+	$('#customInput').on('input', function(){
+		$('#customValue').html($('#customInput').val());
+	});
+
+	sessionStorage.setItem('samsungPayShopDemoDropDown', $('#serverSwitch').val());
+	// event listener for drop down
 	$('#serverSwitch').change(function(){
 		sessionStorage.setItem('samsungPayShopDemoDropDown', $('#serverSwitch').val());
 	});

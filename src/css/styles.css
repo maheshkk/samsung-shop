@@ -67,6 +67,11 @@ iframe {
 	display: block;
 	margin: 0 auto;
 }
+label, #customInput{
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+}
 
 /*------------------------------------*\
     $MAIN

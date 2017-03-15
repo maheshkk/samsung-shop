@@ -85,7 +85,7 @@
             </div>
             <div class="product-info">
                 <h5>Gear VR</h5>
-                <h6>$49.99</h6>
+                <h6>$0.00</h6>
             </div>
         </div>
         
@@ -131,6 +131,17 @@
 
     </section>
 
+    <div class="product-card">
+        <div class="product-image">
+            <img src="https://s7d2.scene7.com/is/image/SamsungUS/qn65q9famfxza-gallery1-0313?$product-details-jpg$">
+        </div>
+        <div class="product-info">
+            <h5>Custom item</h5>
+            <h6 id="customValue">$1000000000.00</h6>
+        </div>
+    </div>
+    <input id="customInput" type="number" placeholder="$1000.00"></input>
+
     <div id="single-product">
         <div class="single-product-card">
             <div class="product-page-hide">X</div>
@@ -153,7 +164,12 @@
         </div>
     </div>
 
+    <label>Valid domain with allowpaymentrequest attribute</label>
     <iframe src="https://wpay.herokuapp.com/" allowpaymentrequest></iframe>
+    <label>Valid domain, no allowpaymentrequest attribute</label>
+    <iframe src="https://wpay.herokuapp.com/"></iframe>
+    <iframe src="https://winstonchen.github.io/invalid-iframe/invalid-both.html"></iframe>
+    <iframe src="https://winstonchen.github.io/invalid-iframe/invalid-domain.html" allowpaymentrequest></iframe>
 
 </body>
 </html>
