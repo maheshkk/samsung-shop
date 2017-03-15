@@ -8,7 +8,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/samsung-shop/",
+  "start_url": "https://masheshkk.github.io/samsung-shop/index.html",
   "display": "standalone",
   "orientation": "portrait"
 }
