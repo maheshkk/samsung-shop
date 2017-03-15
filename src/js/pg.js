@@ -5,11 +5,14 @@ function guid() {
 
 function processPayment(payload, totalCost) {
     console.log(payload);
-    return new Promise(function (resolve, reject) {    
+    return new Promise(function (resolve, reject) {
         if (!payload || !payload.details) {
            resolve(false);
         }
-
+        // auto approve all manual cards - for now
+        if(payload.methodName !== 'https://samsung.com/pay'){
+            resolve(true);
+        }    
         //credentials should be from spay app
         var credentials;
         if(!payload.details.paymentCredential){
@@ -29,11 +32,6 @@ function processPayment(payload, totalCost) {
         var server = {};
         var serverSwitch;
         var switchVal = $('#serverSwitch').val();
-        if(switchVal){
-            serverSwitch = switchVal;
-        } else {
-            serverSwitch = sessionStorage.getItem('samsungPayShopDemoDropDown');
-        }
         if(serverSwitch === 'staging'){
             server['mid'] = '2cae108f-c342-4a79-b8f9-bb524112ab17';
             server['url'] = '/papi/v1/transactions';
@@ -72,6 +70,7 @@ function processPayment(payload, totalCost) {
             console.log('success');
             console.log(JSON.stringify(response));
             if(response['resp_code'] && response['resp_code'] === "DECLINE"){
+                alert('Card declined');
                 resolve(false);
             } else {
                 resolve(true);
