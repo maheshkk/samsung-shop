@@ -11,6 +11,7 @@ function processPayment(payload, totalCost) {
         }
         // auto approve all manual cards - for now
         if(payload.methodName !== 'https://samsung.com/pay'){
+            console.log('detected non spay');
             resolve(true);
         }    
         //credentials should be from spay app
@@ -31,17 +32,24 @@ function processPayment(payload, totalCost) {
         //setup correct url and mid for specific values of dropdown
         var server = {};
         var serverSwitch = $('#serverSwitch').val();
-        if(serverSwitch === 'staging'){
-            server['mid'] = '2cae108f-c342-4a79-b8f9-bb524112ab17';
-            server['url'] = '/papi/v1/transactions';
-        } else if (serverSwitch === 'production') {
-            server['mid'] = '9a75435d-2535-4284-a8c9-cb249860d403';
-            server['url'] = '/pcat/v1/transactions';
-        } else if(serverSwitch === 'stripe') {
-            server['mid'] = '18cb7fde-5321-4dba-b9ee-13a49e172f7c';
-	        server['url'] = '/papi/v1/transactions';
-        } else {
-	    }
+        switch(serverSwitch){
+            case 'staging':
+            case 'fd-sim-prd':
+                server['mid'] = '2cae108f-c342-4a79-b8f9-bb524112ab17';
+                server['url'] = '/papi/v1/transactions';
+                break;
+            case 'production':
+            case 'fd-cat-prd':
+                server['mid'] = '9a75435d-2535-4284-a8c9-cb249860d403';
+                server['url'] = '/pcat/v1/transactions';
+                break;
+            case 'stripe':
+            case 'stripe-prd':
+                server['mid'] = '18cb7fde-5321-4dba-b9ee-13a49e172f7c';
+    	        server['url'] = '/papi/v1/transactions';
+            default:
+                break;
+        }
         var url = 'https://api.samsungpaydev.us' + server['url'];
         console.log(url);
 
@@ -83,42 +91,5 @@ function processPayment(payload, totalCost) {
           },
           dataType: 'json'
         });
-        //alert(postPayment);
-        /*
-        fetch('https://api.samsungpaydev.us/pcat/v1/transactions', {
-            method: 'POST',
-            body: JSON.stringify(postPayment),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(function(response) {
-            console.log(postPayment);
-            console.log(response);
-            //alert(response);
-            if (!response.ok) {
-                //handle error
-                resolve(false);
-            }
-            return response.json();
-        }).then(function(paymentVerified) {
-            console.log(postPayment);
-            console.log(paymentVerified);
-            //alert(paymentVerified);
-            try { 
-                if (paymentVerified && paymentVerified.resp_code && paymentVerified.resp_code == "APPROVAL") {
-                    console.log("RES: " + paymentVerified);
-                    resolve(true);
-                }
-            } catch(e) {
-                console.log("unexpected response")
-                reject(false);
-            }
-        }).catch(function(err) {
-            console.log(postPayment);
-            console.log("Err: " + err.message);
-            reject(false);            
-        });
-        */
     });        
 }
