@@ -33,12 +33,10 @@ function processPayment(payload, totalCost) {
         var server = {};
         var serverSwitch = $('#serverSwitch').val();
         switch(serverSwitch){
-            case 'staging':
             case 'fd-sim-prd':
                 server['mid'] = '2cae108f-c342-4a79-b8f9-bb524112ab17';
                 server['url'] = '/papi/v1/transactions';
                 break;
-            case 'production':
             case 'fd-cat-prd':
                 server['mid'] = '9a75435d-2535-4284-a8c9-cb249860d403';
                 server['url'] = '/pcat/v1/transactions';

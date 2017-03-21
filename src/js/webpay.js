@@ -15,14 +15,8 @@ webpay.prototype.setup = function(itemSummary, total){
 	var product = {}; 
 	var serverSwitch = $('#serverSwitch').val();
 	switch(serverSwitch){
-		case 'staging':
-			product['id'] = '99599f416a1b4cff88a5b7';
-			break;
 		case 'stripe':
 			product['id'] = 'c8e2edebcab74d8bb76658';
-			break;
-		case 'production':
-			product['id'] = '2bc3e6da781e4e458b18bc'; 
 			break;
 		case 'fd-sim-prd':
 			product['id'] = '7c1a34644e774837bc44b1';
@@ -34,7 +28,7 @@ webpay.prototype.setup = function(itemSummary, total){
 			product['id'] = 'a433362c57254be7b79a08';
 			break;
 		default:
-			product['id'] = 'a6bea2455a6749c6945ee7';
+			product['id'] = '7c1a34644e774837bc44b1';
 			break;
 	}
   //data to be used alongside spay
@@ -192,6 +186,6 @@ webpay.prototype.setup = function(itemSummary, total){
 	      console.error("Uh oh, something bad happened while processing payment", err.message);
 	  });
 	}).catch(err => {
-	  console.error("Uh oh, something bad happened", err.message);
+	  console.error("Uh oh, something bad happened", err);
 	});
 }
