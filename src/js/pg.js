@@ -33,6 +33,7 @@ function processPayment(payload, totalCost) {
         var server = {};
         var serverSwitch = $('#serverSwitch').val();
         switch(serverSwitch){
+            case 'elmo':
             case 'fd-sim-prd':
                 server['mid'] = '2cae108f-c342-4a79-b8f9-bb524112ab17';
                 server['url'] = '/papi/v1/transactions';

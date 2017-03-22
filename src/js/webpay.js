@@ -27,6 +27,9 @@ webpay.prototype.setup = function(itemSummary, total){
 		case 'stripe-prd':
 			product['id'] = 'a433362c57254be7b79a08';
 			break;
+		case 'elmo':
+			product['id'] = '99599f416a1b4cff88a5b7';
+			break;
 		default:
 			product['id'] = '7c1a34644e774837bc44b1';
 			break;
