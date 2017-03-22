@@ -9,12 +9,9 @@
 <script>
 
  $().ready(function() {
-    var response = sessionStorage.getItem("response"); 
-    if (response) {
-      response = JSON.parse(response);
-
-      if (response && response.payerEmail) {
-        $("#accountEmail").attr("value", response.payerEmail);
+    var email = sessionStorage.getItem("samsungPayShopDemoEmail"); 
+    if (email) {
+        $("#accountEmail").attr("value", email);
         $("#accountPassword").focus();
       }
     }  

@@ -172,7 +172,7 @@ webpay.prototype.setup = function(itemSummary, total){
 		  // shipping address information
 		  "address": JSON.stringify(paymentResponse.shippingAddress)
 	  };
-	  
+	  sessionStorage.setItem("samsungPayShopDemoEmail", paymentResponse.payerEmail); 
 	  console.log(paymentData);
 	  console.log(JSON.stringify(paymentData));
 	  processPayment(paymentResponse, finalCost).then( success => {
