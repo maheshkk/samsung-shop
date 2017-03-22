@@ -174,8 +174,10 @@ webpay.prototype.setup = function(itemSummary, total){
 	  };
 	  
 	  console.log(paymentData);
+	  console.log(JSON.stringify(paymentData));
 	  processPayment(paymentResponse, finalCost).then( success => {
 	  	console.log(success);
+	  	console.log(JSON.stringify(success));
 	  	if (success) {
 				// Call complete to hide payment sheet
 				paymentResponse.complete('success');
