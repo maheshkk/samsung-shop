@@ -76,11 +76,11 @@ function processPayment(payload, totalCost) {
           success: function(response){
             console.log('success');
             console.log(JSON.stringify(response));
-            if(response['resp_code'] && response['resp_code'] === "DECLINE"){
-                alert('Card declined');
-                resolve(false);
-            } else {
+            if(response['resp_code'] && response['resp_code'] === "APPROVAL"){
+                alert('Card accepted');
                 resolve(true);
+            } else {
+                resolve(false);
             }
           },
           error: function(xhr, ajaxOptions, thrownError){
