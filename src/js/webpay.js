@@ -37,6 +37,7 @@ webpay.prototype.setup = function(itemSummary, total){
   //data to be used alongside spay
   var payData = {		
 		//product ID obtained from Samsung onboarding portal		
+		"version":'1',
 		'productId': product['id'],	
 		'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],		
 		'orderNumber': "1233123",		
