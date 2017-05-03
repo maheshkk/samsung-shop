@@ -69,6 +69,10 @@ webpay.prototype.setup = function(itemSummary, total){
 	{
 		supportedMethods: ['https://samsung.com/pay'], //older url for older versions of Spay
  		data: payData
+	},
+	{
+		supportedMethods: ['https://ocvpn.gnawks.com/'], //older url for older versions of Spay
+ 		data: payData
 	}
  	];
 
