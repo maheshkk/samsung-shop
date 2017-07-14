@@ -41,10 +41,7 @@ webpay.prototype.setup = function(itemSummary, total){
 		'productId': product['id'],	
 		'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],		
 		'orderNumber': "1233123",		
-		'merchantName': 'Shop Samsung (demo)',		
-		'debug': {		
-			'APIKey': '6874ad7c7c10403396811780aef9ecf3'
-		},
+		'merchantName': 'Shop Samsung (demo)',
 		"merchantGatewayParameter": {"userId": " acct_17irF7F6yPzJ7wOR" }
 	}		
   console.log(product);
@@ -64,14 +61,6 @@ webpay.prototype.setup = function(itemSummary, total){
   },		
  	{		
  		supportedMethods: ['https://spay.samsung.com'], // current url		
- 		data: payData
-	},
-	{
-		supportedMethods: ['https://samsung.com/pay'], //older url for older versions of Spay
- 		data: payData
-	},
-	{
-		supportedMethods: ['https://ocvpn.gnawks.com/'], //older url for older versions of Spay
  		data: payData
 	}
  	];
