@@ -42,10 +42,10 @@ webpay.prototype.setup = function(itemSummary, total){
 		'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],		
 		'orderNumber': "1233123",		
 		'merchantName': 'Shop Samsung (demo)',
-		"merchantGatewayParameter": {"userId": " acct_17irF7F6yPzJ7wOR" }
+		"merchantGatewayParameter": {"userId": " acct_17irF7F6yPzJ7wOR" },
 		"debug": {				
  			"APIKey": "6874ad7c7c10403396811780aef9ecf3"		
- 		},	  
+ 		}	  
 	}		
   console.log(product);
 	// Supported payment methods
