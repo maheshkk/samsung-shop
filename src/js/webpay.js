@@ -99,6 +99,14 @@ webpay.prototype.setup = function(itemSummary, total){
 	//shipping 
 	details['displayItems'].push(
 	{
+		label: 'Default shipping',
+		amount: { currency: 'USD', value : 10.00 }, // -US$10.00
+		pending: false 																 // The price is not determined yet
+	});
+
+	// other costs
+	details['displayItems'].push(
+	{
 		label: 'Loyal customer discount',
 		amount: { currency: 'USD', value : discount }, // -US$10.00
 		pending: true 																 // The price is not determined yet
