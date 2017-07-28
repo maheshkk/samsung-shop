@@ -105,7 +105,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	});
 
 	//total
-	var finalCost = parseFloat(total.replace('$', '')) + discount;
+	var finalCost = parseFloat(total.replace('$', '')) + discount + 10.00; //10.00 for defualt shipping
 	details['total'] = {
   		label: 'Total',
   		amount: { currency: 'USD', value : finalCost},
@@ -140,6 +140,7 @@ webpay.prototype.setup = function(itemSummary, total){
  	//detect shipping option changes
  	payment.addEventListener('shippingoptionchange', e => {
 	  e.updateWith(((details, shippingOption) => {
+	  	finalCost -= 10.00;
 	    var selectedShippingOption;
 	    var otherShippingOption;
 	    if (shippingOption === 'standard') {
