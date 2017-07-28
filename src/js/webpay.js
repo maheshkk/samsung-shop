@@ -140,17 +140,17 @@ webpay.prototype.setup = function(itemSummary, total){
  	//detect shipping option changes
  	payment.addEventListener('shippingoptionchange', e => {
 	  e.updateWith(((details, shippingOption) => {
-	  	finalCost -= 10.00;
+	  	var originalCost = finalCost - 10.00;
 	    var selectedShippingOption;
 	    var otherShippingOption;
 	    if (shippingOption === 'standard') {
 	      selectedShippingOption = details['shippingOptions'][0];
 	      otherShippingOption = details['shippingOptions'][1];
-	      details['total']['amount']['value'] = finalCost + 10.00;
+	      details['total']['amount']['value'] = originalCost + 10.00;
 	    } else {
 	      selectedShippingOption = details['shippingOptions'][1];
 	      otherShippingOption = details['shippingOptions'][0];
-	      details['total']['amount']['value'] = finalCost + 25.00;
+	      details['total']['amount']['value'] = originalCost + 25.00;
 	    }
 	    selectedShippingOption.selected = true;
 	    otherShippingOption.selected = false;
