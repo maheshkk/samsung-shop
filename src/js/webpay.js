@@ -155,12 +155,12 @@ webpay.prototype.setup = function(itemSummary, total){
 	      selectedShippingOption = details['shippingOptions'][0];
 	      otherShippingOption = details['shippingOptions'][1];
 	      details['total']['amount']['value'] = originalCost + 10.00;
-	      details['displayItems'][0]['amount']['value'] = 10.00;
+	      details['displayItems'][1]['amount']['value'] = 10.00;
 	    } else {
 	      selectedShippingOption = details['shippingOptions'][1];
 	      otherShippingOption = details['shippingOptions'][0];
 	      details['total']['amount']['value'] = originalCost + 25.00;
-	      details['displayItems'][0]['amount']['value'] = 25.00;
+	      details['displayItems'][1]['amount']['value'] = 25.00;
 	    }
 	    selectedShippingOption.selected = true;
 	    otherShippingOption.selected = false;
