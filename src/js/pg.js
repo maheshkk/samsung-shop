@@ -36,10 +36,12 @@ function processPayment(payload, totalCost) {
         switch(serverSwitch){
             case 'elmo':
             case 'fd-sim-prd':
+            case 'stg-sim-prd':
                 server['mid'] = '2cae108f-c342-4a79-b8f9-bb524112ab17';
                 server['url'] = '/papi/v1/transactions';
                 break;
             case 'fd-cat-prd':
+            case 'stg-cat-prd':
                 server['mid'] = '9a75435d-2535-4284-a8c9-cb249860d403';
                 server['url'] = '/pcat/v1/transactions';
                 break;
