@@ -81,7 +81,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	    {
 	      id: 'standard',
 	      label: 'Standard shipping',
-	      amount: {currency: 'USD', value: '10.00'},
+	      amount: {currency: 'USD', value: '0.00'},
 	      selected: true
 	    },
 	    {
@@ -106,7 +106,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	details['displayItems'].push(
 	{
 		label: 'Default shipping',
-		amount: { currency: 'USD', value : 10.00 }, // -US$10.00
+		amount: { currency: 'USD', value : 0.00 }, // -US$10.00
 		pending: false 																 // The price is not determined yet
 	});
 
@@ -119,7 +119,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	});
 
 	//total
-	var finalCost = parseFloat(total.replace('$', '')) + discount + 10.00; //10.00 for defualt shipping
+	var finalCost = parseFloat(total.replace('$', '')) + discount + 0.00; //10.00 for defualt shipping
 	details['total'] = {
   		label: 'Total',
   		amount: { currency: 'USD', value : finalCost},
@@ -154,14 +154,14 @@ webpay.prototype.setup = function(itemSummary, total){
  	//detect shipping option changes
  	payment.addEventListener('shippingoptionchange', e => {
 	  e.updateWith(((details, shippingOption) => {
-	  	var originalCost = finalCost - 10.00;
+	  	var originalCost = finalCost - 0.00;
 	    var selectedShippingOption;
 	    var otherShippingOption;
 	    if (shippingOption === 'standard') {
 	      selectedShippingOption = details['shippingOptions'][0];
 	      otherShippingOption = details['shippingOptions'][1];
-	      details['total']['amount']['value'] = originalCost + 10.00;
-	      details['displayItems'][1]['amount']['value'] = 10.00;
+	      details['total']['amount']['value'] = originalCost + 0.00;
+	      details['displayItems'][1]['amount']['value'] = 0.00;
 	    } else {
 	      selectedShippingOption = details['shippingOptions'][1];
 	      otherShippingOption = details['shippingOptions'][0];
