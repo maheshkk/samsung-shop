@@ -1,0 +1,22 @@
+.wrapper {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.button {
+	color: #FFFFFF;
+	text-align: center;
+	/*
+	margin: auto;
+	width: 200px;
+	height: 45px;
+	background-color: #5aad35;
+	border: #FFFFFF solid 2px;
+	color: #FFFFFF;
+	cursor: pointer;
+	text-align: center;
+	padding-top:10px;
+	border-radius: 10px;
+	*/
+}
