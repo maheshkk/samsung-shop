@@ -1,0 +1,3350 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>SafeFrame Container</title>
+</head>
+
+<body marginwidth="0" marginheight="0">
+    <script>
+        (function () {
+            var b = this;
+            var g = String.prototype.trim ? function (a) {
+                return a.trim()
+            }
+                : function (a) {
+                    return a.replace(/^[\s\xa0]+|[\s\xa0]+$/g, "")
+                }
+                , h = function (a, c) {
+                    return a < c ? -1 : a > c ? 1 : 0
+                };
+            var k;
+            a: {
+                var l = b.navigator;
+                if (l) {
+                    var m = l.userAgent;
+                    if (m) {
+                        k = m;
+                        break a
+                    }
+                }
+                k = ""
+            }
+            ; var ba = function (a, c) {
+                var d = aa;
+                return Object.prototype.hasOwnProperty.call(d, a) ? d[a] : d[a] = c(a)
+            };
+            var ca = -1 != k.indexOf("Opera"), n = -1 != k.indexOf("Trident") || -1 != k.indexOf("MSIE"), da = -1 != k.indexOf("Edge"), p = -1 != k.indexOf("Gecko") && !(-1 != k.toLowerCase().indexOf("webkit") && -1 == k.indexOf("Edge")) && !(-1 != k.indexOf("Trident") || -1 != k.indexOf("MSIE")) && -1 == k.indexOf("Edge"), q = -1 != k.toLowerCase().indexOf("webkit") && -1 == k.indexOf("Edge"), r = function () {
+                var a = b.document;
+                return a ? a.documentMode : void 0
+            }, t;
+            a: {
+                var v = ""
+                    , w = function () {
+                        var a = k;
+                        if (p)
+                            return /rv\:([^\);]+)(\)|;)/.exec(a);
+                        if (da)
+                            return /Edge\/([\d\.]+)/.exec(a);
+                        if (n)
+                            return /\b(?:MSIE|rv)[: ]([^\);]+)(\)|;)/.exec(a);
+                        if (q)
+                            return /WebKit\/(\S+)/.exec(a);
+                        if (ca)
+                            return /(?:Version)[ \/]?(\S+)/.exec(a)
+                    }();
+                w && (v = w ? w[1] : "");
+                if (n) {
+                    var x = r();
+                    if (null != x && x > parseFloat(v)) {
+                        t = String(x);
+                        break a
+                    }
+                }
+                t = v
+            }
+            var y = t, aa = {}, z = function (a) {
+                return ba(a, function () {
+                    for (var c = 0, d = g(String(y)).split("."), S = g(String(a)).split("."), fa = Math.max(d.length, S.length), u = 0; 0 == c && u < fa; u++) {
+                        var e = d[u] || ""
+                            , f = S[u] || "";
+                        do {
+                            e = /(\d*)(\D*)(.*)/.exec(e) || ["", "", "", ""];
+                            f = /(\d*)(\D*)(.*)/.exec(f) || ["", "", "", ""];
+                            if (0 == e[0].length && 0 == f[0].length)
+                                break;
+                            c = h(0 == e[1].length ? 0 : parseInt(e[1], 10), 0 == f[1].length ? 0 : parseInt(f[1], 10)) || h(0 == e[2].length, 0 == f[2].length) || h(e[2], f[2]);
+                            e = e[3];
+                            f = f[3]
+                        } while (0 == c)
+                    }
+                    return 0 <= c
+                })
+            }, A;
+            var B = b.document;
+            A = B && n ? r() || ("CSS1Compat" == B.compatMode ? parseInt(y, 10) : 5) : void 0;
+            var C;
+            if (!(C = !p && !n)) {
+                var D;
+                if (D = n)
+                    D = 9 <= Number(A);
+                C = D
+            }
+            C || p && z("1.9.1");
+            n && z("9");
+            var E = p || q || n && z(11);
+            var F = !1
+                , G = function (a) {
+                    if (a = a.match(/[\d]+/g))
+                        a.length = 3
+                };
+            (function () {
+                if (navigator.plugins && navigator.plugins.length) {
+                    var a = navigator.plugins["Shockwave Flash"];
+                    if (a && (F = !0,
+                        a.description)) {
+                        G(a.description);
+                        return
+                    }
+                    if (navigator.plugins["Shockwave Flash 2.0"]) {
+                        F = !0;
+                        return
+                    }
+                }
+                if (navigator.mimeTypes && navigator.mimeTypes.length && (a = navigator.mimeTypes["application/x-shockwave-flash"],
+                    F = !(!a || !a.enabledPlugin))) {
+                    G(a.enabledPlugin.description);
+                    return
+                }
+                try {
+                    var c = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.7");
+                    F = !0;
+                    G(c.GetVariable("$version"));
+                    return
+                } catch (d) { }
+                try {
+                    c = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.6");
+                    F = !0;
+                    return
+                } catch (d) { }
+                try {
+                    c = new ActiveXObject("ShockwaveFlash.ShockwaveFlash"),
+                        F = !0,
+                        G(c.GetVariable("$version"))
+                } catch (d) { }
+            })();
+            var ea = /^([^;]+);(?:e:([\d,]*);)?(\d+);([\s\S]*)$/;
+            try {
+                var H, I = ea.exec(window.name);
+                if (null === I)
+                    throw Error("Cannot parse serialized data");
+                for (var J = {}, K = I[2] ? I[2].split(",") : [], L = 0; L < K.length; L++)
+                    J[K[L]] = !0;
+                var M = +I[3]
+                    , N = I[4];
+                if (M > N.length)
+                    throw Error("Cannot parse serialized data");
+                H = {
+                    c: I[1],
+                    a: J,
+                    content: N.substr(0, M),
+                    b: N.substr(M)
+                };
+                H.a["131968836"] && E && (window.name = "");
+                b.sf_ = {
+                    v: H.c,
+                    exp: H.a,
+                    cfg: H.b
+                };
+                var O = H.content
+                    , P = window;
+                if (E) {
+                    var Q = P.document;
+                    Q.open("text/html", "replace");
+                    Q.write(O);
+                    Q.close()
+                } else {
+                    var R = O, T;
+                    if (T = n && z(7) && !z(10)) {
+                        var U = navigator.userAgent.match(/Trident\/([0-9]+.[0-9]+)/);
+                        T = 6 > (U ? parseFloat(U[1]) : 0)
+                    }
+                    var V;
+                    if (V = T)
+                        a: {
+                            for (var W = 0; W < R.length; ++W)
+                                if (127 < R.charCodeAt(W)) {
+                                    V = !0;
+                                    break a
+                                }
+                            V = !1
+                        }
+                    if (V) {
+                        for (var X = unescape(encodeURIComponent(R)), ga = Math.floor(X.length / 2), Y = [], Z = 0; Z < ga; ++Z)
+                            Y[Z] = String.fromCharCode(256 * X.charCodeAt(2 * Z + 1) + X.charCodeAt(2 * Z));
+                        1 == X.length % 2 && (Y[ga] = X.charAt(X.length - 1));
+                        R = Y.join("")
+                    }
+                    P.goog_content = R;
+                    P.location.replace("javascript:window.goog_content")
+                }
+            } catch (a) { }
+            ;
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script>
+        var google_casm = ["", 0, null, 0, 0];
+    </script>
+    <link href="" rel="stylesheet" type="text/css">
+    <style>
+        a.rh-ms-mute-undo {
+            color: #0000ff;
+        }
+
+        body,
+        table,
+        div,
+        ul,
+        li {
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: "Slabo 27px", "Times New Roman", serif;
+        }
+
+        #adunit {
+            background-color: #ffffff;
+            height: 50px;
+            width: 320px;
+        }
+
+        #glasspane {
+            background-color: white;
+            bottom: 0;
+            left: 0;
+            opacity: 0.0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+            visibility: hidden;
+            z-index: 100;
+        }
+
+        #glasspane.one-point-five-click {
+            opacity: 0.5;
+            transition-delay: 0s;
+            visibility: visible;
+        }
+
+        #ads {
+            height: 50px;
+            left: 0px;
+            position: absolute;
+            top: 0px;
+            width: 320px;
+        }
+
+        #ads ul {
+            list-style: none;
+        }
+
+        #ads ul li {
+            clear: both;
+            float: left;
+            line-height: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #ads table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .rhsvgpngicon {
+            vertical-align: middle;
+        }
+
+        .rh-gradient {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .ads_chrome_top {
+            position: absolute;
+            overflow: hidden;
+            top: 0px;
+            width: 320px;
+            height: 0px;
+        }
+
+        .ads_chrome_bottom {
+            position: absolute;
+            overflow: hidden;
+            bottom: 0px;
+            width: 320px;
+            height: 0px;
+        }
+
+        .ads_chrome_left {
+            position: absolute;
+            overflow: hidden;
+            left: 0px;
+            width: 0px;
+            height: 50px;
+        }
+
+        .ads_chrome_right {
+            position: absolute;
+            overflow: hidden;
+            right: 0px;
+            width: 0px;
+            height: 50px;
+        }
+
+        .rhtitle.rhdefaultcolored {
+            color: #0000ff;
+        }
+
+        .rhtitle {
+            text-decoration: none;
+            word-wrap: break-word;
+        }
+
+        .rhbody.rhdefaultcolored {
+            color: #000000;
+        }
+
+        .rhbody {
+            text-decoration: none;
+            word-wrap: break-word;
+        }
+
+        a.rhbody:hover {
+            text-decoration: underline;
+        }
+
+        .rhimage,
+        .rhimage_nolink {
+            display: inline-block;
+        }
+
+        .rhimage img {
+            cursor: pointer;
+        }
+
+        .rhimage_nolink img,
+        .rhimage_nolink img:hover {
+            border: none;
+        }
+
+        .rhimage-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .rhimage-container:hover .rhoverlay-text,
+        .rhimage-container.expanded .rhoverlay-text {
+            opacity: 1.0;
+        }
+
+        .rhoverlay-text {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            color: #999;
+            opacity: 0.0;
+            padding: 3px;
+            font-family: arial, sans-serif;
+            background: linear-gradient(rgba(255, 255, 255, 1.0), rgba(255, 255, 255, 0.0));
+            height: 20px;
+            line-height: 1em;
+            font-size: 12px;
+        }
+
+        .taw0 .rh000 img {
+            border: 1px solid #0088ff;
+        }
+
+        .taw0 .rh000 img:hover {
+            border-color: #0000ff;
+        }
+
+        .rhbutton-container {
+            position: relative;
+            visibility: hidden;
+        }
+
+        .rhbutton {
+            cursor: pointer;
+            display: inline-block;
+            margin: 0;
+            text-align: center;
+            transition: position, z-index, opacity;
+            transition-delay: 0.3s;
+            visibility: visible;
+            white-space: nowrap;
+        }
+
+        .rhbutton.one-point-five-click {
+            position: relative;
+            transition-delay: 0s;
+            z-index: 200;
+        }
+
+        .rhbutton.one-point-five-click.preexpanded {
+            z-index: initial;
+        }
+
+        .rhbutton.one-point-five-click .message {
+            text-overflow: ellipsis;
+        }
+
+        .rhbutton .message {
+            color: white;
+            display: inline-block;
+            overflow: hidden;
+            transition: max-width 0.3s linear;
+            vertical-align: middle;
+        }
+
+        .rhbutton .message span {
+            margin-left: 0.3em;
+            margin-right: 0.3em;
+        }
+
+        .onhoverbg {
+            background: #f8f8f8;
+        }
+
+        .rhbutton .icon-container {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .rhbutton .icon,
+        .rhbutton .rhsvgpngicon {
+            border-width: 0;
+        }
+
+        .taw0 .rh002 .rhbutton-container {
+            left: -226px;
+            text-align: right;
+            width: 275px;
+        }
+
+        .taw0 .rh002 .rhbutton {
+            background: #0088ff;
+            -webkit-border-radius: 0px;
+            border-radius: 0px;
+            border-width: 0px;
+            height: 50px;
+            min-width: 49px;
+            max-width: 275px;
+        }
+
+        .taw0 .rh002 .rhbutton:hover {
+            background: #2d8fe5;
+        }
+
+        .taw0 .rh002 .icon-container {
+            height: 50px;
+            line-height: 50px;
+            width: 35px;
+        }
+
+        .taw0 .rh002 .icon,
+        .taw0 .rh002 .icon-container .rhsvgpngicon {
+            height: 37px;
+            margin-left: 0px;
+            vertical-align: top;
+            margin-top: 6px;
+        }
+
+        .taw0 .rh002 .message {
+            line-height: 50px;
+            font-size: 15px;
+            max-width: 0;
+        }
+
+        .taw0 .rh002 .one-point-five-click .message {
+            color: white;
+            max-width: 240px;
+        }
+
+        .rhprice.rhdefaultcolored {
+            color: #000000;
+        }
+
+        .rhprice {
+            white-space: nowrap;
+            word-wrap: break-word;
+        }
+
+        .rhsaleprice.rhdefaultcolored {
+            color: #000000;
+        }
+
+        .rhsaleprice {
+            font-weight: normal;
+            text-decoration: line-through;
+            white-space: nowrap;
+            word-wrap: break-word;
+        }
+
+        .rhprice {
+            text-decoration: none;
+        }
+
+        a.rhprice:hover {
+            text-decoration: underline;
+        }
+
+        .rhreviews.rhdefaultcolored {
+            color: #000000;
+        }
+
+        .rhstarratings img,
+        .rhstarratings svg {
+            vertical-align: baseline;
+        }
+
+        .rhpromotext.rhdefaultcolored {
+            color: #000000
+        }
+
+        #ads .rh :hover {
+            background-color: #f2f2f2
+        }
+
+        #ads .rh000 .rhimage img {
+            border: none
+        }
+
+        #ads .rh001000 .rhtitle {
+            color: #0088ff
+        }
+
+        #ads .rh0010010 .rhprice {
+            color: #818285
+        }
+
+        #ads .rh0010011 {
+            opacity: 0.5
+        }
+
+        #ads .rh0010012 .rhreviews {
+            color: #818285
+        }
+
+        #ads .rh001100 .rhpromotext {
+            color: #000000
+        }
+
+        #ads .rh001200 .rhbody {
+            color: #000000
+        }
+
+        #ads .rh002 .icon {
+            padding-left: 18%;
+            padding-top: 10%
+        }
+
+        #ads .rh002 .rhbutton {
+            -moz-box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
+            -ms-box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
+            -o-box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
+            box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
+            color: #0088ff;
+            font-family: "Open Sans", verdana, arial, sans-serif
+        }
+
+        #ads .rh002 .rhsvgpngicon {
+            padding-left: 18%;
+            padding-top: 10%
+        }
+
+        .animated>.rh0010 {
+            -webkit-animation: rh-anim1-1 15s ease 0s infinite;
+            animation: rh-anim1-1 15s ease 0s infinite;
+            visibility: visible
+        }
+
+        .animated>.rh0011 {
+            -webkit-animation: rh-anim1-2 15s ease 0s infinite;
+            animation: rh-anim1-2 15s ease 0s infinite;
+            visibility: hidden
+        }
+
+        .animated>.rh0012 {
+            -webkit-animation: rh-anim1-3 15s ease 0s infinite;
+            animation: rh-anim1-3 15s ease 0s infinite;
+            visibility: hidden
+        }
+
+        .rh {
+            background-color: #ffffff;
+            display: inline-block;
+            font-size: 0;
+            height: 50px;
+            line-height: 0;
+            overflow: hidden;
+            padding: 0;
+            width: 320px
+        }
+
+        .rh>table {
+            height: 100%
+        }
+
+        .rh0 {
+            display: inline-block;
+            font-size: 0;
+            height: 50px;
+            line-height: 0;
+            overflow: hidden;
+            padding: 0
+        }
+
+        .rh0>table {
+            height: 100%
+        }
+
+        .rh00 {
+            display: inline-block;
+            font-size: 0;
+            line-height: 0;
+            overflow: hidden;
+            padding: 0;
+            width: 320px
+        }
+
+        .rh00>table {
+            height: 100%
+        }
+
+        .rh000 {
+            display: inline-block;
+            overflow: hidden;
+            padding: 0 7px 0 0;
+            width: 49px
+        }
+
+        .rh000c {
+            padding: 0;
+            text-align: left;
+            vertical-align: middle;
+            width: 56px
+        }
+
+        .rh001 {
+            display: inline-block;
+            font-size: 0;
+            height: 50px;
+            line-height: 0;
+            overflow: hidden;
+            padding: 0;
+            position: relative;
+            width: 208px
+        }
+
+        .rh0010 {
+            display: block;
+            font-size: 0;
+            height: 50px;
+            line-height: 0;
+            overflow: hidden;
+            padding: 0;
+            position: absolute
+        }
+
+        .rh0010>table {
+            height: 100%
+        }
+
+        .rh00100 {
+            display: inline-block;
+            font-size: 0;
+            line-height: 0;
+            overflow: hidden;
+            padding: 0;
+            width: 208px
+        }
+
+        .rh00100>table {
+            width: 100%
+        }
+
+        .rh001000 {
+            display: inline-block;
+            font-family: "Open Sans", arial, sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 20px;
+            overflow: hidden;
+            padding: 0
+        }
+
+        .rh001000c {
+            padding: 0;
+            text-align: left;
+            vertical-align: middle
+        }
+
+        .rh001001 {
+            display: inline-block;
+            font-size: 0;
+            height: 17px;
+            line-height: 0;
+            overflow: hidden;
+            padding: 0
+        }
+
+        .rh001001>table {
+            height: 100%
+        }
+
+        .rh0010010 {
+            display: inline-block;
+            font-family: "Open Sans", arial, sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 17px;
+            overflow: hidden;
+            padding: 0 5px 0 0;
+            white-space: nowrap
+        }
+
+        .rh0010010c {
+            padding: 0;
+            vertical-align: middle
+        }
+
+        .rh0010011 {
+            display: inline-block;
+            font-size: 13px;
+            line-height: 17px;
+            overflow: hidden;
+            padding: 0 5px 0 0;
+            white-space: nowrap
+        }
+
+        .rh0010011c {
+            padding: 0;
+            vertical-align: middle
+        }
+
+        .rh0010012 {
+            display: inline-block;
+            font-family: "Open Sans", arial, sans-serif;
+            font-size: 13px;
+            font-weight: 300;
+            line-height: 17px;
+            max-width: 74px;
+            overflow: hidden;
+            padding: 0 5px 0 0;
+            white-space: nowrap
+        }
+
+        .rh0010012c {
+            padding: 0;
+            vertical-align: middle
+        }
+
+        .rh001001c {
+            height: 17px;
+            padding: 0
+        }
+
+        .rh00100c {
+            padding: 0;
+            vertical-align: middle;
+            width: 208px
+        }
+
+        .rh0011 {
+            display: block;
+            font-size: 0;
+            height: 50px;
+            line-height: 0;
+            overflow: hidden;
+            padding: 0;
+            position: absolute
+        }
+
+        .rh0011>table {
+            height: 100%
+        }
+
+        .rh00110 {
+            display: inline-block;
+            font-size: 0;
+            line-height: 0;
+            overflow: hidden;
+            padding: 0;
+            width: 208px
+        }
+
+        .rh00110>table {
+            width: 100%
+        }
+
+        .rh001100 {
+            display: inline-block;
+            font-family: "Open Sans", arial, sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 20px;
+            overflow: hidden;
+            padding: 0
+        }
+
+        .rh001100c {
+            padding: 0;
+            vertical-align: middle
+        }
+
+        .rh001101 {
+            display: inline-block;
+            font-family: "Open Sans", arial, sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 17px;
+            overflow: hidden;
+            padding: 0 5px 0 0;
+            white-space: nowrap;
+            width: 203px
+        }
+
+        .rh001101c {
+            padding: 0;
+            vertical-align: middle;
+            width: 208px
+        }
+
+        .rh00110c {
+            padding: 0;
+            vertical-align: middle;
+            width: 208px
+        }
+
+        .rh0012 {
+            display: block;
+            font-size: 0;
+            height: 50px;
+            line-height: 0;
+            overflow: hidden;
+            padding: 0;
+            position: absolute
+        }
+
+        .rh0012>table {
+            height: 100%
+        }
+
+        .rh00120 {
+            display: inline-block;
+            font-size: 0;
+            line-height: 0;
+            overflow: hidden;
+            padding: 0;
+            width: 208px
+        }
+
+        .rh00120>table {
+            width: 100%
+        }
+
+        .rh001200 {
+            display: inline-block;
+            font-family: "Open Sans", arial, sans-serif;
+            font-size: 12px;
+            font-weight: 300;
+            line-height: 16px;
+            overflow: hidden;
+            padding: 0
+        }
+
+        .rh001200c {
+            padding: 0;
+            vertical-align: middle
+        }
+
+        .rh00120c {
+            padding: 0;
+            vertical-align: middle;
+            width: 208px
+        }
+
+        .rh001c {
+            height: 50px;
+            padding: 0;
+            vertical-align: middle;
+            width: 208px
+        }
+
+        .rh002 {
+            display: inline-block;
+            font-size: 15px;
+            height: 50px;
+            line-height: 18px;
+            padding: 0 0 0 7px;
+            width: 49px
+        }
+
+        .rh002c {
+            height: 50px;
+            padding: 0;
+            text-align: right;
+            vertical-align: middle;
+            width: 56px
+        }
+
+        .rh00c {
+            padding: 0;
+            vertical-align: middle;
+            width: 320px
+        }
+
+        .rh0c {
+            height: 50px;
+            padding: 0
+        }
+
+        .taw {
+            height: 50px;
+            width: 320px
+        }
+
+        @keyframes rh-anim1-1 {
+            93.333%,
+            40% {
+                top: 50px;
+                visibility: hidden;
+            }
+
+            0%,
+            26.667%,
+            100% {
+                top: 0px;
+                visibility: visible;
+            }
+
+            33.333% {
+                top: -50px;
+                visibility: hidden;
+            }
+        }
+
+        @keyframes rh-anim1-2 {
+            26.667%,
+            73.333%,
+            0%,
+            100% {
+                top: 50px;
+                visibility: hidden;
+            }
+
+            33.333%,
+            60% {
+                top: 0px;
+                visibility: visible;
+            }
+
+            66.667% {
+                top: -50px;
+                visibility: hidden;
+            }
+        }
+
+        @keyframes rh-anim1-3 {
+            60%,
+            6.6667% {
+                top: 50px;
+                visibility: hidden;
+            }
+
+            66.667%,
+            93.333% {
+                top: 0px;
+                visibility: visible;
+            }
+
+            0%,
+            100% {
+                top: -50px;
+                visibility: hidden;
+            }
+        }
+
+        @-webkit-keyframes rh-anim1-1 {
+            93.333%,
+            40% {
+                top: 50px;
+                visibility: hidden;
+            }
+
+            0%,
+            26.667%,
+            100% {
+                top: 0px;
+                visibility: visible;
+            }
+
+            33.333% {
+                top: -50px;
+                visibility: hidden;
+            }
+        }
+
+        @-webkit-keyframes rh-anim1-2 {
+            26.667%,
+            73.333%,
+            0%,
+            100% {
+                top: 50px;
+                visibility: hidden;
+            }
+
+            33.333%,
+            60% {
+                top: 0px;
+                visibility: visible;
+            }
+
+            66.667% {
+                top: -50px;
+                visibility: hidden;
+            }
+        }
+
+        @-webkit-keyframes rh-anim1-3 {
+            60%,
+            6.6667% {
+                top: 50px;
+                visibility: hidden;
+            }
+
+            66.667%,
+            93.333% {
+                top: 0px;
+                visibility: visible;
+            }
+
+            0%,
+            100% {
+                top: -50px;
+                visibility: hidden;
+            }
+        }
+    </style>
+    <script>
+        (function () {
+            var c = this;
+            var h = String.prototype.trim ? function (a) {
+                return a.trim()
+            }
+                : function (a) {
+                    return a.replace(/^[\s\xa0]+|[\s\xa0]+$/g, "")
+                }
+                , k = function (a, b) {
+                    return a < b ? -1 : a > b ? 1 : 0
+                };
+            var n;
+            a: {
+                var p = c.navigator;
+                if (p) {
+                    var q = p.userAgent;
+                    if (q) {
+                        n = q;
+                        break a
+                    }
+                }
+                n = ""
+            }
+            ; var t = function (a, b) {
+                var d = r;
+                Object.prototype.hasOwnProperty.call(d, a) || (d[a] = b(a))
+            };
+            var u = -1 != n.indexOf("Opera"), v = -1 != n.indexOf("Trident") || -1 != n.indexOf("MSIE"), w = -1 != n.indexOf("Edge"), y = -1 != n.indexOf("Gecko") && !(-1 != n.toLowerCase().indexOf("webkit") && -1 == n.indexOf("Edge")) && !(-1 != n.indexOf("Trident") || -1 != n.indexOf("MSIE")) && -1 == n.indexOf("Edge"), z = -1 != n.toLowerCase().indexOf("webkit") && -1 == n.indexOf("Edge"), A = function () {
+                var a = c.document;
+                return a ? a.documentMode : void 0
+            }, B;
+            a: {
+                var C = ""
+                    , D = function () {
+                        var a = n;
+                        if (y)
+                            return /rv\:([^\);]+)(\)|;)/.exec(a);
+                        if (w)
+                            return /Edge\/([\d\.]+)/.exec(a);
+                        if (v)
+                            return /\b(?:MSIE|rv)[: ]([^\);]+)(\)|;)/.exec(a);
+                        if (z)
+                            return /WebKit\/(\S+)/.exec(a);
+                        if (u)
+                            return /(?:Version)[ \/]?(\S+)/.exec(a)
+                    }();
+                D && (C = D ? D[1] : "");
+                if (v) {
+                    var E = A();
+                    if (null != E && E > parseFloat(C)) {
+                        B = String(E);
+                        break a
+                    }
+                }
+                B = C
+            }
+            var F = B, r = {}, G = function (a) {
+                t(a, function () {
+                    for (var b = 0, d = h(String(F)).split("."), e = h(String(a)).split("."), l = Math.max(d.length, e.length), m = 0; 0 == b && m < l; m++) {
+                        var f = d[m] || ""
+                            , g = e[m] || "";
+                        do {
+                            f = /(\d*)(\D*)(.*)/.exec(f) || ["", "", "", ""];
+                            g = /(\d*)(\D*)(.*)/.exec(g) || ["", "", "", ""];
+                            if (0 == f[0].length && 0 == g[0].length)
+                                break;
+                            b = k(0 == f[1].length ? 0 : parseInt(f[1], 10), 0 == g[1].length ? 0 : parseInt(g[1], 10)) || k(0 == f[2].length, 0 == g[2].length) || k(f[2], g[2]);
+                            f = f[3];
+                            g = g[3]
+                        } while (0 == b)
+                    }
+                    return 0 <= b
+                })
+            }, H;
+            var I = c.document;
+            H = I && v ? A() || ("CSS1Compat" == I.compatMode ? parseInt(F, 10) : 5) : void 0;
+            var J;
+            if (!(J = !y && !v)) {
+                var K;
+                if (K = v)
+                    K = 9 <= Number(H);
+                J = K
+            }
+            J || y && G("1.9.1");
+            v && G("9");
+            (function () {
+                var a = !1;
+                try {
+                    var b = Object.defineProperty({}, "passive", {
+                        get: function () {
+                            a = !0
+                        }
+                    });
+                    c.addEventListener("test", null, b)
+                } catch (d) { }
+                return a
+            })();
+            var L = {};
+            window.ss = function (a) {
+                void 0 !== L[a] ? L[a]++ : L[a] = 1;
+                var b = document.getElementById(a)
+                    , d = L[a];
+                if (window.css)
+                    css(a, "nm", d, void 0, void 0);
+                else if (b) {
+                    a = b.href;
+                    var e = a.indexOf("&nm=");
+                    if (0 > e)
+                        d = a + "&nm=" + d;
+                    else
+                        var e = e + 4
+                            , l = a.indexOf("&", e)
+                            , d = 0 <= l ? a.substring(0, e) + d + a.substring(l) : a.substring(0, e) + d;
+                    b.href = 2E3 < d.length ? a : d
+                }
+            }
+                ;
+        }
+        ).call(this);
+        function su(id) {
+            var a = document.getElementById(id);
+            var b = (new Date()).getTime();
+            if (a && a.myt && b) {
+                var t = b - a.myt;
+                if (window.css) {
+                    css(id, 'clkt', t);
+                    return;
+                }
+                var bi = a.href.indexOf("&clkt=");
+                if (bi > 0) {
+                    var c = a.href.substring(0, bi + 6);
+                    var d = a.href.substring(bi + 6, a.href.length);
+                    var ei = d.indexOf("&");
+                    var r = '';
+                    if (ei >= 0)
+                        r = d.substring(ei, d.length);
+                    a.href = c + t + r;
+                } else {
+                    a.href += "&clkt=" + t;
+                }
+            }
+        }
+        (function () {
+            var c = this;
+            var g = String.prototype.trim ? function (a) {
+                return a.trim()
+            }
+                : function (a) {
+                    return a.replace(/^[\s\xa0]+|[\s\xa0]+$/g, "")
+                }
+                , h = function (a, b) {
+                    return a < b ? -1 : a > b ? 1 : 0
+                };
+            var l;
+            a: {
+                var m = c.navigator;
+                if (m) {
+                    var n = m.userAgent;
+                    if (n) {
+                        l = n;
+                        break a
+                    }
+                }
+                l = ""
+            }
+            ; var q = function (a, b) {
+                var d = p;
+                Object.prototype.hasOwnProperty.call(d, a) || (d[a] = b(a))
+            };
+            var r = -1 != l.indexOf("Opera"), t = -1 != l.indexOf("Trident") || -1 != l.indexOf("MSIE"), u = -1 != l.indexOf("Edge"), v = -1 != l.indexOf("Gecko") && !(-1 != l.toLowerCase().indexOf("webkit") && -1 == l.indexOf("Edge")) && !(-1 != l.indexOf("Trident") || -1 != l.indexOf("MSIE")) && -1 == l.indexOf("Edge"), w = -1 != l.toLowerCase().indexOf("webkit") && -1 == l.indexOf("Edge"), y = function () {
+                var a = c.document;
+                return a ? a.documentMode : void 0
+            }, z;
+            a: {
+                var A = ""
+                    , B = function () {
+                        var a = l;
+                        if (v)
+                            return /rv\:([^\);]+)(\)|;)/.exec(a);
+                        if (u)
+                            return /Edge\/([\d\.]+)/.exec(a);
+                        if (t)
+                            return /\b(?:MSIE|rv)[: ]([^\);]+)(\)|;)/.exec(a);
+                        if (w)
+                            return /WebKit\/(\S+)/.exec(a);
+                        if (r)
+                            return /(?:Version)[ \/]?(\S+)/.exec(a)
+                    }();
+                B && (A = B ? B[1] : "");
+                if (t) {
+                    var C = y();
+                    if (null != C && C > parseFloat(A)) {
+                        z = String(C);
+                        break a
+                    }
+                }
+                z = A
+            }
+            var E = z, p = {}, F = function (a) {
+                q(a, function () {
+                    for (var b = 0, d = g(String(E)).split("."), D = g(String(a)).split("."), M = Math.max(d.length, D.length), k = 0; 0 == b && k < M; k++) {
+                        var e = d[k] || ""
+                            , f = D[k] || "";
+                        do {
+                            e = /(\d*)(\D*)(.*)/.exec(e) || ["", "", "", ""];
+                            f = /(\d*)(\D*)(.*)/.exec(f) || ["", "", "", ""];
+                            if (0 == e[0].length && 0 == f[0].length)
+                                break;
+                            b = h(0 == e[1].length ? 0 : parseInt(e[1], 10), 0 == f[1].length ? 0 : parseInt(f[1], 10)) || h(0 == e[2].length, 0 == f[2].length) || h(e[2], f[2]);
+                            e = e[3];
+                            f = f[3]
+                        } while (0 == b)
+                    }
+                    return 0 <= b
+                })
+            }, G;
+            var H = c.document;
+            G = H && t ? y() || ("CSS1Compat" == H.compatMode ? parseInt(E, 10) : 5) : void 0;
+            var I;
+            if (!(I = !v && !t)) {
+                var J;
+                if (J = t)
+                    J = 9 <= Number(G);
+                I = J
+            }
+            I || v && F("1.9.1");
+            t && F("9");
+            (function () {
+                var a = !1;
+                try {
+                    var b = Object.defineProperty({}, "passive", {
+                        get: function () {
+                            a = !0
+                        }
+                    });
+                    c.addEventListener("test", null, b)
+                } catch (d) { }
+                return a
+            })();
+            var K = {}
+                , L = function (a, b) {
+                    void 0 !== K[a] || (K[a] = []);
+                    var d = K[a][b];
+                    d || (K[a][b] = !0);
+                    d || (d = document.getElementById(a),
+                        window.css ? css(a, "nb", b, !0, void 0) : d && (a = d.href,
+                            b = a + ("&nb=" + b),
+                            d.href = 2E3 < b.length ? a : b))
+                };
+            window.cla = function (a, b) {
+                if (0 > b || parseInt(b, 10) !== b)
+                    b = 17;
+                L(a, b)
+            }
+                ;
+            window.cll = function (a, b) {
+                L(a, b || 1)
+            }
+                ;
+            window.clb = function (a) {
+                L(a, 2)
+            }
+                ;
+            window.clh = function (a, b) {
+                L(a, b || 0)
+            }
+                ;
+        }
+        ).call(this);
+        (function () {
+            var d = this;
+            var k = String.prototype.trim ? function (a) {
+                return a.trim()
+            }
+                : function (a) {
+                    return a.replace(/^[\s\xa0]+|[\s\xa0]+$/g, "")
+                }
+                , l = function (a, b) {
+                    return a < b ? -1 : a > b ? 1 : 0
+                };
+            var n;
+            a: {
+                var p = d.navigator;
+                if (p) {
+                    var q = p.userAgent;
+                    if (q) {
+                        n = q;
+                        break a
+                    }
+                }
+                n = ""
+            }
+            ; var t = function (a, b) {
+                var c = r;
+                Object.prototype.hasOwnProperty.call(c, a) || (c[a] = b(a))
+            };
+            var u = -1 != n.indexOf("Opera"), v = -1 != n.indexOf("Trident") || -1 != n.indexOf("MSIE"), w = -1 != n.indexOf("Edge"), y = -1 != n.indexOf("Gecko") && !(-1 != n.toLowerCase().indexOf("webkit") && -1 == n.indexOf("Edge")) && !(-1 != n.indexOf("Trident") || -1 != n.indexOf("MSIE")) && -1 == n.indexOf("Edge"), z = -1 != n.toLowerCase().indexOf("webkit") && -1 == n.indexOf("Edge"), A = function () {
+                var a = d.document;
+                return a ? a.documentMode : void 0
+            }, B;
+            a: {
+                var C = ""
+                    , D = function () {
+                        var a = n;
+                        if (y)
+                            return /rv\:([^\);]+)(\)|;)/.exec(a);
+                        if (w)
+                            return /Edge\/([\d\.]+)/.exec(a);
+                        if (v)
+                            return /\b(?:MSIE|rv)[: ]([^\);]+)(\)|;)/.exec(a);
+                        if (z)
+                            return /WebKit\/(\S+)/.exec(a);
+                        if (u)
+                            return /(?:Version)[ \/]?(\S+)/.exec(a)
+                    }();
+                D && (C = D ? D[1] : "");
+                if (v) {
+                    var E = A();
+                    if (null != E && E > parseFloat(C)) {
+                        B = String(E);
+                        break a
+                    }
+                }
+                B = C
+            }
+            var F = B, r = {}, G = function (a) {
+                t(a, function () {
+                    for (var b = 0, c = k(String(F)).split("."), e = k(String(a)).split("."), f = Math.max(c.length, e.length), m = 0; 0 == b && m < f; m++) {
+                        var g = c[m] || ""
+                            , h = e[m] || "";
+                        do {
+                            g = /(\d*)(\D*)(.*)/.exec(g) || ["", "", "", ""];
+                            h = /(\d*)(\D*)(.*)/.exec(h) || ["", "", "", ""];
+                            if (0 == g[0].length && 0 == h[0].length)
+                                break;
+                            b = l(0 == g[1].length ? 0 : parseInt(g[1], 10), 0 == h[1].length ? 0 : parseInt(h[1], 10)) || l(0 == g[2].length, 0 == h[2].length) || l(g[2], h[2]);
+                            g = g[3];
+                            h = h[3]
+                        } while (0 == b)
+                    }
+                    return 0 <= b
+                })
+            }, H;
+            var I = d.document;
+            H = I && v ? A() || ("CSS1Compat" == I.compatMode ? parseInt(F, 10) : 5) : void 0;
+            var J;
+            if (!(J = !y && !v)) {
+                var K;
+                if (K = v)
+                    K = 9 <= Number(H);
+                J = K
+            }
+            J || y && G("1.9.1");
+            v && G("9");
+            (function () {
+                var a = !1;
+                try {
+                    var b = Object.defineProperty({}, "passive", {
+                        get: function () {
+                            a = !0
+                        }
+                    });
+                    d.addEventListener("test", null, b)
+                } catch (c) { }
+                return a
+            })();
+            var L = function (a, b, c, e) {
+                if (window.css)
+                    css(b, c, e, void 0, void 0);
+                else if (a) {
+                    b = a.href;
+                    var f = "&" + c + "=";
+                    c = b.indexOf(f);
+                    0 > c ? e = b + f + e : (c += f.length,
+                        f = b.indexOf("&", c),
+                        e = 0 <= f ? b.substring(0, c) + e + b.substring(f) : b.substring(0, c) + e);
+                    a.href = 2E3 < e.length ? b : e
+                }
+            };
+            var M = null
+                , N = function (a) {
+                    M = a
+                };
+            document.addEventListener && document.addEventListener("mousedown", N, !0);
+            window.xy = function (a, b, c) {
+                c = c || b;
+                if ((a = a || M) && b && c) {
+                    var e = Math.round(a.clientY - c.offsetTop)
+                        , f = b.id;
+                    L(b, f, "nx", Math.round(a.clientX - c.offsetLeft));
+                    L(b, f, "ny", e)
+                }
+            }
+                ;
+        }
+        ).call(this);
+        (function () {
+            var d = this;
+            var h = String.prototype.trim ? function (a) {
+                return a.trim()
+            }
+                : function (a) {
+                    return a.replace(/^[\s\xa0]+|[\s\xa0]+$/g, "")
+                }
+                , k = function (a, b) {
+                    return a < b ? -1 : a > b ? 1 : 0
+                };
+            var n;
+            a: {
+                var p = d.navigator;
+                if (p) {
+                    var q = p.userAgent;
+                    if (q) {
+                        n = q;
+                        break a
+                    }
+                }
+                n = ""
+            }
+            ; var t = function (a, b) {
+                var c = r;
+                Object.prototype.hasOwnProperty.call(c, a) || (c[a] = b(a))
+            };
+            var u = -1 != n.indexOf("Opera"), v = -1 != n.indexOf("Trident") || -1 != n.indexOf("MSIE"), w = -1 != n.indexOf("Edge"), y = -1 != n.indexOf("Gecko") && !(-1 != n.toLowerCase().indexOf("webkit") && -1 == n.indexOf("Edge")) && !(-1 != n.indexOf("Trident") || -1 != n.indexOf("MSIE")) && -1 == n.indexOf("Edge"), z = -1 != n.toLowerCase().indexOf("webkit") && -1 == n.indexOf("Edge"), A = function () {
+                var a = d.document;
+                return a ? a.documentMode : void 0
+            }, B;
+            a: {
+                var C = ""
+                    , D = function () {
+                        var a = n;
+                        if (y)
+                            return /rv\:([^\);]+)(\)|;)/.exec(a);
+                        if (w)
+                            return /Edge\/([\d\.]+)/.exec(a);
+                        if (v)
+                            return /\b(?:MSIE|rv)[: ]([^\);]+)(\)|;)/.exec(a);
+                        if (z)
+                            return /WebKit\/(\S+)/.exec(a);
+                        if (u)
+                            return /(?:Version)[ \/]?(\S+)/.exec(a)
+                    }();
+                D && (C = D ? D[1] : "");
+                if (v) {
+                    var E = A();
+                    if (null != E && E > parseFloat(C)) {
+                        B = String(E);
+                        break a
+                    }
+                }
+                B = C
+            }
+            var F = B, r = {}, G = function (a) {
+                t(a, function () {
+                    for (var b = 0, c = h(String(F)).split("."), e = h(String(a)).split("."), l = Math.max(c.length, e.length), m = 0; 0 == b && m < l; m++) {
+                        var f = c[m] || ""
+                            , g = e[m] || "";
+                        do {
+                            f = /(\d*)(\D*)(.*)/.exec(f) || ["", "", "", ""];
+                            g = /(\d*)(\D*)(.*)/.exec(g) || ["", "", "", ""];
+                            if (0 == f[0].length && 0 == g[0].length)
+                                break;
+                            b = k(0 == f[1].length ? 0 : parseInt(f[1], 10), 0 == g[1].length ? 0 : parseInt(g[1], 10)) || k(0 == f[2].length, 0 == g[2].length) || k(f[2], g[2]);
+                            f = f[3];
+                            g = g[3]
+                        } while (0 == b)
+                    }
+                    return 0 <= b
+                })
+            }, H;
+            var I = d.document;
+            H = I && v ? A() || ("CSS1Compat" == I.compatMode ? parseInt(F, 10) : 5) : void 0;
+            var J;
+            if (!(J = !y && !v)) {
+                var K;
+                if (K = v)
+                    K = 9 <= Number(H);
+                J = K
+            }
+            J || y && G("1.9.1");
+            v && G("9");
+            (function () {
+                var a = !1;
+                try {
+                    var b = Object.defineProperty({}, "passive", {
+                        get: function () {
+                            a = !0
+                        }
+                    });
+                    d.addEventListener("test", null, b)
+                } catch (c) { }
+                return a
+            })();
+            var L = [0, 2, 1]
+                , M = null;
+            document.addEventListener && document.addEventListener("mousedown", function (a) {
+                M = a
+            }, !0);
+            window.mb = function (a) {
+                if (a) {
+                    var b;
+                    if (b = window.event || M) {
+                        var c;
+                        (c = b.which ? 1 << L[b.which - 1] : b.button) && b.shiftKey && (c |= 8);
+                        c && b.altKey && (c |= 16);
+                        c && b.ctrlKey && (c |= 32);
+                        b = c
+                    } else
+                        b = null;
+                    if (b)
+                        if (c = b,
+                            window.css)
+                            css(a.id, "mb", c, void 0, void 0);
+                        else if (a) {
+                            b = a.href;
+                            var e = b.indexOf("&mb=");
+                            if (0 > e)
+                                c = b + "&mb=" + c;
+                            else {
+                                var e = e + 4
+                                    , l = b.indexOf("&", e);
+                                c = 0 <= l ? b.substring(0, e) + c + b.substring(l) : b.substring(0, e) + c
+                            }
+                            a.href = 2E3 < c.length ? b : c
+                        }
+                }
+            }
+                ;
+        }
+        ).call(this);
+        function st(id) {
+            var a = document.getElementById(id);
+            if (a) {
+                a.myt = (new Date()).getTime();
+                xy(window.event, a);
+                mb(a);
+            }
+        }
+        function ha(a, x) {
+            clh(a, x);
+            su(a);
+        }
+        function ia(a, e, x) {
+            cll(a, x);
+            su(a);
+        }
+        function ja(a, x) {
+            cla(a, x);
+            su(a);
+        }
+        function ga(o, e, x) {
+            if (document.getElementById) {
+                var a = o.id.substring(1), p = "", r = "", g = e.target, t, f, h;
+                if (g) {
+                    t = g.id;
+                    f = g.parentNode;
+                    if (f) {
+                        p = f.id;
+                        h = f.parentNode;
+                        if (h)
+                            r = h.id;
+                    }
+                } else {
+                    h = e.srcElement;
+                    f = h.parentNode;
+                    if (f)
+                        p = f.id;
+                    t = h.id;
+                }
+                if (t == a || p == a || r == a)
+                    return true;
+                ia(a, e, x);
+                top.location.href = document.getElementById(a).href;
+            }
+        }
+    </script>
+    <script>
+        <!--
+            (function () {
+                var d = this
+                    , e = function (a, b, c) {
+                        return a.call.apply(a.bind, arguments)
+                    }
+                    , k = function (a, b, c) {
+                        if (!a)
+                            throw Error();
+                        if (2 < arguments.length) {
+                            var q = Array.prototype.slice.call(arguments, 2);
+                            return function () {
+                                var c = Array.prototype.slice.call(arguments);
+                                Array.prototype.unshift.apply(c, q);
+                                return a.apply(b, c)
+                            }
+                        }
+                        return function () {
+                            return a.apply(b, arguments)
+                        }
+                    }
+                    , l = function (a, b, c) {
+                        l = Function.prototype.bind && -1 != Function.prototype.bind.toString().indexOf("native code") ? e : k;
+                        return l.apply(null, arguments)
+                    };
+                var m = document
+                    , n = window;
+                var p = String.prototype.trim ? function (a) {
+                    return a.trim()
+                }
+                    : function (a) {
+                        return a.replace(/^[\s\xa0]+|[\s\xa0]+$/g, "")
+                    }
+                    , r = function (a, b) {
+                        return a < b ? -1 : a > b ? 1 : 0
+                    };
+                var t;
+                a: {
+                    var u = d.navigator;
+                    if (u) {
+                        var v = u.userAgent;
+                        if (v) {
+                            t = v;
+                            break a
+                        }
+                    }
+                    t = ""
+                }
+                ; var y = function (a, b) {
+                    var c = w;
+                    Object.prototype.hasOwnProperty.call(c, a) || (c[a] = b(a))
+                };
+                var z = -1 != t.indexOf("Opera"), A = -1 != t.indexOf("Trident") || -1 != t.indexOf("MSIE"), B = -1 != t.indexOf("Edge"), C = -1 != t.indexOf("Gecko") && !(-1 != t.toLowerCase().indexOf("webkit") && -1 == t.indexOf("Edge")) && !(-1 != t.indexOf("Trident") || -1 != t.indexOf("MSIE")) && -1 == t.indexOf("Edge"), D = -1 != t.toLowerCase().indexOf("webkit") && -1 == t.indexOf("Edge"), E = function () {
+                    var a = d.document;
+                    return a ? a.documentMode : void 0
+                }, F;
+                a: {
+                    var G = ""
+                        , H = function () {
+                            var a = t;
+                            if (C)
+                                return /rv\:([^\);]+)(\)|;)/.exec(a);
+                            if (B)
+                                return /Edge\/([\d\.]+)/.exec(a);
+                            if (A)
+                                return /\b(?:MSIE|rv)[: ]([^\);]+)(\)|;)/.exec(a);
+                            if (D)
+                                return /WebKit\/(\S+)/.exec(a);
+                            if (z)
+                                return /(?:Version)[ \/]?(\S+)/.exec(a)
+                        }();
+                    H && (G = H ? H[1] : "");
+                    if (A) {
+                        var I = E();
+                        if (null != I && I > parseFloat(G)) {
+                            F = String(I);
+                            break a
+                        }
+                    }
+                    F = G
+                }
+                var J = F, w = {}, K = function (a) {
+                    y(a, function () {
+                        for (var b = 0, c = p(String(J)).split("."), q = p(String(a)).split("."), T = Math.max(c.length, q.length), f = 0; 0 == b && f < T; f++) {
+                            var g = c[f] || ""
+                                , h = q[f] || "";
+                            do {
+                                g = /(\d*)(\D*)(.*)/.exec(g) || ["", "", "", ""];
+                                h = /(\d*)(\D*)(.*)/.exec(h) || ["", "", "", ""];
+                                if (0 == g[0].length && 0 == h[0].length)
+                                    break;
+                                b = r(0 == g[1].length ? 0 : parseInt(g[1], 10), 0 == h[1].length ? 0 : parseInt(h[1], 10)) || r(0 == g[2].length, 0 == h[2].length) || r(g[2], h[2]);
+                                g = g[3];
+                                h = h[3]
+                            } while (0 == b)
+                        }
+                        return 0 <= b
+                    })
+                }, L;
+                var M = d.document;
+                L = M && A ? E() || ("CSS1Compat" == M.compatMode ? parseInt(J, 10) : 5) : void 0;
+                var N;
+                if (!(N = !C && !A)) {
+                    var O;
+                    if (O = A)
+                        O = 9 <= Number(L);
+                    N = O
+                }
+                N || C && K("1.9.1");
+                A && K("9");
+                var P = function () {
+                    var a = !1;
+                    try {
+                        var b = Object.defineProperty({}, "passive", {
+                            get: function () {
+                                a = !0
+                            }
+                        });
+                        d.addEventListener("test", null, b)
+                    } catch (c) { }
+                    return a
+                }()
+                    , Q = function (a, b, c) {
+                        a.addEventListener ? a.addEventListener(b, c, P ? void 0 : !1) : a.attachEvent && a.attachEvent("on" + b, c)
+                    }
+                    , R = function (a, b, c) {
+                        a.removeEventListener ? a.removeEventListener(b, c, P ? void 0 : !1) : a.detachEvent && a.detachEvent("on" + b, c)
+                    };
+                var S = function () {
+                    this.g = this.g;
+                    this.h = this.h
+                };
+                S.prototype.g = !1;
+                S.prototype.o = function () {
+                    this.g || (this.g = !0,
+                        this.j())
+                }
+                    ;
+                S.prototype.j = function () {
+                    if (this.h)
+                        for (; this.h.length;)
+                            this.h.shift()()
+                }
+                    ;
+                var U = function () {
+                    S.call(this);
+                    this.l = l(this.s, this);
+                    this.i = l(this.o, this);
+                    this.m = window.setTimeout(this.i, 3E3);
+                    Q(n, "click", this.l);
+                    Q(m, "DOMContentLoaded", this.i)
+                };
+                (function () {
+                    function a() { }
+                    a.prototype = S.prototype;
+                    U.g = S.prototype;
+                    U.prototype = new a;
+                    U.prototype.constructor = U;
+                    U.h = function (a, c, q) {
+                        for (var b = Array(arguments.length - 2), f = 2; f < arguments.length; f++)
+                            b[f - 2] = arguments[f];
+                        return S.prototype[c].apply(a, b)
+                    }
+                })();
+                U.prototype.s = function (a) {
+                    a.preventDefault ? a.preventDefault() : a.returnValue = !1
+                }
+                    ;
+                U.prototype.j = function () {
+                    this.m && window.clearTimeout(this.m);
+                    R(n, "click", this.l);
+                    R(m, "DOMContentLoaded", this.i);
+                    U.g.j.call(this)
+                }
+                    ;
+                var V = function () {
+                    return new U
+                }
+                    , W = ["goog_init_pcb"]
+                    , X = d;
+                W[0] in X || !X.execScript || X.execScript("var " + W[0]);
+                for (var Y; W.length && (Y = W.shift());) {
+                    var Z;
+                    if (Z = !W.length)
+                        Z = void 0 !== V;
+                    Z ? X[Y] = V : X[Y] && Object.prototype.hasOwnProperty.call(X, Y) ? X = X[Y] : X = X[Y] = {}
+                }
+                ;
+            }
+            ).call(this);
+        goog_init_pcb();
+            //-->
+    </script>
+    <script src=""></script>
+    <div id="adunit" data-rh-set-type="16">
+        <div id="glasspane"></div>
+        <div id="ads" data-ifc="[[[null,1000,9,2,4]]]">
+            <ul>
+                <li id="taw0" class="taw taw0" lang="vi">
+                    <div class="rh">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="rh0c">
+                                        <div class="rh0">
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="rh00c">
+                                                            <div class="rh00">
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td class="rh000c">
+                                                                                <div class="rh-box-image rh-image rh000">
+                                                                                    <a class="rhimage" title="UC Browser - Fast Download">
+                                                                                            <img style="height:47px;width:47px;" src="data:image/png;base64,UklGRmQLAABXRUJQVlA4WAoAAAAQAAAAjAAAjAAAQUxQSPABAAABT+OgjSRHOnfvXv7EH+49iIjI5Rz5Ya8at6aXZGYEETqPLUrkCrko8RSKosH0BKHEP2BLkqS4aTMzMzMzMzMeW3dnaSV7//8TxDAd4SdH9H8CkPu2saW1w5uH1w/HD2NKqYQu3oRSKhb6zsfr/c3B6uJIKwp8Ys/Vpd3eGSuY3ist42V3IYzYWk5rMF+NT1rWx/q8zGp5p/NwoSU+y5mlZTZyUxNoqYPKHFR/a7nDyuwCLXmQlallN7M409KfZzSt5Z/JoE4z2JDugYKnNP2aw5FUBgl2ik7NYk/SGQ1XSZpHAMNETABbROwBJhEuoJksb6GibZCKsQUqllao2Nij4viaips7Kh5eqHj7oMJwqHAjVPgBFWGUilicivhfSUL/+/+f7HEq4n8mMSqiIRWBT0XEpcIxqPh8o+LlgYq7Gyquj6jYX6didYmKhVEqRtqoaCmnAnCJMIE9IraBCSKGARABAFc0nCX10NCVBJsEAylHSOhPhScKHpG2gYK6dJghYBqZnot3jsxN4UxkG4gWIOuqULDvmuxQGYgV1iCnplAWcn0q0iVyPyXQHPJZey/McxPy3PcpiDeOAuw4FeK2H4U6tGn8lravw8kyFHbzwPzK7vXdy7sdCaJKqZ8i+lVKqdD3Pt8eb042lifaK5BzVlA4IE4JAABQLACdASqNAI0APrVQo0unJKMhqLXbyOAWiWwHBgL/3ANNE8P7Z2q23e5f1L9t/aGq79u/p36x9gHaTGk7cM739t/SD3EfnL/ue4B+sHSG8wH7T+tv/cvUl/gfUA/zf+z6xP0APLq9kf+4/+H0p/UA//+xHWi9n12RyoAhvJNVTzy3eefSeiB+uRsLGd3Stg3WWX5pbHp82b9c5lrUFEvgbN9w2f5lZtUi7YtZdo1w2Gn/+rIN+y4/OhC08AztvYdlhNGjnXRnoGN6N4URCRZsvt+s2FPDs3TlQcvDsYZz+947T3oTCy1N97scx1BpyxTM+hvcxx3jqlqEUtJ+8Ld5IDrz1DNs9vjrpDexW8KSK6ise/hSek//92oWuPGXBUFka5WJpWVyHBLyiDUjKDeX7s444iNEFSV87HAwlqTiqhX5uOio6DpqWCW0cM8PNHa6WOXQMpOl65PYlaeRxKfxFuxSoziDKyggIAAA/va8LBcggLE60F9P00vPuCf7eW5JO2Ujc9+4HXH24c5ZPGkvsb/APrpRyyiArVH4f3rEvMza6oTdyi4xV0StaGPe+f2KgsqwS4cJx0ZdbdjpmnAar76hqCYpUeljQlNxVqtHZ+DzBz3KtBZ+kFlB+lh8rC/j/kyen/Aj8GBo/nmJS6thIDp1ALx8CTfeFC0fjTek9BuC9fKA1XbJsWlD5xjI0RfzJYF+egXXu/eCQUNKgWYWdj0MkNkBNwbSpe5CnkRjUrbR0ph0ygX9bc97GJRdxxdD9EsCCC0BozQBrydkD+KC+rxH9q0IfCfJ7IkwT1YjATS6ZGFullmfPDoxFa6vGtEEq4pP/cbNNkbfF1+dBMvI1sD4NI2YJbZgdjOYNDXsC8TTZy3F/LEimD7tA/OVIeHFjcy34ENCfqhKKAt7YqQeJMbHZcPKadMt9y1wjxB0ILtz6rgaxBdLFVwNM0ze5WD9dR70mbGNJvKZYZoIfPjS9G8+08p2pogltcM44wXcNyELGPb29em4S/21PXXcbZjmATIZBPFpw5F33efVxhnI4eVDoTS0Xkh6sWpImqxWyYRDndvGZOj13q4YgDLOmve3K3uRPEf/lOL0Ye7qCVjLu3vnfmlWkc5AHl8nfFVBSZfujXq4LnXHkuKKfwzwekKEd7wFEqqfBQ4po5HkZ70Vtvt+k1RgpO1VPD+DtN/D7FTcG/pBK4BQtrNd3zH0xyrDzDIoLLHHwwJu0pwmgFzX6nt5ugeDUV0Ic31En8tOKbwpTrkpMIIRGZAV+aQrOvaRvlIXoUbBZut6fpDQdMODVuyzQL7SqRd7VQsdes4T8KGMDBWoPUZsAvYWBb22mjf8OP7zoR47PuaOBhAMhU4Cp3m7oED/P95J5KhgXNZ6JGUVUrfiSV31/ZAqrS8SGpRqUQYmqLQP7V+kgrS/3ll/qmrnfnXD+H0HNIx8VGvhDqzA+CbYJhcF39D3lAlaG/YmBQg2ImtTo9l+OoNXxiU6QTFDMUSct69xlGZ+Do72QXDhGYfB/wcIzSFo4ptFhMylNxodb6nVMQbirx2d8NCSqLN+Ods8o1VQNqFCRB52D7v51J9yBN91UJVegLKSpLRRFiVQrpirJakEIatBX65wvbJv8cvgfali+uIcMqn2rLw0Wi9zvoiPgWm0dk3MU8KFjJvDbAZdfcvp4kIPNI2s2/69JIe+DiTCVRoWl34XOvMzTEXnwe4JRhyBHxi3NduWI4UP9CIRSOBQHBgPb3S9TwGZ8PzcncUyCSTLHYiS6k2ls+tdTfdIuU/sj244JaMIL4NbmpSoe+kDuEpygZf+Sdee1Uu9LazCqfQeSkqBj3RDLlug3BZz9isgyS21D5/4gf5oHMaEVpv31Gagp3X192oQENb0T+X8zrj1NetrhNIMpNoFVr3Qa7++al0CD4fqdiBCLksZxf+jd0cRsRlkAQ7mSzx11IfM+sI+yjsD1nDGbvyZ0HQvkZM45AtTSqSXhPwfdSADWv/NoOhksJArldCg3Q6SWERrcR4HBo0gv906dPucNvbUdkLiSOn7Qoce+d2mCeXc7RHMB6ZQSlrDZNBvoEVImao3t8LhMvdhw8YRN0WPri9TsjfyrnQw6h3kq4faH1JsffYfBvO4DW14ickrU/jZjEkKpTl+wdNvga0EsZNr/epqUiG5I6skdDhaWmV5tcPEmza0cvAVZCRWDBm+bROQN+/HA2XyebepBkAugeOaF6Hzc3E1YnksTx6QZQAo9MAvpTEzRMPqzWeDa4YW2sCvFYOhIZExSvq5Y+H0NQeH9cVxwEcImJCWmQIgh86lmVT7482m1huclvJnnUw67G4GixNuD6wHpHesPJYl4S4Vi46yYrO2mrpfdhqaa8bekNBjt9iUK7pLRlPLynakW80VFCs0f++kd3AlBfsorhIv+xFsrxvTlreSjvKR/k5LhaNYSCjo2AfjCcfAjPnFWTcrx34mSZtx0JtHZeMYVvurei8D+lFN08QGMVW68yU/mXAhVmMOiyJRx8hSu0rogMFiFYB8kNA8PUp0bIpHMPxUTr/lIddA2+SlIrcw1Pxj/e9wXN8pG+BTwf/SnxawGKLFI9yA/3m9CuDmkbTg0fo+15PRAu4uniwkug9h8xWeHnnyTYyBRh3+F2q0keNjz62Gej8KnZDpLItqdf425PquwJZNTyzDY3CYBAnKf5WHsdJeFQ8wiw6Ju8aeMvhthLRmEGZ6mG+deGqPsEaND48MQMUCYU0YB4K15PjTJfImw4gjGBeRyURaqLfj0wu44ajIcDTHLF6fV9ohZi2NnmakxKz9u50ROTJ9AVOR5uRO/ugDuiPt7xDMYwYFYJjOh6Jzyp3+mMB7fC43Rz1spWpop9nOHcVpqb5cQjx4Fxm/uG6i/vck2CTnMGaf5p3fot1VMG/3xGyGif3CSk0O5/iW02cAnO+/s75ku+55KDwrgOqQH8GLwvTTu9oaJipknPo8bVwLG7FrnvTJcqrfVaEPk+xy5gEHc17C6iHkfYnaNtxEpuBGuNEV87Lr6brELUixirZtCf4iDOyRx6cwuBC/rqVAJDA27bYYjNTvyvfGmuP+G19r9nV1Gs2qNgiSOCBwq6WLolaTonTHLM6Qeu+IGb8nVYSwHGDCDvr7un7m67OrseMfjKkD3euPUYUai5WK2GZoK0AAAAA=" alt="">
+                                                                                            <!--ko xoa-->
+                                                                                        </a>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="rh001c">
+                                                                                <div class="rh-box-overlap rh001 animated" data-num-frames="3">
+                                                                                    <div class="rh0010">
+                                                                                        <table>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td class="rh00100c">
+                                                                                                        <div class="rh00100">
+                                                                                                            <table>
+                                                                                                                <tbody>
+                                                                                                                    <tr>
+                                                                                                                        <td class="rh001000c">
+                                                                                                                            <div class="rh-box-title rh-title rh001000">
+                                                                                                                                <a class="rhtitle rhdefaultcolored" href=""
+                                                                                                                                    target="_top"
+                                                                                                                                    title=""
+                                                                                                                                    data-original-click-url="">
+                                                                                                                                        <span>UC Browser - Fast Download</span>
+                                                                                                                                    </a>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                    <tr>
+                                                                                                                        <td class="rh001001c">
+                                                                                                                            <div class="rh001001">
+                                                                                                                                <table>
+                                                                                                                                    <tbody>
+                                                                                                                                        <tr>
+                                                                                                                                            <td class="rh0010010c">
+                                                                                                                                                <div class="rh-box-price rh-price rh0010010">
+                                                                                                                                                    <span class="rhprice rhdefaultcolored">FREE </span>
+                                                                                                                                                </div>
+                                                                                                                                            </td>
+                                                                                                                                            <td class="rh0010011c">
+                                                                                                                                                <div class="rh-box-starratings rh0010011">
+                                                                                                                                                    <span class="rhstarratings">
+                                                                                                                                                            <svg class="rhsvgpngicon" preserveAspectRatio="xMinYMin meet" version="1.1" xml:space="preserve" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" viewBox="0 0 24 24" x="0px" y="0px" height="10px" width="10px">
+                                                                                                                                                                <path fill="#000000" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                                                                                                                                                            </svg>
+                                                                                                                                                            <svg class="rhsvgpngicon" preserveAspectRatio="xMinYMin meet" version="1.1" xml:space="preserve" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" viewBox="0 0 24 24" x="0px" y="0px" height="10px" width="10px">
+                                                                                                                                                                <path fill="#000000" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                                                                                                                                                            </svg>
+                                                                                                                                                            <svg class="rhsvgpngicon" preserveAspectRatio="xMinYMin meet" version="1.1" xml:space="preserve" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" viewBox="0 0 24 24" x="0px" y="0px" height="10px" width="10px">
+                                                                                                                                                                <path fill="#000000" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                                                                                                                                                            </svg>
+                                                                                                                                                            <svg class="rhsvgpngicon" preserveAspectRatio="xMinYMin meet" version="1.1" xml:space="preserve" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" viewBox="0 0 24 24" x="0px" y="0px" height="10px" width="10px">
+                                                                                                                                                                <path fill="#000000" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                                                                                                                                                            </svg>
+                                                                                                                                                            <svg class="rhsvgpngicon" preserveAspectRatio="xMinYMin meet" version="1.1" xml:space="preserve" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" viewBox="0 0 24 24" x="0px" y="0px" height="10px" width="10px">
+                                                                                                                                                                <path fill="#000000" d="M22 9.74l-7.19-.62L12 2.5 9.19 9.13 2 9.74l5.46 4.73-1.64 7.03L12 17.77l6.18 3.73-1.63-7.03L22 9.74zM12 15.9V6.6l1.71 4.04 4.38 .38-3.32 2.88 1 4.28L12 15.9z"></path>
+                                                                                                                                                            </svg>
+                                                                                                                                                        </span>
+                                                                                                                                                </div>
+                                                                                                                                            </td>
+                                                                                                                                            <td class="rh0010012c">
+                                                                                                                                                <div class="rh-box-reviews rh0010012">
+                                                                                                                                                    <span class="rhreviews rhdefaultcolored">(13,067,523)</span>
+                                                                                                                                                </div>
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                    </tbody>
+                                                                                                                                </table>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <div class="rh0011">
+                                                                                        <table>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td class="rh00110c">
+                                                                                                        <div class="rh00110">
+                                                                                                            <table>
+                                                                                                                <tbody>
+                                                                                                                    <tr>
+                                                                                                                        <td class="rh001100c">
+                                                                                                                            <div class="rh-box-promo-text rh001100">
+                                                                                                                                <span class="rhpromotext rhdefaultcolored">UC Browser Surf Web Fast</span>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                    <tr>
+                                                                                                                        <td class="rh001101c">
+                                                                                                                            <div class="rh-box-store-icon rh001101">
+                                                                                                                                <div class="rhstoreicon">
+                                                                                                                                    <svg class="rhsvgpngicon" preserveAspectRatio="xMinYMin meet" version="1.1" xml:space="preserve" xmlns="https://www.w3.org/2000/svg"
+                                                                                                                                        xmlns:xlink="https://www.w3.org/1999/xlink"
+                                                                                                                                        x="0px"
+                                                                                                                                        y="0px"
+                                                                                                                                        height="13px"
+                                                                                                                                        width="54px"
+                                                                                                                                        viewBox="0 0 124 30"
+                                                                                                                                        enable-background="new 0 0 124 30">
+                                                                                                                                        <g>
+                                                                                                                                            <path fill="#818285" class="st1" enable-background="new" d="M59.39,11.93c-2.63,0-4.78,2-4.78,4.76c0,2.74,2.15,4.76,4.78,4.76s4.78-2.02,4.78-4.76C64.17,13.94,62.02,11.93,59.39,11.93z M59.39,19.59c-1.44,0-2.69-1.19-2.69-2.89c0-1.71,1.24-2.89,2.69-2.89s2.69,1.17,2.69,2.89C62.08,18.39,60.83,19.59,59.39,19.59z M72.19,13h-0.07c-0.47-0.56-1.37-1.06-2.51-1.06c-2.38,0-4.57,2.09-4.57,4.78c0,2.67,2.18,4.75,4.57,4.75c1.14,0,2.04-0.5,2.51-1.08h0.07v0.69c0,1.82-0.97,2.8-2.54,2.8c-1.28,0-2.08-0.92-2.4-1.7l-1.82,0.76c0.52,1.26,1.91,2.82,4.22,2.82c2.45,0,4.53-1.44,4.53-4.96v-8.55h-1.98V13z M69.79,19.59c-1.44,0-2.65-1.21-2.65-2.87c0-1.68,1.21-2.91,2.65-2.91c1.43,0,2.54,1.23,2.54,2.91C72.34,18.38,71.22,19.59,69.79,19.59z M48.96,11.93c-2.63,0-4.78,2-4.78,4.76c0,2.74,2.15,4.76,4.78,4.76c2.63,0,4.78-2.02,4.78-4.76C53.74,13.94,51.59,11.93,48.96,11.93z M48.96,19.59c-1.44,0-2.69-1.19-2.69-2.89c0-1.71,1.24-2.89,2.69-2.89c1.44,0,2.69,1.17,2.69,2.89C51.65,18.39,50.4,19.59,48.96,19.59z M36.55,13.4v2.02h4.84c-0.14,1.14-0.52,1.97-1.1,2.54c-0.7,0.7-1.8,1.48-3.74,1.48c-2.98,0-5.3-2.4-5.3-5.38c0-2.98,2.33-5.38,5.3-5.38c1.61,0,2.78,0.63,3.65,1.44l1.43-1.43c-1.21-1.15-2.82-2.04-5.07-2.04c-4.08,0-7.51,3.32-7.51,7.4s3.43,7.4,7.51,7.4c2.2,0,3.86-0.72,5.16-2.08c1.34-1.34,1.75-3.21,1.75-4.73c0-0.47-0.04-0.9-0.11-1.26L36.55,13.4L36.55,13.4z M87.3,14.97c-0.4-1.06-1.61-3.03-4.08-3.03c-2.45,0-4.49,1.93-4.49,4.76c0,2.67,2.02,4.76,4.73,4.76c2.18,0,3.45-1.34,3.97-2.11l-1.62-1.08c-0.54,0.79-1.28,1.32-2.35,1.32c-1.06,0-1.82-0.49-2.31-1.44l6.37-2.63L87.3,14.97z M80.8,16.55c-0.05-1.84,1.43-2.78,2.49-2.78c0.83,0,1.53,0.41,1.77,1.01L80.8,16.55z M75.62,21.17h2.09v-14h-2.09V21.17z M97.1,7.17h-5.01v14h2.09v-5.3h2.92c2.32,0,4.59-1.68,4.59-4.35C101.7,8.85,99.42,7.17,97.1,7.17z M97.16,13.92h-2.97v-4.8h2.97c1.56,0,2.45,1.29,2.45,2.4C99.61,12.6,98.72,13.92,97.16,13.92z M102.85,21.17h2.09v-14h-2.09V21.17z M110.07,11.91c-1.51,0-3.08,0.67-3.73,2.14l1.86,0.77c0.4-0.77,1.13-1.03,1.91-1.03c1.08,0,2.18,0.65,2.2,1.8v0.14c-0.38-0.22-1.19-0.54-2.18-0.54c-2,0-4.03,1.1-4.03,3.15c0,1.87,1.64,3.08,3.48,3.08c1.41,0,2.18-0.63,2.67-1.37h0.07v1.08h2.02v-5.37C114.33,13.3,112.47,11.91,110.07,11.91z M109.82,19.58c-0.69,0-1.64-0.34-1.64-1.19c0-1.08,1.19-1.5,2.22-1.5c0.92,0,1.35,0.2,1.91,0.47C112.15,18.66,111.03,19.58,109.82,19.58z M121.68,12.21l-2.4,6.07h-0.07l-2.49-6.07h-2.25l3.73,8.49l-2.13,4.72h2.18L124,12.21H121.68z"></path>
+                                                                                                                                            <g>
+                                                                                                                                                <!-- Added a dummy svg linear gradient; Chrome eats the first one? -->
+                                                                                                                                                <linearGradient id="SVGID_0_" gradientUnits="userSpaceOnUse" x1="11.4091" y1="-420.4857" x2="-4.78" y2="-404.2966" gradientTransform="matrix(1 0 0 1 0 424)">
+                                                                                                                                                    <stop offset="0" style="stop-color:#00A0FF"></stop>
+                                                                                                                                                    <stop offset="0.0065" style="stop-color:#00A1FF"></stop>
+                                                                                                                                                    <stop offset="0.2601" style="stop-color:#00BEFF"></stop>
+                                                                                                                                                    <stop offset="0.5122" style="stop-color:#00D2FF"></stop>
+                                                                                                                                                    <stop offset="0.7604" style="stop-color:#00DFFF"></stop>
+                                                                                                                                                    <stop offset="1" style="stop-color:#00E3FF"></stop>
+                                                                                                                                                </linearGradient>
+                                                                                                                                                <path fill="url(#SVGID_0_)" d="M0.45,2.38C0.17,2.68,0,3.14,0,3.74v21.33c0,0.6,0.17,1.06,0.45,1.35l0.07,0.07l11.95-11.95v-0.14v-0.14L0.52,2.31L0.45,2.38z"></path>
+                                                                                                                                                <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="11.4091" y1="-420.4857" x2="-4.78" y2="-404.2966" gradientTransform="matrix(1 0 0 1 0 424)">
+                                                                                                                                                    <stop offset="0" style="stop-color:#00A0FF"></stop>
+                                                                                                                                                    <stop offset="0.1" style="stop-color:#00A1FF"></stop>
+                                                                                                                                                    <stop offset="0.2601" style="stop-color:#00BEFF"></stop>
+                                                                                                                                                    <stop offset="0.5122" style="stop-color:#00D2FF"></stop>
+                                                                                                                                                    <stop offset="0.7604" style="stop-color:#00DFFF"></stop>
+                                                                                                                                                    <stop offset="1" style="stop-color:#00E3FF"></stop>
+                                                                                                                                                </linearGradient>
+                                                                                                                                                <path class="st2" fill="url(#SVGID_1_)" d="M0.45,2.38C0.17,2.68,0,3.14,0,3.74v21.33c0,0.6,0.17,1.06,0.45,1.35l0.07,0.07l11.95-11.95v-0.14v-0.14L0.52,2.31L0.45,2.38z"></path>
+                                                                                                                                                <linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="23.0181" y1="-409.5933" x2="-0.3233" y2="-409.5933" gradientTransform="matrix(1 0 0 1 0 424)">
+                                                                                                                                                    <stop offset="0" style="stop-color:#FFE000"></stop>
+                                                                                                                                                    <stop offset="0.4087" style="stop-color:#FFBD00"></stop>
+                                                                                                                                                    <stop offset="0.7754" style="stop-color:#FFA500"></stop>
+                                                                                                                                                    <stop offset="1" style="stop-color:#FF9C00"></stop>
+                                                                                                                                                </linearGradient>
+                                                                                                                                                <path class="st3" fill="url(#SVGID_2_)" d="M16.45,18.53l-3.98-3.99v-0.14v-0.14l3.98-3.98l0.09,0.05l4.72,2.68c1.35,0.77,1.35,2.02,0,2.79l-4.72,2.68L16.45,18.53z"></path>
+                                                                                                                                                <linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="14.3292" y1="-407.3798" x2="-7.6245" y2="-385.4261" gradientTransform="matrix(1 0 0 1 0 424)">
+                                                                                                                                                    <stop offset="0" style="stop-color:#FF3A44"></stop>
+                                                                                                                                                    <stop offset="1" style="stop-color:#C31162"></stop>
+                                                                                                                                                </linearGradient>
+                                                                                                                                                <path class="st4" fill="url(#SVGID_3_)" d="M16.54,18.48l-4.07-4.07L0.45,26.43c0.44,0.47,1.18,0.53,2,0.06L16.54,18.48"></path>
+                                                                                                                                                <linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="-2.5804" y1="-428.7178" x2="7.2228" y2="-418.9146" gradientTransform="matrix(1 0 0 1 0 424)">
+                                                                                                                                                    <stop offset="0" style="stop-color:#32A071"></stop>
+                                                                                                                                                    <stop offset="0.0685" style="stop-color:#2DA771"></stop>
+                                                                                                                                                    <stop offset="0.4762" style="stop-color:#15CF74"></stop>
+                                                                                                                                                    <stop offset="0.8009" style="stop-color:#06E775"></stop>
+                                                                                                                                                    <stop offset="1" style="stop-color:#00F076"></stop>
+                                                                                                                                                </linearGradient>
+                                                                                                                                                <path class="st5" fill="url(#SVGID_4_)" d="M16.54,10.33L2.45,2.32c-0.83-0.47-1.56-0.41-2,0.06l12.02,12.02L16.54,10.33z"></path>
+                                                                                                                                                <g>
+                                                                                                                                                    <path class="st6" style="opacity:0.2;enable-background:new;" d="M16.45,18.39l-14,7.96c-0.78,0.45-1.48,0.42-1.93,0.01l0,0l-0.07,0.07l0,0l0.07,0.07l0,0c0.45,0.4,1.15,0.44,1.93-0.01l14.09-8.01L16.45,18.39z"></path>
+                                                                                                                                                    <path class="st7" d="M0.45,26.29C0.17,25.99,0,25.53,0,24.93v0.14c0,0.6,0.17,1.06,0.45,1.35l0.07-0.07L0.45,26.29z"></path>
+                                                                                                                                                </g>
+                                                                                                                                                <path class="st7" style="opacity:0.12;enable-background:new;" d="M21.26,15.66l-4.81,2.73l0.09,0.09l4.72-2.68c0.67-0.38,1.01-0.89,1.01-1.39l0,0C22.22,14.86,21.87,15.31,21.26,15.66z"></path>
+                                                                                                                                                <path class="st8" style="opacity:0.25;fill:#FFFFFF;enable-background:new;" d="M2.45,2.47l18.81,10.69c0.61,0.35,0.95,0.8,1.01,1.25l0,0c0-0.5-0.34-1.01-1.01-1.39L2.45,2.32C1.1,1.56,0,2.19,0,3.74v0.14C0,2.34,1.1,1.7,2.45,2.47z"></path>
+                                                                                                                                            </g>
+                                                                                                                                        </g>
+                                                                                                                                    </svg>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <div class="rh0012">
+                                                                                        <table>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td class="rh00120c">
+                                                                                                        <div class="rh00120">
+                                                                                                            <table>
+                                                                                                                <tbody>
+                                                                                                                    <tr>
+                                                                                                                        <td class="rh001200c">
+                                                                                                                            <div class="rh-body rh-box-body rh001200">
+                                                                                                                                <span class="rhbody rhdefaultcolored">Want a faster and safer browser? 1,000,000+ Users Choice for Android</span>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="rh002c">
+                                                                                <div class="rh-box-button rh-nessie-button rh002">
+                                                                                    <div class="rhbutton-container">
+                                                                                        <a class="rhbutton" href=""
+                                                                                            target="_top" title="" data-original-click-url="">
+                                                                                            <div class="icon-container">
+                                                                                                <svg class="rhsvgpngicon" preserveAspectRatio="xMinYMin meet" version="1.1" xml:space="preserve" xmlns="https://www.w3.org/2000/svg"
+                                                                                                    xmlns:xlink="https://www.w3.org/1999/xlink"
+                                                                                                    x="0px" y="0px" height="37px"
+                                                                                                    width="34px" viewBox="11.5 8.5 36.5 39.5"
+                                                                                                    enable-background="new 11.5 8.5 36.5 39.5">
+                                                                                                    <radialGradient id="SVGID_1_" cx="152.055" cy="-48.9406" r="68.9549" gradientTransform="matrix(0.5 0 0 -0.5 -62.5 -5)" gradientUnits="userSpaceOnUse">
+                                                                                                        <stop offset="0.33" style="stop-color:#263238;stop-opacity:0.15"></stop>
+                                                                                                        <stop offset="1" style="stop-color:#263238;stop-opacity:0"></stop>
+                                                                                                    </radialGradient>
+                                                                                                    <polygon fill="url(#SVGID_1_)" points="28.5,10.5 24,30 28.5,34.5 13.5,36 25.5,48 48,48 48,30"></polygon>
+                                                                                                    <path fill="white" d="M34.5,19.5h-6v-9h-9v9h-6L24,30L34.5,19.5z M13.5,33v3h21v-3H13.5z"></path>
+                                                                                                </svg>
+                                                                                            </div>
+                                                                                            <div class="message">
+                                                                                                <span>INSTALL</span>
+                                                                                            </div>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="ads_chrome_top"></div>
+        <div class="ads_chrome_bottom"></div>
+        <div class="ads_chrome_left"></div>
+        <div class="ads_chrome_right"></div>
+    </div>
+    <style>
+        div,
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .abgcp {
+            height: 15px;
+            padding-left: 0;
+            padding-bottom: 0;
+            padding-right: 10px;
+            padding-top: 10px;
+            left: 0px;
+            bottom: 0px;
+            position: absolute;
+            width: 31px;
+            z-index: 9020;
+        }
+
+        .abgc {
+            display: block;
+            height: 15px;
+            overflow: hidden;
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            text-rendering: geometricPrecision;
+            width: 31px;
+            z-index: 9020;
+        }
+
+        .abgb {
+            display: block;
+            height: 15px;
+            width: 15px;
+        }
+
+        .abgc {
+            cursor: pointer;
+        }
+
+        .cbb {
+            background-image: url('');
+            background-repeat: no-repeat;
+            background-position: top right;
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            z-index: 9020;
+        }
+
+        .abgb {
+            position: absolute;
+            left: 16px;
+            bottom: 0px;
+        }
+
+        .cbb {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+
+        .abgc img {
+            display: block;
+        }
+
+        .abgc svg {
+            display: block;
+        }
+
+        .abgs {
+            display: none;
+            height: 100%;
+        }
+
+        .abgl {
+            text-decoration: none;
+        }
+
+        .abgi {
+            fill-opacity: 1.0;
+            fill: #00aecd;
+            stroke: none;
+        }
+
+        .abgbg {
+            fill-opacity: 1.0;
+            fill: #cdcccc;
+            stroke: none;
+        }
+
+        .abgtxt {
+            fill: black;
+            font-family: 'Arial';
+            font-size: 100px;
+            overflow: visible;
+            stroke: none;
+        }
+    </style>
+    <div id="abgcp" class="abgcp">
+        <div id="abgc" class="abgc" dir="ltr">
+            <div id="abgb" class="abgb">
+                <svg width="100%" height="100%">
+                    <rect class="abgbg" width="100%" height="100%"></rect>
+                    <svg class="abgi" x="0px">
+                        <path d="M7.5,1.5a6,6,0,1,0,0,12a6,6,0,1,0,0,-12m0,1a5,5,0,1,1,0,10a5,5,0,1,1,0,-10ZM6.625,11l1.75,0l0,-4.5l-1.75,0ZM7.5,3.75a1,1,0,1,0,0,2a1,1,0,1,0,0,-2Z"></path>
+                    </svg>
+                </svg>
+            </div>
+            <div id="abgs" class="abgs">
+                <a id="abgl" class="abgl" href=""
+                    target="_blank">
+                    <svg width="100%" height="100%">
+                        <path class="abgbg" d="M0,15L96,15L96,4s0,-4,-4,-4L0,0z"></path>
+                        <svg class="abgtxt" x="17px" y="11px" width="34px">
+                            <text>Ads by</text>
+                        </svg>
+                        <svg class="abgtxt" x="53px" y="11px" width="38px">
+                            <text>Google</text>
+                        </svg>
+                        <svg class="abgi" x="0px">
+                            <path d="M7.5,1.5a6,6,0,1,0,0,12a6,6,0,1,0,0,-12m0,1a5,5,0,1,1,0,10a5,5,0,1,1,0,-10ZM6.625,11l1.75,0l0,-4.5l-1.75,0ZM7.5,3.75a1,1,0,1,0,0,2a1,1,0,1,0,0,-2Z"></path>
+                        </svg>
+                    </svg>
+                </a>
+            </div>
+            <div id="cbb" class="cbb"></div>
+        </div>
+    </div>
+    <div id="mute_panel" class="survey-horiz survey-scroll jake-middle">
+        <div id="panel_set">
+            <div id="ad_closed_panel" class="panel fallback-wrap" wp="1">
+                <div class="panel-container">
+                    <div class="panel-content fade">
+                        <div class="panel-row" style="font-size: 11px;">
+
+                        </div>
+                        <div class="panel-row" wp="0" style="font-size: 11px;">
+                            <a id="report_btn" class="btn responsive-btn shadow">
+                                    <span id="report_text" class="btn-text" style="font-size: 11px;">Report this ad</span>
+                                </a>
+                            <a id="spacer"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="survey_panel" class="panel">
+                &nbsp;
+                <style>
+                    #survey-container {
+                        position: absolute;
+                        top: 0px;
+                        left: 0px;
+                        z-index: 9100;
+                        width: 320px;
+                        height: 50px;
+                        overflow: hidden;
+                        background-color: #FAFAFA;
+                        font-size: 0;
+                        white-space: nowrap;
+                    }
+
+                    .survey-horiz,
+                    .survey-vert {
+                        text-align: center;
+                    }
+
+                    #survey-container * {
+                        box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                    }
+
+                    .survey-block {
+                        height: 50px;
+                    }
+
+                    .survey-option {
+                        position: relative;
+                        z-index: 9110;
+                        overflow: hidden;
+                        display: inline-block;
+                        padding: 1px 5px;
+                        width: 96px;
+                        height: 50px;
+                        border: 1px solid #E0E0E0;
+                        background-color: #FFFFFF;
+                        cursor: pointer;
+                    }
+
+                    .survey-option:hover,
+                    .survey-option:active {
+                        background-color: #F5F5F5;
+                    }
+
+                    .survey-option div {
+                        width: 100%;
+                        height: 100%;
+                        display: table;
+                        text-align: center;
+                    }
+
+                    .survey-option span {
+                        vertical-align: middle;
+                        display: table-cell;
+                        color: #4285F4;
+                        font-family: Arial, sans-serif;
+                        text-align: center;
+                        font-size: 12px;
+                        line-height: 14px;
+                        white-space: normal;
+                    }
+
+                    @media (min-height: 54px) {
+                        .survey-horiz.survey-spaced .survey-option,
+                        .survey-vert .survey-option {
+                            box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 1px 3px rgba(0, 0, 0, 0.26) !important;
+                            border: none;
+                        }
+                    }
+
+                    #mute_panel.survey-horiz .survey-option {
+                        display: inline-block;
+                        margin-left: -1px;
+                        box-shadow: none;
+                    }
+
+                    #mute_panel.survey-horiz .survey-option:first-child {
+                        margin-left: 0;
+                    }
+
+                    #mute_panel.survey-horiz.survey-spaced .survey-option {
+                        margin-left: 8px;
+                    }
+
+                    #mute_panel.survey-horiz.survey-spaced .survey-option:first-child {
+                        margin-left: 0;
+                    }
+
+                    #mute_panel.survey-horiz.jake-middle .survey-block {
+                        margin-top: 0px;
+                    }
+
+                    #mute_panel.survey-horiz.jake-top .survey-block {
+                        margin-top: 8px;
+                    }
+
+                    #mute_panel.survey-vert .survey-option,
+                    #mute_panel.survey-horiz.survey-spaced .survey-option {
+                        border-radius: 2px;
+                    }
+
+                    #mute_panel.survey-vert .survey-option {
+                        margin: 8px auto 0 auto;
+                        display: block;
+                    }
+
+                    #mute_panel.survey-vert.jake-top .survey-option:first-child {
+                        margin-top: 8px;
+                    }
+
+                    #mute_panel.survey-vert.jake-middle .survey-option:first-child {
+                        margin-top: -87px;
+                    }
+
+                    .scroll {
+                        position: absolute;
+                        top: 0px;
+                        z-index: 9120;
+                        display: none;
+                        width: 30px;
+                        border: 1px solid transparent;
+                        background-color: #666;
+                        background-color: rgba(0, 0, 0, 0.6);
+                        text-align: center;
+                        transition: visibility 150ms step-end;
+                        cursor: pointer;
+                    }
+
+                    .survey-scroll .scroll {
+                        display: block;
+                    }
+
+                    .scroll div {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        height: 36px;
+                        width: 36px;
+                        margin: -18px 0 0 -18px;
+                    }
+
+                    .scroll:hover,
+                    .scroll:active {
+                        background-color: #999;
+                        background-color: rgba(0, 0, 0, 0.4);
+                    }
+
+                    .scroll-right {
+                        right: 0;
+                        border-top-left-radius: 4px;
+                        border-bottom-left-radius: 4px;
+                    }
+
+                    .scroll-right div {
+                        background-image: url("https://www.gstatic.com/images/icons/material/system/1x/keyboard_arrow_right_white_36dp.png");
+                    }
+
+                    .scroll-left {
+                        left: 0;
+                        border-top-right-radius: 4px;
+                        border-bottom-right-radius: 4px;
+                    }
+
+                    .scroll-left div {
+                        background-image: url("https://www.gstatic.com/images/icons/material/system/1x/keyboard_arrow_left_white_36dp.png");
+                    }
+
+                    .survey-option {
+                        transition: margin 150ms linear;
+                    }
+                </style>
+                <div id="survey-container">
+                    <div class="fade">
+                        <a wp="1" class="survey-block survey-option">
+                            <div wp="0">
+                                <span style="font-size: 12px;">Ad covered content</span>
+                            </div>
+                        </a>
+                        <a wp="1" class="survey-block survey-option">
+                            <div wp="0">
+                                <span style="font-size: 12px;">Not interested in this ad</span>
+                            </div>
+                        </a>
+                        <a wp="1" class="survey-block survey-option">
+                            <div wp="0">
+                                <span style="font-size: 12px;">Seen this ad multiple times</span>
+                            </div>
+                        </a>
+                        <a wp="1" class="survey-block survey-option">
+                            <div wp="0">
+                                <span style="font-size: 12px;">Ad was inappropriate</span>
+                            </div>
+                        </a>
+                        <a class="survey-block scroll scroll-left" style="visibility:hidden">
+                            <div></div>
+                        </a>
+                        <a class="survey-block scroll scroll-right" style="visibility:visible">
+                            <div></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="post_survey_panel" class="panel" wp="1">
+                <div class="panel-container">
+                    <div class="panel-content fade">
+                        <span id="confirmation_msg" class="conf-msg" style="font-size: 17px;">We'll try not to show that ad again</span>
+                        <span id="contributor_msg" class="conf-msg" style="font-size: 17px;"></span>
+                    </div>
+                </div>
+            </div>
+            <div id="final_closed_panel" class="panel" wp="1">
+                <div class="panel-container">
+                    <div class="panel-content fade">
+                        <span id="final_closed_text" style="font-size: 17px;">
+                                Ad closed by <img src="">
+                            </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <style>
+            #panel_set>.panel {
+                position: fixed;
+                top: -50px;
+                left: -320px;
+                z-index: 9100;
+                display: block;
+                width: 320px;
+                height: 50px;
+            }
+
+            #panel_set img {
+                border: 0;
+            }
+
+            #panel_set>.panel.visible,
+            #panel_set .visible .panel {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                opacity: 1;
+            }
+
+            #panel_set .panel-container {
+                display: table;
+                width: 320px;
+                height: 50px;
+                margin: 0;
+                padding: 0;
+                background-color: #FAFAFA;
+            }
+
+            #panel_set .panel-row {
+                display: block;
+                padding: 0 0 0.3em 0;
+            }
+
+            #panel_set .panel-row:first-child {
+                padding: 0.3em;
+            }
+
+            #panel_set .panel-content {
+                vertical-align: top;
+                display: table-cell;
+                color: #999999;
+                color: rgba(0, 0, 0, 0.4);
+                transition: opacity 150ms linear;
+                text-align: center;
+                font-family: 'Arial', sans-serif;
+            }
+
+            .collapsed #panel_set .fade {
+                opacity: 0.4;
+            }
+
+            .jake-middle.survey-horiz #panel_set .panel-content {
+                vertical-align: middle;
+            }
+
+            #ad_closed_panel .btn {
+                display: inline-block;
+                border-radius: 2px;
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 1px 3px rgba(0, 0, 0, 0.26) !important;
+                text-decoration: none;
+                white-space: nowrap;
+                line-height: 1em;
+                cursor: pointer;
+            }
+
+            #closed_text,
+            #final_closed_text {
+                display: inline-block;
+                line-height: 1.28em;
+                font-size: 1.2em;
+            }
+
+            #closed_text img,
+            #final_closed_text img {
+                margin-bottom: -0.34em;
+                height: 1.25em;
+                opacity: 0.4;
+                -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+            }
+
+            #spacer {
+                display: inline-block;
+                padding: 0;
+                box-shadow: none;
+                width: 3px;
+            }
+
+            .btn>span {
+                display: inline-block;
+                padding: 0.5em 0.6em;
+                line-height: 1em;
+            }
+
+            #settings_btn {
+                background-color: #FFFFFF;
+                color: #9E9EA6;
+            }
+
+            #settings_btn:hover,
+            #settings_btn:active {
+                background-color: #F5F5F5;
+            }
+
+            #settings_text {
+                white-space: nowrap;
+            }
+
+            #report_btn {
+                background-color: #4285F5;
+                color: white;
+            }
+
+            #report_btn:hover,
+            #report_btn:active {
+                background-color: #3275E5;
+            }
+
+            #settings_icon {
+                position: relative;
+                display: inline-block;
+                margin-bottom: -0.15em;
+                height: 1em;
+                width: 1em;
+                opacity: 0.4;
+                -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+            }
+
+            [dir="rtl"] #settings_icon {
+                float: left;
+            }
+
+            #confirmation_msg {
+                font-weight: bold;
+                color: #333333;
+            }
+
+            #confirmation_msg,
+            #final_closed_text {
+                line-height: 1.1em;
+                padding: 0.3em;
+            }
+
+            #post_survey_panel span {
+                display: block;
+                text-align: center;
+                line-height: 1em;
+            }
+
+            #post_survey_panel a,
+            #post_survey_panel a:active,
+            #post_survey_panel a:hover {
+                text-decoration: none;
+                color: #4285F5;
+            }
+
+            #final_closed_panel,
+            #final_closed_panel span {
+                opacity: 0;
+                transition: opacity 400ms linear;
+            }
+
+            #final_closed_panel span {
+                white-space: normal;
+            }
+
+            #final_closed_panel span.visible {
+                opacity: 1;
+            }
+
+            .fallback-wrap .btn {
+                margin: 1px auto 1px auto;
+                white-space: normal;
+            }
+        </style>
+    </div>
+    <script>
+            var abgp = {
+                elp: document.getElementById('abgcp'),
+                el: document.getElementById('abgc'),
+                ael: document.getElementById('abgs'),
+                iel: document.getElementById('abgb'),
+                hw: 15,
+                sw: 96,
+                hh: 15,
+                sh: 15,
+                himg: '',
+                simg: '',
+                alt: 'Ads by Google',
+                t: 'Ads by',
+                tw: 34,
+                t2: 'Google',
+                t2w: 38,
+                tbo: 0,
+                att: 'adsbygoogle',
+                ff: '',
+                halign: 'left',
+                fe: false,
+                iba: true,
+                lttp: false,
+                uic: true,
+                uit: false,
+                ict: document.getElementById('cbb'),
+                ci: '',
+                icd: {
+                    "creatives": [],
+                    "height": 50,
+                    "width": 320,
+                    "attribution": {
+                        "user_feedback_data": {
+                            "mute_icon_url": "",
+                            "pub_feedback_icon_url": "",
+                            "close_button_token": "",
+                            "interaction_conversion": {
+                                "label": "user_feedback_menu_interaction",
+                                "label_instance": "",
+                                "include_close_button_token": false
+                            },
+                            "survey_header": "What was wrong with this ad?",
+                            "DEPRECATED_survey_options": [],
+                            "back_icon_url": "",
+                            "mute_confirmation_header": "Thanks for the feedback!",
+                            "mute_confirmation_text": "We’ll review this ad to improve the experience in the future.",
+                            "pub_feedback_confirmation_header": "Thanks for the feedback!",
+                            "pub_feedback_confirmation_text": "We’ll use your feedback to review ads on this site.",
+                            "encoded_cookie": "CAASEuRouN55NZSTrGSKNd7RvmD-Uw",
+                            "undo_text": "Undo",
+                            "closing_countdown_text": "Closing ad: %1$d",
+                            "attribution_text": "Ads by Google",
+                            "attribution_icon_url": "",
+                            "attribution_destination_url": "",
+                            "ad_feedback_icon_url": "",
+                            "is_rtl_language": false,
+                            "feedback_options": [{
+                                "text": "Report this ad",
+                                "conversion": {
+                                    "label": "user_feedback_menu_option",
+                                    "label_instance": "1",
+                                    "include_close_button_token": true
+                                },
+                                "survey": {
+                                    "header": "What was wrong with this ad?",
+                                    "options": [{
+                                        "text": "Ad covered content",
+                                        "conversion": {
+                                            "label": "mute_survey_option",
+                                            "label_instance": "3",
+                                            "include_close_button_token": true
+                                        }
+                                    }, {
+                                        "text": "Not interested in this ad",
+                                        "conversion": {
+                                            "label": "mute_survey_option",
+                                            "label_instance": "7",
+                                            "include_close_button_token": true
+                                        }
+                                    }, {
+                                        "text": "Seen this ad multiple times",
+                                        "conversion": {
+                                            "label": "mute_survey_option",
+                                            "label_instance": "2",
+                                            "include_close_button_token": true
+                                        }
+                                    }, {
+                                        "text": "Ad was inappropriate",
+                                        "conversion": {
+                                            "label": "mute_survey_option",
+                                            "label_instance": "8",
+                                            "include_close_button_token": true
+                                        }
+                                    }]
+                                },
+                                "undo_conversion": {
+                                    "label": "user_feedback_undo",
+                                    "label_instance": "1",
+                                    "include_close_button_token": true
+                                }
+                            }],
+                            "mute_panel_data": {
+                                "adchoices_icon_url": "",
+                                "adchoices_button_text": "AdChoices",
+                                "closed_message_text": "Ad closed by %1$s",
+                                "enable_lightbox": false,
+                                "google_logo_url": "",
+                                "report_ad_button_text": "Report this ad",
+                                "confirmation_text": "We'll try not to show that ad again",
+                                "settings_button_first": false,
+                                "ads_by_google_icon_url": "",
+                                "ads_by_google_button_text": "Ads by Google",
+                                "protocol_gstatic_host": ""
+                            }
+                        }
+                    },
+                    "flags": [{
+                        "name": "show_feedback_survey_button",
+                        "value": "true"
+                    }, {
+                        "name": "jake_dimension_selection_strategy",
+                        "value": "iframe_then_adslotconfig_then_100pct"
+                    }, {
+                        "name": "jake_transition_timeout",
+                        "value": "-1"
+                    }, {
+                        "name": "enable_jake_why_this_ad",
+                        "value": "true"
+                    }]
+                },
+                uaal: true,
+                opi: false
+            };
+    </script>
+    <script>
+        (function () {
+            var aa = "function" == typeof Object.defineProperties ? Object.defineProperty : function (a, b, c) {
+                if (c.get || c.set)
+                    throw new TypeError("ES3 does not support getters and setters.");
+                a != Array.prototype && a != Object.prototype && (a[b] = c.value)
+            }
+                , l = "undefined" != typeof window && window === this ? this : "undefined" != typeof global && null != global ? global : this
+                , m = function () {
+                    m = function () { }
+                        ;
+                    l.Symbol || (l.Symbol = ba)
+                }
+                , ca = 0
+                , ba = function (a) {
+                    return "jscomp_symbol_" + (a || "") + ca++
+                }
+                , u = function () {
+                    m();
+                    var a = l.Symbol.iterator;
+                    a || (a = l.Symbol.iterator = l.Symbol("iterator"));
+                    "function" != typeof Array.prototype[a] && aa(Array.prototype, a, {
+                        configurable: !0,
+                        writable: !0,
+                        value: function () {
+                            return r(this)
+                        }
+                    });
+                    u = function () { }
+                }
+                , r = function (a) {
+                    var b = 0;
+                    return da(function () {
+                        return b < a.length ? {
+                            done: !1,
+                            value: a[b++]
+                        } : {
+                                done: !0
+                            }
+                    })
+                }
+                , da = function (a) {
+                    u();
+                    a = {
+                        next: a
+                    };
+                    a[l.Symbol.iterator] = function () {
+                        return this
+                    }
+                        ;
+                    return a
+                }
+                , v = function (a) {
+                    u();
+                    var b = a[Symbol.iterator];
+                    return b ? b.call(a) : r(a)
+                }
+                , w = this
+                , y = function (a, b) {
+                    a = a.split(".");
+                    var c = w;
+                    a[0] in c || !c.execScript || c.execScript("var " + a[0]);
+                    for (var d; a.length && (d = a.shift());)
+                        a.length || void 0 === b ? c[d] && Object.prototype.hasOwnProperty.call(c, d) ? c = c[d] : c = c[d] = {} : c[d] = b
+                }
+                , z = function (a) {
+                    var b = typeof a;
+                    if ("object" == b)
+                        if (a) {
+                            if (a instanceof Array)
+                                return "array";
+                            if (a instanceof Object)
+                                return b;
+                            var c = Object.prototype.toString.call(a);
+                            if ("[object Window]" == c)
+                                return "object";
+                            if ("[object Array]" == c || "number" == typeof a.length && "undefined" != typeof a.splice && "undefined" != typeof a.propertyIsEnumerable && !a.propertyIsEnumerable("splice"))
+                                return "array";
+                            if ("[object Function]" == c || "undefined" != typeof a.call && "undefined" != typeof a.propertyIsEnumerable && !a.propertyIsEnumerable("call"))
+                                return "function"
+                        } else
+                            return "null";
+                    else if ("function" == b && "undefined" == typeof a.call)
+                        return "object";
+                    return b
+                }
+                , ea = function (a, b, c) {
+                    return a.call.apply(a.bind, arguments)
+                }
+                , fa = function (a, b, c) {
+                    if (!a)
+                        throw Error();
+                    if (2 < arguments.length) {
+                        var d = Array.prototype.slice.call(arguments, 2);
+                        return function () {
+                            var c = Array.prototype.slice.call(arguments);
+                            Array.prototype.unshift.apply(c, d);
+                            return a.apply(b, c)
+                        }
+                    }
+                    return function () {
+                        return a.apply(b, arguments)
+                    }
+                }
+                , A = function (a, b, c) {
+                    A = Function.prototype.bind && -1 != Function.prototype.bind.toString().indexOf("native code") ? ea : fa;
+                    return A.apply(null, arguments)
+                }
+                , B = Date.now || function () {
+                    return +new Date
+                }
+                , C = function (a, b) {
+                    function c() { }
+                    c.prototype = b.prototype;
+                    a.F = b.prototype;
+                    a.prototype = new c;
+                    a.prototype.constructor = a;
+                    a.H = function (a, c, k) {
+                        for (var d = Array(arguments.length - 2), n = 2; n < arguments.length; n++)
+                            d[n - 2] = arguments[n];
+                        return b.prototype[c].apply(a, d)
+                    }
+                };
+            var ga = String.prototype.trim ? function (a) {
+                return a.trim()
+            }
+                : function (a) {
+                    return a.replace(/^[\s\xa0]+|[\s\xa0]+$/g, "")
+                }
+                , D = function (a, b) {
+                    return a < b ? -1 : a > b ? 1 : 0
+                };
+            var E = function (a) {
+                this.data = a || []
+            }
+                , F = function (a, b, c) {
+                    a = a.data[b];
+                    return null != a ? a : c
+                }
+                , ha = function (a, b) {
+                    a = a.data;
+                    a[0] || (a[0] = []);
+                    return a[0][b]
+                };
+            var G = function (a) {
+                this.data = a || []
+            };
+            C(G, E);
+            var H = function (a) {
+                this.data = a || []
+            };
+            C(H, E);
+            var ia = function (a) {
+                this.data = a || []
+            };
+            C(ia, E);
+            var I = document
+                , J = window;
+            var K;
+            a: {
+                var ka = w.navigator;
+                if (ka) {
+                    var la = ka.userAgent;
+                    if (la) {
+                        K = la;
+                        break a
+                    }
+                }
+                K = ""
+            }
+            ; var oa = function (a, b) {
+                var c = na;
+                return Object.prototype.hasOwnProperty.call(c, a) ? c[a] : c[a] = b(a)
+            };
+            var pa = -1 != K.indexOf("Opera"), L = -1 != K.indexOf("Trident") || -1 != K.indexOf("MSIE"), qa = -1 != K.indexOf("Edge"), M = -1 != K.indexOf("Gecko") && !(-1 != K.toLowerCase().indexOf("webkit") && -1 == K.indexOf("Edge")) && !(-1 != K.indexOf("Trident") || -1 != K.indexOf("MSIE")) && -1 == K.indexOf("Edge"), N = -1 != K.toLowerCase().indexOf("webkit") && -1 == K.indexOf("Edge"), ra = function () {
+                var a = w.document;
+                return a ? a.documentMode : void 0
+            }, O;
+            a: {
+                var P = ""
+                    , Q = function () {
+                        var a = K;
+                        if (M)
+                            return /rv\:([^\);]+)(\)|;)/.exec(a);
+                        if (qa)
+                            return /Edge\/([\d\.]+)/.exec(a);
+                        if (L)
+                            return /\b(?:MSIE|rv)[: ]([^\);]+)(\)|;)/.exec(a);
+                        if (N)
+                            return /WebKit\/(\S+)/.exec(a);
+                        if (pa)
+                            return /(?:Version)[ \/]?(\S+)/.exec(a)
+                    }();
+                Q && (P = Q ? Q[1] : "");
+                if (L) {
+                    var R = ra();
+                    if (null != R && R > parseFloat(P)) {
+                        O = String(R);
+                        break a
+                    }
+                }
+                O = P
+            }
+            var sa = O, na = {}, S = function (a) {
+                return oa(a, function () {
+                    for (var b = 0, c = ga(String(sa)).split("."), d = ga(String(a)).split("."), h = Math.max(c.length, d.length), k = 0; 0 == b && k < h; k++) {
+                        var p = c[k] || ""
+                            , n = d[k] || "";
+                        do {
+                            p = /(\d*)(\D*)(.*)/.exec(p) || ["", "", "", ""];
+                            n = /(\d*)(\D*)(.*)/.exec(n) || ["", "", "", ""];
+                            if (0 == p[0].length && 0 == n[0].length)
+                                break;
+                            b = D(0 == p[1].length ? 0 : parseInt(p[1], 10), 0 == n[1].length ? 0 : parseInt(n[1], 10)) || D(0 == p[2].length, 0 == n[2].length) || D(p[2], n[2]);
+                            p = p[3];
+                            n = n[3]
+                        } while (0 == b)
+                    }
+                    return 0 <= b
+                })
+            }, ta;
+            var ua = w.document;
+            ta = ua && L ? ra() || ("CSS1Compat" == ua.compatMode ? parseInt(sa, 10) : 5) : void 0;
+            !M && !L || L && 9 <= Number(ta) || M && S("1.9.1");
+            L && S("9");
+            var va = {
+                capture: !0
+            }
+                , wa = function () {
+                    var a = !1;
+                    try {
+                        var b = Object.defineProperty({}, "passive", {
+                            get: function () {
+                                a = !0
+                            }
+                        });
+                        w.addEventListener("test", null, b)
+                    } catch (c) { }
+                    return a
+                }()
+                , T = function (a, b, c, d) {
+                    a.addEventListener ? a.addEventListener(b, c, wa ? d : d ? d.capture || !1 : !1) : a.attachEvent && a.attachEvent("on" + b, c)
+                };
+            var xa = Object.prototype.hasOwnProperty
+                , ya = function (a, b) {
+                    for (var c in a)
+                        xa.call(a, c) && b.call(void 0, a[c], c, a)
+                }
+                , za = function (a, b) {
+                    a && ya(b, function (b, d) {
+                        a.style[d] = b
+                    })
+                }
+                , Aa = function (a) {
+                    for (var b = I.body, c = document.createDocumentFragment(), d = a.length, h = 0; h < d; ++h)
+                        c.appendChild(a[h]);
+                    b.appendChild(c)
+                };
+            var U = function () {
+                this.i = this.i;
+                this.j = this.j
+            };
+            U.prototype.i = !1;
+            var Ba = function (a) {
+                a.i || (a.i = !0,
+                    a.l())
+            };
+            U.prototype.l = function () {
+                if (this.j)
+                    for (; this.j.length;)
+                        this.j.shift()()
+            }
+                ;
+            L && S("9");
+            !N || S("528");
+            M && S("1.9b") || L && S("8") || pa && S("9.5") || N && S("528");
+            M && !S("8") || L && S("9");
+            var V = function (a, b, c) {
+                U.call(this);
+                this.m = a;
+                this.A = b || 0;
+                this.o = c;
+                this.u = A(this.v, this)
+            };
+            C(V, U);
+            V.prototype.g = 0;
+            V.prototype.l = function () {
+                V.F.l.call(this);
+                0 != this.g && w.clearTimeout(this.g);
+                this.g = 0;
+                delete this.m;
+                delete this.o
+            }
+                ;
+            V.prototype.start = function (a) {
+                0 != this.g && w.clearTimeout(this.g);
+                this.g = 0;
+                var b = this.u;
+                a = void 0 !== a ? a : this.A;
+                if ("function" != z(b))
+                    if (b && "function" == typeof b.handleEvent)
+                        b = A(b.handleEvent, b);
+                    else
+                        throw Error("Invalid listener argument");
+                this.g = 2147483647 < Number(a) ? -1 : w.setTimeout(b, a || 0)
+            }
+                ;
+            V.prototype.v = function () {
+                this.g = 0;
+                this.m && this.m.call(this.o)
+            }
+                ;
+            var Ca = function (a) {
+                return /^\s*$/.test(a) ? !1 : /^[\],:{}\s\u2028\u2029]*$/.test(a.replace(/\\["\\\/bfnrtu]/g, "@").replace(/(?:"[^"\\\n\r\u2028\u2029\x00-\x08\x0a-\x1f]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)[\s\u2028\u2029]*(?=:|,|]|}|$)/g, "]").replace(/(?:^|:|,)(?:[\s\u2028\u2029]*\[)+/g, ""))
+            }
+                , Da = function (a) {
+                    a = String(a);
+                    if (Ca(a))
+                        try {
+                            return eval("(" + a + ")")
+                        } catch (b) { }
+                    throw Error("Invalid JSON string: " + a);
+                };
+            var Ea = function (a) {
+                T(J, "message", function (b) {
+                    try {
+                        var c = Da(b.data);
+                        !c || "ig" !== c.googMsgType || a(c, b)
+                    } catch (d) { }
+                })
+            };
+            var Fa = {
+                display: "inline-block",
+                position: "absolute",
+                "z-index": "2147483647"
+            }
+                , Ga = {
+                    width: "50px",
+                    height: "50px",
+                    top: "0",
+                    left: "0"
+                }
+                , Ha = {
+                    display: "none",
+                    width: "100%",
+                    height: "100%",
+                    top: "0",
+                    left: "0"
+                }
+                , W = function () {
+                    this.l = [];
+                    this.o = this.u = this.g = null;
+                    this.C = [];
+                    this.m = null;
+                    this.A = [];
+                    this.j = [];
+                    this.i = [];
+                    this.v = {}
+                };
+            W.prototype.G = function (a) {
+                var b = this;
+                this.m = new ia(a);
+                a = new G(this.m.data[0]);
+                for (var c = a.data[0] ? a.data[0].length : 0, d = 0; d < c; ++d) {
+                    var h = new H(ha(a, d));
+                    this.i.push({
+                        B: 0,
+                        s: !1,
+                        h: h,
+                        w: -1
+                    })
+                }
+                if (F(this.m, 3, void 0)) {
+                    try {
+                        this.j = I.querySelectorAll("*[data-ifc]")
+                    } catch (k) { }
+                    a = this.j.length;
+                    for (c = 0; c < a; ++c)
+                        for (d = new G(JSON.parse(this.j[c].getAttribute("data-ifc") || "[]")),
+                            h = 0; h < (d.data[0] ? d.data[0].length : 0); ++h)
+                            this.i.push({
+                                B: 0,
+                                s: !1,
+                                h: new H(ha(d, h)),
+                                w: c
+                            })
+                }
+                a = this.i.length;
+                for (c = 0; c < a; ++c)
+                    d = this.i[c].h,
+                        null != d.data[1] && null != d.data[4] ? (!this.g && F(d, 8, void 0) && (this.g = X(Ha)),
+                            Ia(this, this.i[c])) : null != d.data[0] && F(d, 8, void 0) && Ja(this, F(d, 0, ""));
+                F(this.m, 2, void 0) && (this.u = X(Ga));
+                a = this.l.slice(0);
+                this.g && a.push(this.g);
+                this.u && a.push(this.u);
+                I.body && Aa(a);
+                T(I, "click", function (a) {
+                    for (var c, d = -1, f = [], h = v(b.i), t = h.next(); !t.done; t = h.next()) {
+                        var t = t.value
+                            , e = t.w
+                            , q = -1 !== e;
+                        if (!(F(t.h, 2, 0) <= d || t.s || q && !1 === f[e])) {
+                            var g = !q || f[e] || b.j[e].contains(a.target);
+                            q && g && (f[e] = !0);
+                            if (e = g)
+                                if (q = a,
+                                    e = t,
+                                    g = e.h,
+                                    null != g.data[1] && null != g.data[4])
+                                    e = b.v[F(g, 4, 1)],
+                                        e = void 0 !== e && B() < e + F(g, 1, 0);
+                                else if (null != g.data[0]) {
+                                    var g = (0 <= e.w ? b.j[e.w] : I.body).getBoundingClientRect()
+                                        , k = v([q.clientX - g.left, q.clientY - g.top, g.width, g.height])
+                                        , q = k.next().value
+                                        , g = k.next().value
+                                        , ma = k.next().value
+                                        , k = k.next().value;
+                                    !(0 < ma && 0 < k) || isNaN(q) || isNaN(g) || 0 > q || 0 > g ? e = !1 : (e = Ka(F(e.h, 0, "")),
+                                        e = !(q >= e.left && ma - q > e.right && g >= e.top && k - g > e.bottom))
+                                } else
+                                    e = !0;
+                            e && (c = t,
+                                d = F(t.h, 2, 0))
+                        }
+                    }
+                    if (c)
+                        switch (d = c.h,
+                        F(d, 3, 1)) {
+                            case 2:
+                            case 3:
+                            case 4:
+                                a.preventDefault ? a.preventDefault() : a.returnValue = !1;
+                                f = c.h;
+                                if (null != f.data[7] && ++c.B >= F(f, 7, 0))
+                                    if (c.s = !0,
+                                        b.g && null != f.data[1])
+                                        La(b);
+                                    else if (0 < b.l.length && null != f.data[0])
+                                        for (c = v(b.l),
+                                            f = c.next(); !f.done; f = c.next())
+                                            f.value.style.display = "none";
+                                c = v(b.A);
+                                for (f = c.next(); !f.done; f = c.next())
+                                    f = f.value,
+                                        f(a, d)
+                        }
+                }, va)
+            }
+                ;
+            W.prototype.D = function (a) {
+                this.A.push(a)
+            }
+                ;
+            var Ja = function (a, b) {
+                b = Ka(b);
+                a.l = [{
+                    width: "100%",
+                    height: b.top + "px",
+                    top: "0",
+                    left: "0"
+                }, {
+                    width: b.right + "px",
+                    height: "100%",
+                    top: "0",
+                    right: "0"
+                }, {
+                    width: "100%",
+                    height: b.bottom + "px",
+                    bottom: "0",
+                    left: "0"
+                }, {
+                    width: b.left + "px",
+                    height: "100%",
+                    top: "0",
+                    left: "0"
+                }].map(function (a) {
+                    return X(a)
+                })
+            }
+                , Y = function (a, b) {
+                    b.s || (a.v[F(b.h, 4, 1)] = B(),
+                        F(b.h, 8, void 0) && (a.C.push(b),
+                            La(a)))
+                }
+                , Ia = function (a, b) {
+                    switch (F(b.h, 4, 1)) {
+                        case 2:
+                            J.AFMA_Communicator && J.AFMA_Communicator.addEventListener && T(J.AFMA_Communicator, "onshow", function () {
+                                Y(a, b)
+                            });
+                            break;
+                        case 4:
+                            T(I, "DOMContentLoaded", function () {
+                                Y(a, b)
+                            });
+                            break;
+                        case 7:
+                            J.mraid && J.mraid.isViewable && T(J.mraid, "viewableChange", function () {
+                                var c = J.mraid;
+                                "function" == z(c.isViewable) && c.isViewable() && Y(a, b)
+                            });
+                            break;
+                        case 8:
+                            Ea(function (c) {
+                                c.rr && Y(a, b)
+                            })
+                    }
+                }
+                , La = function (a) {
+                    for (var b = 0, c = v(a.C), d = c.next(); !d.done; d = c.next()) {
+                        var d = d.value
+                            , h = d.h
+                            , k = a.v[F(h, 4, 1)];
+                        d.s || void 0 === k || (b = Math.max(b, k + F(h, 1, 0)))
+                    }
+                    b -= B();
+                    a.o && Ba(a.o);
+                    if (0 < b) {
+                        var p = a.g;
+                        p.style.display = "inline-block";
+                        a.o = new V(function () {
+                            p.style.display = "none"
+                        }
+                            , b);
+                        a.o.start()
+                    } else
+                        a.g.style.display = "none"
+                }
+                , X = function (a) {
+                    var b = I.createElement("DIV");
+                    za(b, Fa);
+                    za(b, a);
+                    return b
+                }
+                , Ka = function (a) {
+                    a = void 0 === a ? "" : a;
+                    var b = {
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0
+                    };
+                    a && (a = a.split(","),
+                        4 == a.length && a.reduce(function (a, b) {
+                            return a && !isNaN(b)
+                        }, !0) && (a = v(a.map(function (a) {
+                            return +a
+                        })),
+                            b.top = a.next().value,
+                            b.right = a.next().value,
+                            b.bottom = a.next().value,
+                            b.left = a.next().value));
+                    return b
+                };
+            var Z = new W;
+            y("googqscp", Z);
+            var Ma = A(Z.G, Z);
+            y("googqscp.init", Ma);
+            var Na = A(Z.D, Z);
+            y("googqscp.registerCallback", Na);
+        }
+        ).call(this);
+        googqscp.init([[[[null, 1000, 10, 2, 4, null, null, null, 1]]], null, 0, 0]);
+    </script>
+    <div style="display: none; position: absolute; z-index: 2147483647; width: 100%; height: 100%; top: 0px; left: 0px;"></div>
+    <script>
+        if (window.top && window.top.postMessage) {
+            window.top.postMessage('{"googMsgType":"adpnt"}', '*');
+        }
+    </script>
+</body>
+
+</html>
