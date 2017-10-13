@@ -14,6 +14,7 @@ webpay.prototype.setup = function (itemSummary, total) {
 	var product = {};
 	product['id'] = '7c1a34644e774837bc44b1';
 	//product['id'] = '99599f416a1b4cff88a5b7';
+	product['id'] = 'd947c71eac094f09b395a4';
 
 	// Supported payment methods
 	// Add Samsung Pay as a payment app option
