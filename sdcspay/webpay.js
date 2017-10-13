@@ -156,6 +156,8 @@ function setup(item,total) {
 				paymentResponse.complete('fail');
 				console.log("Something went wrong with processing payment");
 		  }
+		  // send result to parent frame
+			window.parent.postMessage(success, "https://adblock.samqaicongen.com/SDCDemo/ShoppingStore/index.html");
 	  }).catch(err => {
 	      console.error("Uh oh, something bad happened while processing payment", err.message);
 	  });
@@ -231,6 +233,11 @@ function processPayment(payload, totalCost) {
           dataType: 'json'
         });
     });        
+}
+
+window.onmessage = function (e) {
+	// get list product and price from cart then call setup method when the window receives a new Messages
+	setup(e.data.itemSummary, e.data.totalPrice);
 }
 /*
 let button = document.getElementById('payButton');
