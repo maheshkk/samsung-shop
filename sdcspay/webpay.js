@@ -4,7 +4,7 @@ function setup(item,total) {
 	 //data to be used alongside spay
 	let payData = {		
 		//product ID obtained from Samsung onboarding portal		
-		'productId': "99599f416a1b4cff88a5b7",	
+		'productId': "7c1a34644e774837bc44b1",	//'7c1a34644e774837bc44b1'; //99599f416a1b4cff88a5b7
 		'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],		
 		'orderNumber': "1233123",		
 		'merchantName': 'Shop Samsung (demo)',		
