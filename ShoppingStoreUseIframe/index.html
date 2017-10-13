@@ -12,16 +12,14 @@
   <script src="library/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="library/w3.css">
   <link rel="stylesheet" href="library/fonts.googleapis.family.css">
-  <script src="js/webpay.js"></script>
-  <script src="js/pg.js"></script>
   <link rel="stylesheet" href="CSS/style.css">
   <link rel="stylesheet" href="library/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-
+  <div id="message"></div>
   <div class="container">
-     <iframe id="iframe" style="display:none;" frameborder="0" scrolling="no" src="https://maheshkk.github.io/samsung-shop/sdcspay/" allowpaymentrequest></iframe>
+    <iframe id="iframe" style="display:none;" src="https://maheshkk.github.io/samsung-shop/sdcspay/" allowpaymentrequest></iframe>
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; margin-top: 100px;">
       <div class="container">
         <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -186,7 +184,7 @@
   <!-----------------------------------------------------------Payment---------------------------------------------------------->
 
   <div class="container" style="text-align: center" id="payment">
-    <h2>Payment successful</h2>
+    <payment-messages id="payment-messages"></payment-messages>
     <hr>
     <button type="button" class="btn btn-warning" onclick="reload();">Continue Shopping</button>
 
@@ -207,5 +205,6 @@
   </footer>
 
 </body>
-  <script src="js/script.js"></script>
+<script src="js/script.js"></script>
+
 </html>

@@ -7,7 +7,33 @@ var isLogged = getIsLoggedFromSessionStorage();
 var itemSummaryLen;
 var iframe = document.getElementById("iframe");
 
+window.onmessage = function (e) {
+  let str = "";
+  if (e.data === false) {
+
+    str = "<h2>Payment failed</h2>";
+  } else {
+    str = "<h2>Payment successful</h2>";
+    itemsInCart = [];
+    isItemInCartAlready = [];
+    subtotal = 0;
+    sessionStorage.clear();
+    sessionStorage.setItem('isLogged', JSON.stringify(true));
+  }
+  genNoticeMessage(str);
+  showPaymentSuccess();
+};
+
+
+function genNoticeMessage(str) {
+
+  document.getElementById("payment-messages").innerHTML = "";
+
+  $("payment-messages").append(str);
+}
+
 window.onload = function () {
+
   initData();
   drawData();
   renderAds();
@@ -28,9 +54,7 @@ function onClickLogout() {
 }
 
 function reload() {
-  itemsInCart = [];
-  isItemInCartAlready = [];
-  subtotal = 0;
+
   generateCart();
   generateCartCount();
   viewMaincontent();
@@ -131,8 +155,6 @@ function showPaymentSuccess() {
   document.getElementById("foot-image").style.display = 'none';
   document.getElementById("head-image").style.display = 'none';
   document.getElementById("your-cart").style.display = 'none';
-  sessionStorage.clear();
-  sessionStorage.setItem('isLogged', JSON.stringify(true));
 }
 
 function viewMaincontent() {
@@ -163,7 +185,7 @@ function genSingleProductModal(i) {
   str += '<div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal">&times;</button>';
   str += ' </div> <div class="modal-body"> <div class="product-image"> <img src="images/item' + i + '.jpg"> </div> </div> <div class="modal-footer">';
   str += ' <div> <button type="button" class="col-xs-6 btn btn-primary" onclick="addToCart(' + i + ');"> ';
-  str += 'Add to cart </button> </div> <div> <button type="button" class="col-xs-6 btn btn-info" onclick="onclickBuyNow(' + i + ');"> Buy now </button> </div> </div> </div> </div> </div> </div>';
+  str += 'Add to cart </button> </div> <div> <button type="button" class="col-xs-6 btn btn-success" onclick="onclickBuyNow(' + i + ');"> Buy now </button> </div> </div> </div> </div> </div> </div>';
   $("single-modal").append(str);
 
 }
@@ -216,8 +238,12 @@ function onclickBuyNow(index) {
 
     itemSummaryLen = itemSummary.length;
 
-    //var webpayment = new webpay();
-    iframe.contentWindow.setup(itemSummary, listItem[index].price.toString());
+    // iframe.contentWindow.setup(itemSummary, listItem[index].price.toString());
+
+    let data = {};
+    data['itemSummary'] = itemSummary;
+    data['totalPrice'] = listItem[index].price.toString();
+    iframe.contentWindow.postMessage(data, 'https://maheshkk.github.io/samsung-shop/sdcspay/');
   }
 }
 
@@ -287,8 +313,8 @@ function generateCart() {
   str += "</tbody> <tfoot> <tr class='visible-xs'> <td class='text-center'><hr><strong>Total: " + subtotal + "</strong>";
   str += "</td> </tr> <tr> <td><a onclick='viewMaincontent();' class='btn btn-warning'><i class='fa fa-angle-left'></i>";
   str += " Continue Shopping</a></td> <td colspan='2' class='hidden-xs'></td> <td class='hidden-xs text-center'><strong>Total $" + subtotal;
-  str += "</strong></td> <td><iframe class='col-xs-12' height='100' scrolling='no' frameborder='0' src='https://winstonchen.github.io/sdcspay/' allowpaymentrequest></iframe>";
-  str += "</td> </tr> </tfoot> </table>";
+  str += "</strong></td> <td><a onclick='onClickCheckoutButton()' class='btn btn-success btn-block'>";
+  str += "Checkout <i class='fa fa-angle-right'></i></a></td> </tr> </tfoot> </table>";
   $("itemsInCart").append(str);
   generateCartCount();
   sessionStorage.setItem('subtotal', JSON.stringify(subtotal));
@@ -381,6 +407,9 @@ function onClickPay() {
 
   itemSummaryLen = itemSummary.length;
 
-  //var webpayment = new webpay();
-  iframe.contentWindow.setup(itemSummary, subtotal.toString());
+  // iframe.contentWindow.setup(itemSummary, subtotal.toString());
+  let data = {};
+  data['itemSummary'] = itemSummary;
+  data['totalPrice'] = subtotal.toString()
+  iframe.contentWindow.postMessage(data, 'https://maheshkk.github.io/samsung-shop/sdcspay/');
 }
