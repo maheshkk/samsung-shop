@@ -65,11 +65,18 @@ function setup(item,total) {
 		});
 	});
 
-	//shipping 
+	// discount
 	details['displayItems'].push(
 	{
 		label: 'Loyal customer discount',
-		amount: { currency: 'USD', value : discount }, // -US$10.00
+		amount: { currency: 'USD', value : discount }, // -US$5.00
+		pending: true 																 // The price is not determined yet
+	});
+	// shipping
+	details['displayItems'].push(
+	{
+		label: 'Shipping',
+		amount: { currency: 'USD', value : 0.00 }, // US$0.00
 		pending: true 																 // The price is not determined yet
 	});
 
@@ -112,16 +119,17 @@ function setup(item,total) {
 	  	let originalCost = finalCost;
 	    let selectedShippingOption;
 	    let otherShippingOption;
+	    let displayItemsLength = details['displayItems'].length;
 	    if (shippingOption === 'standard') {
 	      selectedShippingOption = details['shippingOptions'][0];
 	      otherShippingOption = details['shippingOptions'][1];
-	      details['total']['amount']['value'] = originalCost + 0.00;
-				details['displayItems'][1]['amount']['value'] = 0.00;
+	      details['total']['amount']['value'] = originalCost;
+				details['displayItems'][displayItemsLength - 1]['amount']['value'] = 0.00;
 	    } else {
 	      selectedShippingOption = details['shippingOptions'][1];
 	      otherShippingOption = details['shippingOptions'][0];
 	      details['total']['amount']['value'] = originalCost + 10.00;
-				details['displayItems'][1]['amount']['value'] = 10.00;
+				details['displayItems'][displayItemsLength - 1]['amount']['value'] = 10.00;
 	    }
 	    selectedShippingOption.selected = true;
 	    otherShippingOption.selected = false;
@@ -173,6 +181,7 @@ function guid() {
 
 function processPayment(payload, totalCost) {
     console.log(payload);
+    console.log(totalCost);
     return new Promise(function (resolve, reject) {    
         if (!payload || !payload.details) {
            resolve(false);
@@ -239,7 +248,7 @@ window.onmessage = function (e) {
 	// get list product and price from cart then call setup method when the window receives a new Messages
 	setup(e.data.itemSummary, e.data.totalPrice);
 }
-/*
+
 let button = document.getElementById('payButton');
 if (!window.PaymentRequest) {
 	// PaymentRequest API is not available. Forwarding to
@@ -255,7 +264,11 @@ function buy(){
 	let item = [{
 	  'label': 'Candy',
 	  'value': price
-	}];
-	setup(item,price);
+	},
+	{
+		'label': 'Soda',
+	  'value': price
+	}
+	];
+	setup(item,"$200");
 }
-*/
