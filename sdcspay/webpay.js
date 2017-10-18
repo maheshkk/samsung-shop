@@ -186,6 +186,12 @@ function processPayment(payload, totalCost) {
         if (!payload || !payload.details) {
            resolve(false);
         }
+	
+	// auto approve all manual cards - for now
+        if(payload.methodName !== 'https://samsung.com/pay'){
+            console.log('detected non spay');
+            resolve(true);
+        }   
 
         //credentials should be from spay app
         let credentials;
