@@ -102,19 +102,19 @@ webpay.prototype.setup = function(itemSummary, total){
 		});
 	});
 
-	//shipping 
-	details['displayItems'].push(
-	{
-		label: 'Default shipping',
-		amount: { currency: 'USD', value : 0.00 }, // -US$10.00
-		pending: false 																 // The price is not determined yet
-	});
-
 	// other costs
 	details['displayItems'].push(
 	{
 		label: 'Loyal customer discount',
 		amount: { currency: 'USD', value : discount }, // -US$10.00
+		pending: true 																 // The price is not determined yet
+	});
+
+	// shipping
+	details['displayItems'].push(
+	{
+		label: 'Shipping',
+		amount: { currency: 'USD', value : 0.00 }, // US$0.00
 		pending: true 																 // The price is not determined yet
 	});
 
@@ -154,19 +154,20 @@ webpay.prototype.setup = function(itemSummary, total){
  	//detect shipping option changes
  	payment.addEventListener('shippingoptionchange', e => {
 	  e.updateWith(((details, shippingOption) => {
-	  	var originalCost = finalCost - 0.00;
+	  	var originalCost = finalCost;
 	    var selectedShippingOption;
 	    var otherShippingOption;
+	    let displayItemsLength = details['displayItems'].length;
 	    if (shippingOption === 'standard') {
 	      selectedShippingOption = details['shippingOptions'][0];
 	      otherShippingOption = details['shippingOptions'][1];
-	      details['total']['amount']['value'] = originalCost + 0.00;
-	      details['displayItems'][1]['amount']['value'] = 0.00;
+	      details['total']['amount']['value'] = originalCost;
+	      details['displayItems'][displayItemsLength - 1]['amount']['value'] = 0.00;
 	    } else {
 	      selectedShippingOption = details['shippingOptions'][1];
 	      otherShippingOption = details['shippingOptions'][0];
 	      details['total']['amount']['value'] = originalCost + 25.00;
-	      details['displayItems'][1]['amount']['value'] = 25.00;
+	      details['displayItems'][displayItemsLength - 1]['amount']['value'] = 25.00;
 	    }
 	    selectedShippingOption.selected = true;
 	    otherShippingOption.selected = false;

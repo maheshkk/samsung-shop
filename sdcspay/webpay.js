@@ -4,7 +4,7 @@ function setup(item,total) {
 	 //data to be used alongside spay
 	let payData = {		
 		//product ID obtained from Samsung onboarding portal		
-		'productId': "99599f416a1b4cff88a5b7",	
+		'productId': "7c1a34644e774837bc44b1",	//'7c1a34644e774837bc44b1'; //99599f416a1b4cff88a5b7
 		'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],		
 		'orderNumber': "1233123",		
 		'merchantName': 'Shop Samsung (demo)',		
@@ -65,11 +65,18 @@ function setup(item,total) {
 		});
 	});
 
-	//shipping 
+	// discount
 	details['displayItems'].push(
 	{
 		label: 'Loyal customer discount',
-		amount: { currency: 'USD', value : discount }, // -US$10.00
+		amount: { currency: 'USD', value : discount }, // -US$5.00
+		pending: true 																 // The price is not determined yet
+	});
+	// shipping
+	details['displayItems'].push(
+	{
+		label: 'Shipping',
+		amount: { currency: 'USD', value : 0.00 }, // US$0.00
 		pending: true 																 // The price is not determined yet
 	});
 
@@ -112,16 +119,17 @@ function setup(item,total) {
 	  	let originalCost = finalCost;
 	    let selectedShippingOption;
 	    let otherShippingOption;
+	    let displayItemsLength = details['displayItems'].length;
 	    if (shippingOption === 'standard') {
 	      selectedShippingOption = details['shippingOptions'][0];
 	      otherShippingOption = details['shippingOptions'][1];
-	      details['total']['amount']['value'] = originalCost + 0.00;
-				details['displayItems'][1]['amount']['value'] = 0.00;
+	      details['total']['amount']['value'] = originalCost;
+				details['displayItems'][displayItemsLength - 1]['amount']['value'] = 0.00;
 	    } else {
 	      selectedShippingOption = details['shippingOptions'][1];
 	      otherShippingOption = details['shippingOptions'][0];
 	      details['total']['amount']['value'] = originalCost + 10.00;
-				details['displayItems'][1]['amount']['value'] = 10.00;
+				details['displayItems'][displayItemsLength - 1]['amount']['value'] = 10.00;
 	    }
 	    selectedShippingOption.selected = true;
 	    otherShippingOption.selected = false;
@@ -156,6 +164,8 @@ function setup(item,total) {
 				paymentResponse.complete('fail');
 				console.log("Something went wrong with processing payment");
 		  }
+		  // send result to parent frame
+			window.parent.postMessage(success, "https://adblock.samqaicongen.com/SDCDemo/ShoppingStore/index.html");
 	  }).catch(err => {
 	      console.error("Uh oh, something bad happened while processing payment", err.message);
 	  });
@@ -171,10 +181,17 @@ function guid() {
 
 function processPayment(payload, totalCost) {
     console.log(payload);
+    console.log(totalCost);
     return new Promise(function (resolve, reject) {    
         if (!payload || !payload.details) {
            resolve(false);
         }
+	
+	// auto approve all manual cards - for now
+        if(payload.methodName !== 'https://samsung.com/pay'){
+            console.log('detected non spay');
+            resolve(true);
+        }   
 
         //credentials should be from spay app
         let credentials;
@@ -232,7 +249,12 @@ function processPayment(payload, totalCost) {
         });
     });        
 }
-/*
+
+window.onmessage = function (e) {
+	// get list product and price from cart then call setup method when the window receives a new Messages
+	setup(e.data.itemSummary, e.data.totalPrice);
+}
+
 let button = document.getElementById('payButton');
 if (!window.PaymentRequest) {
 	// PaymentRequest API is not available. Forwarding to
@@ -248,7 +270,11 @@ function buy(){
 	let item = [{
 	  'label': 'Candy',
 	  'value': price
-	}];
-	setup(item,price);
+	},
+	{
+		'label': 'Soda',
+	  'value': price
+	}
+	];
+	setup(item,"$200");
 }
-*/
