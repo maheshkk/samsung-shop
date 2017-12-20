@@ -242,6 +242,7 @@ label {
 }
 
 #buyNow {
+	background: url(/samsung-shop/src/img/paybutton.png) no-repeat center;
 	float: right;
     width: 50%;
     height: 64px;
@@ -301,6 +302,14 @@ input {
 }
 
 /* cart page */
+#checkout-button {
+	background: url(/samsung-shop/src/img/paybutton.png) no-repeat center;
+	width:233px;
+}
+#checkout-button:hover {
+	border: #FFFFFF solid 2px;
+}
+
 #cart-items{
 	display: flex;
 	flex-direction: column;
