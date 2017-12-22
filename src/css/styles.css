@@ -242,18 +242,18 @@ label {
 }
 
 #buyNow {
-	background: url(/samsung-shop/src/img/paybutton.png) no-repeat center;
-	float: right;
+    background: url(/samsung-shop/src/img/paybutton.png) no-repeat center;
+    float: right;
     width: 50%;
     height: 64px;
     z-index: 1;
-    background-color: #5cb85c;
-    border: #5cb85c solid 2px;
+    background-color: black;
+    border: black solid 2px;
 }
-#buyNow:hover {
+/*#buyNow:hover {
 	background-color: #FFFFFF;
 	color:#5cb85c;
-}
+}*/
 
 .product-buy-button {
 	background-color: #601A50;
