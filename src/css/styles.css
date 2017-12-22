@@ -243,6 +243,7 @@ label {
 
 #buyNow {
     background: url(/samsung-shop/src/img/paybutton.png) no-repeat center;
+    background-size:contain;    
     float: right;
     width: 50%;
     height: 64px;
