@@ -134,8 +134,7 @@ webpay.prototype.setup = function(itemSummary, total){
 	  	requestPayerEmail: false,
 		requestPayerName: false,
 	  	requestShipping: false,
-		requestPayerPhone: false,
-		shippingType: 'shipping' // "shipping"(default), "delivery" or "pickup"
+		requestPayerPhone: false
 	};
 
 	var payment = new PaymentRequest(
