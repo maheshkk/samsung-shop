@@ -137,10 +137,15 @@ webpay.prototype.setup = function(itemSummary, total){
 		shippingType: 'shipping' // "shipping"(default), "delivery" or "pickup"
 	};
 
-	var payment = new PaymentRequest(
+/*	var payment = new PaymentRequest(
 		supportedInstruments, // required payment method data
 		details,              // required information about transaction
 		options               // optional parameter for things like shipping, etc.
+	);
+*/
+	var payment = new PaymentRequest(
+		supportedInstruments, // required payment method data
+		details              // required information about transaction
 	);
 
 	//detect when shipping address changes
