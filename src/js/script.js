@@ -33,9 +33,10 @@ $().ready(function() {
     				supportedMethods: ['amex', 'discover','mastercard','visa']
   				},
   				{
-    				supportedMethods: ['https://android.com/pay'],
+    				supportedMethods: ['https://spay.samsung.com/'],
     				data: {
       					//product ID obtained from Samsung onboarding portal
+					'version': "1",
       					'productId': '02510116604241796260',
       					'allowedCardNetworks': ['AMEX', 'mastercard', 'visa'],
       					'paymentProtocol': 'PROTOCOL_3DS',
